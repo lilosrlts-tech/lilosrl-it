@@ -87,7 +87,7 @@ export async function FleetPreviewSection() {
         </Link>
       </div>
 
-      <FleetPreviewGrid cards={cards} />
+      <FleetPreviewGrid cards={cards} showWhatsAppCard />
     </section>
   );
 }

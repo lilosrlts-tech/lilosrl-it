@@ -22,7 +22,16 @@ function todayIsoLocal(): string {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 }
 
-export function WhatsAppPreventivoCard() {
+interface WhatsAppPreventivoCardProps {
+  /** Ancora scroll (es. #preventivo-whatsapp). Solo una istanza in pagina. */
+  anchorId?: string;
+  headingId?: string;
+}
+
+export function WhatsAppPreventivoCard({
+  anchorId,
+  headingId = "whatsapp-preventivo-heading",
+}: WhatsAppPreventivoCardProps = {}) {
   const [telefono, setTelefono] = useState("");
   const [kmPrevisti, setKmPrevisti] = useState("");
   const [destinazione, setDestinazione] = useState<string>("trieste-citta");
@@ -76,15 +85,15 @@ export function WhatsAppPreventivoCard() {
 
   return (
     <article
-      id="preventivo-whatsapp"
+      id={anchorId}
       className="flex h-full scroll-mt-24 flex-col overflow-hidden rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50/80 via-white to-slate-50 shadow-sm sm:col-span-2 lg:col-span-2"
-      aria-labelledby="whatsapp-preventivo-heading"
+      aria-labelledby={headingId}
     >
       <div className="border-b border-emerald-100 bg-emerald-600 px-5 py-4 text-white">
         <p className="text-xs font-bold uppercase tracking-[0.18em] text-emerald-100">
           Preventivo rapido
         </p>
-        <h3 id="whatsapp-preventivo-heading" className="mt-1 text-xl font-bold tracking-tight">
+        <h3 id={headingId} className="mt-1 text-xl font-bold tracking-tight">
           Richiedi su WhatsApp
         </h3>
         <p className="mt-1 text-sm text-emerald-50">

@@ -28,14 +28,18 @@ export interface FleetPreviewCardData {
 
 interface FleetPreviewGridProps {
   cards: FleetPreviewCardData[];
+  /** Su mobile il form WA è già sopra le categorie — evita duplicato. */
+  showWhatsAppCard?: boolean;
 }
 
 /**
- * Su smartphone: 3 card + «Mostra tutti», poi form WhatsApp.
- * Da md in su: griglia completa.
- * Solo dati serializzabili (niente JSX da Server Component) per evitare warning key.
+ * Su smartphone: 3 card + «Mostra tutti».
+ * Da md in su: griglia completa (+ WhatsApp se showWhatsAppCard).
  */
-export function FleetPreviewGrid({ cards }: FleetPreviewGridProps) {
+export function FleetPreviewGrid({
+  cards,
+  showWhatsAppCard = true,
+}: FleetPreviewGridProps) {
   const [expanded, setExpanded] = useState(false);
   const hasMore = cards.length > MOBILE_VISIBLE;
 
@@ -130,7 +134,12 @@ export function FleetPreviewGrid({ cards }: FleetPreviewGridProps) {
         </div>
       ) : null}
 
-      <WhatsAppPreventivoCard />
+      {showWhatsAppCard ? (
+        <div className="max-md:hidden sm:col-span-2 lg:col-span-2">
+          <WhatsAppPreventivoCard headingId="whatsapp-preventivo-heading-desktop" />
+        </div>
+      ) : null}
     </div>
   );
 }
+
