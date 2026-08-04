@@ -1,0 +1,518 @@
+/* === Shell gestionale === */
+:root {
+  --bg: #eef2f7;
+  --panel: #ffffff;
+  --text: #1a2332;
+  --muted: #5c6b7f;
+  --border: #d8e0ea;
+  --primary: #1d5fbf;
+  --primary-dark: #154a96;
+  --sidebar: #0f2744;
+  --sidebar-text: #c8d6e8;
+  --free: #eef3f9;
+  --booked: #fbbf24;
+  --contract: #34d399;
+  --selected: #93c5fd;
+  --today: #fef3c7;
+  --weekend: #f8fafc;
+  --shadow: 0 4px 20px rgba(20, 40, 80, 0.08);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 240px;
+  background: var(--sidebar);
+  color: var(--sidebar-text);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.sidebar-brand {
+  padding: 1.25rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.sidebar-brand strong {
+  display: block;
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 0.75rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.nav-item {
+  text-align: left;
+  background: none;
+  border: none;
+  color: var(--sidebar-text);
+  padding: 0.65rem 0.85rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.92rem;
+}
+
+.nav-item:hover { background: rgba(255,255,255,0.06); color: #fff; }
+.nav-item.active { background: var(--primary); color: #fff; }
+
+.sidebar-footer {
+  padding: 1rem;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  font-size: 0.78rem;
+  opacity: 0.7;
+}
+
+.main-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem 0.5rem;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 1.45rem;
+}
+
+.page-header p {
+  margin: 0.25rem 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.page-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.page-content {
+  flex: 1;
+  padding: 1rem 1.5rem 2rem;
+  overflow: auto;
+}
+
+.status {
+  margin: 0.75rem 1.5rem 0;
+  padding: 0.65rem 0.9rem;
+  border-radius: 8px;
+  font-size: 0.92rem;
+}
+
+.status.ok { background: #dcfce7; color: #166534; }
+.status.err { background: #fee2e2; color: #991b1b; }
+.status.hidden { display: none; }
+
+/* === Dashboard === */
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.85rem;
+  margin-bottom: 1.25rem;
+}
+
+.metric-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: var(--shadow);
+}
+
+.metric-card strong {
+  display: block;
+  font-size: 1.6rem;
+  color: var(--primary);
+}
+
+.metric-card span { font-size: 0.85rem; color: var(--muted); }
+
+.quick-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.85rem;
+  margin-bottom: 1.25rem;
+}
+
+.quick-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s;
+}
+
+.quick-card:hover { border-color: var(--primary); }
+.quick-card strong { display: block; margin-bottom: 0.3rem; }
+.quick-card small { color: var(--muted); }
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.panel-header {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+}
+
+/* === Tabelle === */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.data-table th,
+.data-table td {
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+.data-table th {
+  background: #f8fafc;
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.data-table tr:hover td { background: #f8fafc; }
+
+.data-table .clickable { cursor: pointer; color: var(--primary); }
+.data-table .clickable:hover { text-decoration: underline; }
+
+.badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge-prenotazione { background: #fef3c7; color: #92400e; }
+.badge-contratto { background: #d1fae5; color: #065f46; }
+
+.toolbar-inline {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.toolbar-inline input,
+.toolbar-inline select {
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font: inherit;
+}
+
+/* === Calendario === */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
+  padding: 0.75rem 0;
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+
+.dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  margin-right: 0.35rem;
+  vertical-align: -1px;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+.dot.free { background: var(--free); }
+.dot.booked { background: var(--booked); }
+.dot.contract { background: var(--contract); }
+.dot.selected { background: var(--selected); }
+
+.cal-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.cal-toolbar .btn-ghost {
+  background: #e2e8f0;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+#month-label {
+  min-width: 10rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.calendar {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: auto;
+  max-height: calc(100vh - 280px);
+}
+
+.calendar.loading {
+  padding: 2rem;
+  color: var(--muted);
+}
+
+.cal-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  min-width: 100%;
+  user-select: none;
+}
+
+.cal-table th, .cal-table td {
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.cal-table th {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background: #f8fafc;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 0.45rem 0.2rem;
+  min-width: 34px;
+}
+
+.cal-table th.vehicle-col {
+  left: 0;
+  z-index: 4;
+  min-width: 220px;
+  text-align: left;
+  padding-left: 0.75rem;
+}
+
+.cal-table th.weekend { background: #f1f5f9; color: #64748b; }
+.cal-table th.today { background: var(--today); }
+
+.vehicle-cell {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: #fff;
+  padding: 0.55rem 0.75rem;
+  min-width: 220px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.vehicle-cell:hover { background: #f8fafc; }
+
+.vehicle-cell strong { display: block; font-size: 0.92rem; }
+.vehicle-cell small { display: block; color: var(--muted); font-size: 0.78rem; }
+
+.day-cell {
+  width: 34px;
+  min-width: 34px;
+  height: 44px;
+  padding: 0;
+  background: var(--free);
+  cursor: crosshair;
+  position: relative;
+}
+
+.day-cell.weekend { background: var(--weekend); }
+.day-cell.today { box-shadow: inset 0 0 0 2px #f59e0b; }
+.day-cell.selecting { background: var(--selected) !important; }
+
+.day-cell .bar {
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  left: 1px;
+  right: 1px;
+  border-radius: 4px;
+  font-size: 0.62rem;
+  padding: 2px 3px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.bar.prenotazione { background: var(--booked); }
+.bar.contratto { background: var(--contract); }
+
+/* === Dettaglio / placeholder === */
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.detail-card {
+  background: #f8fafc;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.detail-card h3 { margin: 0 0 0.5rem; font-size: 1rem; }
+
+.placeholder-box {
+  padding: 2rem;
+  text-align: center;
+  color: var(--muted);
+}
+
+.placeholder-box strong { display: block; color: var(--text); margin-bottom: 0.5rem; }
+
+/* === Bottoni e modali === */
+.btn {
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--primary-dark); }
+.btn-secondary { background: #e2e8f0; color: var(--text); }
+.btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text); }
+
+.modal {
+  border: none;
+  border-radius: 14px;
+  padding: 0;
+  width: min(560px, 94vw);
+  box-shadow: var(--shadow);
+}
+
+.modal-wide { width: min(680px, 94vw); }
+.modal::backdrop { background: rgba(15, 23, 42, 0.45); }
+
+.modal-header, .modal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-footer {
+  border-bottom: none;
+  border-top: 1px solid var(--border);
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.modal-header h2 { margin: 0; font-size: 1.1rem; }
+.modal-body { padding: 1rem 1.1rem; }
+
+.btn-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--muted);
+}
+
+.summary {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 10px;
+  padding: 0.75rem 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+label {
+  display: block;
+  font-size: 0.86rem;
+  color: var(--muted);
+}
+
+label input, label textarea, label select {
+  display: block;
+  width: 100%;
+  margin-top: 0.3rem;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font: inherit;
+  color: var(--text);
+}
+
+.cliente-row { display: flex; gap: 0.5rem; margin-top: 0.3rem; }
+.cliente-row input { flex: 1; margin-top: 0; }
+.cliente-list { margin-top: 0.5rem; min-height: 5rem; }
+
+.nuovo-cliente {
+  margin: 0.75rem 0;
+  padding: 0.75rem;
+  background: #f8fafc;
+  border-radius: 10px;
+  border: 1px dashed var(--border);
+}
+
+.nuovo-cliente h3 { margin: 0 0 0.6rem; font-size: 0.95rem; }
+.hidden { display: none !important; }
+
+.link-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.75rem; }
+
+@media (max-width: 900px) {
+  .app-shell { flex-direction: column; }
+  .sidebar { width: 100%; }
+  .sidebar-nav { flex-direction: row; flex-wrap: wrap; }
+  .detail-grid, .grid-2 { grid-template-columns: 1fr; }
+}

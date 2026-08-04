@@ -1,0 +1,33 @@
+LILO — ISTRUZIONI SEMPLICI
+==========================
+
+CARTELLA PROGETTO (nuovo sito):
+  C:\Users\info\Progetti\lilosrl-it
+
+SE NON VEDI NULLA NEL BROWSER, SEGUI QUESTI 3 PASSI:
+
+PASSO 1 — CHIUDI TUTTO
+  Doppio clic su:  FERMA_LILO.bat
+  (chiudi anche eventuali finestre nere aperte)
+
+PASSO 2 — RIAVVIA
+  Doppio clic su:  AVVIA_LILO.bat
+  ATTENDI fino a vedere "Sito pronto!" (può richiedere 30 secondi)
+
+PASSO 3 — VERIFICA
+  Doppio clic su:  VERIFICA_LILO.bat
+  Deve comparire "OK" su tutte le righe verdi.
+
+LINK DA USARE (copia nel browser):
+  http://localhost:3000
+  http://localhost:3000/contatti
+  http://localhost:3001/admin
+  Password admin: lilo2024
+
+IMPORTANTE:
+  - Usa SOLO "localhost" (non lilosrl.it)
+  - La prima apertura è lenta (20-30 sec): è normale
+  - Se la pagina è bianca: premi Ctrl+F5
+  - Non chiudere le finestre nere mentre usi il sito
+
+Se VERIFICA_LILO mostra errori rossi, scrivi cosa dice e ti aiuto.

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autonoleggio LILO — Gestionale</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <strong>LILO</strong>
+        <span>Autonoleggio</span>
+      </div>
+      <nav class="sidebar-nav" id="main-nav">
+        <button class="nav-item active" data-page="dashboard">Dashboard</button>
+        <button class="nav-item" data-page="calendario">Calendario flotta</button>
+        <button class="nav-item" data-page="prenotazioni">Prenotazioni e contratti</button>
+        <button class="nav-item" data-page="clienti">Clienti</button>
+        <button class="nav-item" data-page="flotta">Flotta veicoli</button>
+        <button class="nav-item" data-page="tariffario">Tariffario</button>
+        <button class="nav-item" data-page="cargos">CARGOS</button>
+        <button class="nav-item" data-page="impostazioni">Impostazioni</button>
+      </nav>
+      <div class="sidebar-footer">
+        <small id="sidebar-ditta">LILO S.R.L.</small>
+      </div>
+    </aside>
+
+    <div class="main-area">
+      <header class="page-header">
+        <div>
+          <h1 id="page-title">Dashboard</h1>
+          <p id="page-subtitle">Panoramica operativa del noleggio</p>
+        </div>
+        <div id="page-actions" class="page-actions"></div>
+      </header>
+
+      <div id="status" class="status hidden"></div>
+      <main id="page-content" class="page-content"></main>
+    </div>
+  </div>
+
+  <!-- Modale nuova prenotazione -->
+  <dialog id="modal-prenota" class="modal">
+    <form id="form-prenota" method="dialog">
+      <header class="modal-header">
+        <h2>Nuova prenotazione</h2>
+        <button type="button" class="btn-close" data-close>&times;</button>
+      </header>
+      <div class="modal-body">
+        <div class="summary" id="prenota-summary"></div>
+        <div class="grid-2">
+          <label>Data ritiro <input type="date" id="data-ritiro" required></label>
+          <label>Ora ritiro <input type="time" id="ora-ritiro" value="09:00" required></label>
+          <label>Data riconsegna <input type="date" id="data-riconsegna" required></label>
+          <label>Ora riconsegna <input type="time" id="ora-riconsegna" value="18:00" required></label>
+        </div>
+        <label>
+          Cliente
+          <div class="cliente-row">
+            <input type="search" id="cliente-search" placeholder="Cerca nome, cognome, CF..." autocomplete="off">
+            <button type="button" id="btn-nuovo-cliente" class="btn btn-secondary">+ Nuovo</button>
+          </div>
+          <select id="cliente-id" size="4" class="cliente-list"></select>
+        </label>
+        <div id="nuovo-cliente-panel" class="nuovo-cliente hidden">
+          <h3>Nuovo cliente rapido</h3>
+          <div class="grid-2">
+            <label>Nome <input type="text" id="nc-nome"></label>
+            <label>Cognome <input type="text" id="nc-cognome"></label>
+            <label>Codice fiscale <input type="text" id="nc-cf"></label>
+            <label>Telefono <input type="tel" id="nc-tel"></label>
+          </div>
+          <button type="button" id="btn-salva-cliente" class="btn btn-secondary">Salva cliente</button>
+        </div>
+        <label>Note <textarea id="note" rows="2"></textarea></label>
+      </div>
+      <footer class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-close>Annulla</button>
+        <button type="submit" class="btn btn-primary">Conferma prenotazione</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- Modale dettaglio noleggio -->
+  <dialog id="modal-dettaglio" class="modal modal-wide">
+    <header class="modal-header">
+      <h2>Dettaglio noleggio</h2>
+      <button type="button" class="btn-close" data-close>&times;</button>
+    </header>
+    <div class="modal-body" id="dettaglio-body"></div>
+    <footer class="modal-footer" id="dettaglio-footer">
+      <button type="button" class="btn btn-secondary" data-close>Chiudi</button>
+    </footer>
+  </dialog>
+
+  <script src="/static/calendar.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>

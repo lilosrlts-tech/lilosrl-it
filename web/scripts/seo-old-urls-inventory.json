@@ -1,0 +1,46 @@
+{
+  "extractedAt": "2026-07-28T14:19:25.321Z",
+  "pages": [
+    "/",
+    "/chi-siamo",
+    "/termini-e-condizioni",
+    "/cookie-policy-ue",
+    "/flotta-noleggio-2",
+    "/offerta-del-mese",
+    "/flotta-noleggio",
+    "/test-shortcode",
+    "/prezzi"
+  ],
+  "posts": [
+    "/news",
+    "/how-we-manage-large-construction-projects"
+  ],
+  "car_rental_pages": [
+    "/car-rental/booking-confirmed",
+    "/car-rental/car-rental-terms-and-conditions",
+    "/car-rental/search",
+    "/car-rental/payment-cancelled"
+  ],
+  "car_rental_items": [
+    "/car/volvo-volvo-s40",
+    "/car/renault-master",
+    "/car/peugeot-partner",
+    "/car/peugeot-boxer-2",
+    "/car/peugeot-boxer-l2h2-2",
+    "/car/peugeot-boxer-l2h2",
+    "/car/opel-movano",
+    "/car/iveco-iveco-daily",
+    "/car/ford-transit-l3h2-furgone",
+    "/car/ford-transit",
+    "/car/noleggio-furgoni-mercedes-vito-trieste",
+    "/car/noleggio-furgone-a-trieste-ford-l1h1",
+    "/car/fiat-ducato-l1h1",
+    "/car/fiat-doblo",
+    "/car/noleggio-furgoni-autonoleggio-pulmini-9-posti",
+    "/car/opel-karl",
+    "/car/renault-renault-trafic-9-posti",
+    "/car/nissan-primastar",
+    "/car/opel-vivaro"
+  ],
+  "car_rental_items_count": 19
+}

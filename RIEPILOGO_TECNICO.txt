@@ -1,0 +1,343 @@
+RIEPILOGO TECNICO — lilosrl.it
+================================
+Progetto: C:\Users\info\Progetti\lilosrl-it\
+Database: Supabase PostgreSQL + Storage bucket "veicoli"
+Generato: 14 luglio 2026
+
+
+================================================================================
+1. SCHEMA DATABASE SUPABASE
+================================================================================
+
+ESTENSIONI
+----------
+- pgcrypto, unaccent
+- Funzione trigger set_updated_at() su tutte le tabelle principali
+
+
+TABELLA: categorie
+------------------
+Categorie veicoli (Auto, Furgoni, Pulmini, ecc.)
+
+  id              UUID PK (auto-generato)
+  nome            TEXT NOT NULL
+  slug            TEXT NOT NULL UNIQUE (formato a-z0-9-)
+  descrizione     TEXT
+  icona           TEXT
+  ordine          SMALLINT DEFAULT 0
+  attivo          BOOLEAN DEFAULT true
+  seo_title       TEXT
+  seo_description TEXT
+  seo_keywords    TEXT[]
+  meta_robots     TEXT DEFAULT 'index, follow'
+  canonical_url   TEXT
+  created_at      TIMESTAMPTZ
+  updated_at      TIMESTAMPTZ
+
+
+TABELLA: veicoli
+----------------
+Anagrafica flotta + contenuti pubblici + SEO/IA
+
+  Identità:
+    id, categoria_id (FK → categorie), targa (univoca), marca, modello, versione
+
+  Tecnici base:
+    anno_immatricolazione, colore, alimentazione, cambio, posti, porte,
+    cilindrata_cc, potenza_kw, bagagliaio_litri, km_attuali, note_interne
+
+  Pubblicazione:
+    slug (univoco), pubblicato, attivo, in_evidenza, ordine
+
+  Contenuto:
+    titolo_pubblico, sottotitolo, descrizione_breve, descrizione_completa
+
+  SEO:
+    seo_title, seo_description, seo_keywords[], meta_robots, canonical_url,
+    og_title, og_description, og_image_url, twitter_card, twitter_title,
+    twitter_description
+
+  IA / dati strutturati:
+    json_ld (JSONB), ai_summary, ai_highlights[], ai_faq (JSONB),
+    ai_context, lingua_default
+
+  Specifiche furgoni:
+    portata_kg, volume_carico_mc, volume_metri_cubi, portata_utile_kg,
+    trazione, passo, tetto, sensori_parcheggio,
+    lunghezza_mm, larghezza_mm, altezza_mm,
+    vano_lunghezza_mm, vano_larghezza_mm, vano_altezza_mm,
+    lunghezza_vano_mm, larghezza_vano_mm, altezza_vano_mm,
+    larghezza_tra_passaruota_mm
+
+  Specifiche auto:
+    capacita_bagagliaio_valigie, classe_ambientale, connessione_smartphone
+
+  Specifiche pulmini:
+    configurazione_sedili, climatizzazione_posteriore
+
+  Timestamp: created_at, updated_at
+
+
+TABELLA: prezzi
+---------------
+Tariffe per veicolo OPPURE categoria (mutuamente esclusivi)
+
+  id              UUID PK
+  veicolo_id      UUID FK (opzionale)
+  categoria_id    UUID FK (opzionale)
+  tipo_tariffa    ENUM: giornaliero | weekend | settimanale | mensile | ora | custom
+  importo         NUMERIC(10,2)
+  valuta          CHAR(3) DEFAULT 'EUR'
+  data_inizio     DATE
+  data_fine       DATE
+  giorni_minimo   SMALLINT
+  km_inclusi      INTEGER
+  deposito        NUMERIC(10,2)
+  descrizione     TEXT
+  attivo          BOOLEAN DEFAULT true
+  created_at      TIMESTAMPTZ
+  updated_at      TIMESTAMPTZ
+
+
+TABELLA: foto
+-------------
+Metadati immagini (file fisici in Supabase Storage)
+
+  id              UUID PK
+  veicolo_id      UUID FK (CASCADE on delete)
+  storage_bucket  TEXT DEFAULT 'veicoli'
+  storage_path    TEXT (es. {veicolo_id}/timestamp-uuid.jpg)
+  url_pubblico    TEXT
+  alt_text        TEXT NOT NULL (SEO/accessibilità)
+  titolo          TEXT
+  didascalia      TEXT
+  ordine          SMALLINT
+  is_copertina    BOOLEAN (una sola copertina per veicolo)
+  larghezza_px    INTEGER
+  altezza_px      INTEGER
+  mime_type       TEXT
+  peso_bytes      INTEGER
+  created_at      TIMESTAMPTZ
+  updated_at      TIMESTAMPTZ
+
+
+TABELLA: impostazioni_sito
+--------------------------
+Configurazione singleton del sito (1 sola riga)
+
+  id, singleton (vincolo singleton)
+  orari_noleggio, orari_autolavaggio
+  telefono_noleggio, telefono_autolavaggio
+  email_contatto, email_preventivi
+  social_facebook, social_facebook_autolavaggio, social_instagram, social_linkedin
+  indirizzo_noleggio, indirizzo_autolavaggio
+  testo_hero_home, hero_titolo_home, hero_badge_home
+  home_punti_forza_titolo, home_punti_forza_json
+  chi_siamo_hero_titolo, chi_siamo_hero_sottotitolo, chi_siamo_intro
+  offerta_titolo, offerta_descrizione, offerta_attiva
+  descrizione_autolavaggio, autolavaggio_lista_servizi, servizi_noleggio_lista
+  created_at, updated_at
+
+
+TABELLA: seo_settings
+---------------------
+SEO pagine statiche (home, flotta, contatti, ecc.)
+
+  page_key        TEXT PK (es. home, flotta, contatti)
+  seo_title       TEXT
+  seo_description TEXT
+  seo_keywords    TEXT[]
+  meta_robots     TEXT DEFAULT 'index, follow'
+  canonical_url   TEXT
+  og_title        TEXT
+  og_description  TEXT
+  created_at      TIMESTAMPTZ
+  updated_at      TIMESTAMPTZ
+
+
+VISTA: veicoli_pubblici
+-----------------------
+Join di veicoli pubblicati + categoria + prezzo giornaliero attivo + foto copertina.
+Usata dal sito pubblico.
+
+
+STORAGE SUPABASE
+----------------
+  Bucket:   veicoli (pubblico, max 10 MB, MIME: jpeg/png/webp/gif)
+  Policy:   lettura pubblica; scrittura solo service_role (admin API)
+
+
+SICUREZZA (RLS)
+---------------
+  Lettura pubblica (anon):
+    categorie attive, veicoli pubblicati, prezzi attivi,
+    foto di veicoli pubblicati, impostazioni_sito, seo_settings
+
+  Scrittura (authenticated / service_role via admin):
+    gestione completa da pannello admin
+
+
+STATO ATTUALE (verificato)
+--------------------------
+  impostazioni_sito : 1 riga
+  categorie         : 7 righe
+  veicoli           : 7 righe
+  prezzi            : 7 righe
+  foto              : 11 righe
+  seo_settings      : 10 righe
+
+
+================================================================================
+2. FILE .env.local (SEGRETI MASCHERATI)
+================================================================================
+
+ADMIN — admin/.env.local (pannello, porta 3001)
+------------------------------------------------
+
+  ADMIN_PASSWORD=********
+  ADMIN_SESSION_SECRET=********  (min. 32 caratteri)
+
+  NEXT_PUBLIC_SUPABASE_URL=https://iqlegfrjmalrhqwlwkbc.supabase.co
+  NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGci...********
+  SUPABASE_SERVICE_ROLE_KEY=eyJhbGci...********
+  SUPABASE_STORAGE_BUCKET=veicoli
+
+
+  Ruolo variabili admin:
+    ADMIN_PASSWORD              → password login admin (NON è su Supabase)
+    ADMIN_SESSION_SECRET        → firma cookie sessione lilo_admin_session
+    NEXT_PUBLIC_SUPABASE_URL    → URL progetto Supabase
+    NEXT_PUBLIC_SUPABASE_ANON_KEY → chiave pubblica (lettura)
+    SUPABASE_SERVICE_ROLE_KEY   → chiave server (scrittura DB + upload Storage)
+    SUPABASE_STORAGE_BUCKET     → nome bucket foto (default: veicoli)
+
+
+WEB — web/.env.local (sito pubblico, porta 3000)
+-------------------------------------------------
+
+  NEXT_PUBLIC_SUPABASE_URL=https://iqlegfrjmalrhqwlwkbc.supabase.co
+  NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGci...********
+  NEXT_PUBLIC_DEMO_MODE=false
+
+  # Opzionali (Google Analytics, GTM, Ads, cookie consent):
+  GOOGLE_SITE_VERIFICATION=
+  NEXT_PUBLIC_GA_MEASUREMENT_ID=
+  NEXT_PUBLIC_GTM_ID=
+  NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_ID=
+  NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_LABEL=
+  NEXT_PUBLIC_IUBENDA_SITE_ID=
+  NEXT_PUBLIC_COOKIEBOT_ID=
+  # ... altre variabili Google/GDPR
+
+
+  Nota: web e admin condividono URL e anon key.
+        Solo admin ha la SERVICE_ROLE_KEY.
+
+
+================================================================================
+3. CARICAMENTO IMMAGINI — FLUSSO E CODICE
+================================================================================
+
+Il upload è distribuito su 4 livelli:
+
+  VeicoloForm (selezione file)
+      ↓ onSubmit con { copertina, secondaria }
+  AdminPanel.uploadPhotos()
+      ↓ POST multipart /api/veicoli/{id}/foto
+  route.ts (API)
+      ↓ uploadVeicoloFoto()
+  Supabase Storage (bucket veicoli) + INSERT in tabella foto
+
+
+A) UI — admin/src/components/admin/VeicoloForm.tsx
+---------------------------------------------------
+Due input file con anteprima locale:
+
+  - Foto copertina (3/4 frontale): input type="file" accept="image/*"
+  - Foto secondaria (Galleria / Retro): input type="file" accept="image/*"
+
+  Stato React:
+    foto, fotoSecondaria          → File selezionati
+    fotoPreview, fotoSecondariaPreview → anteprima (URL.createObjectURL)
+
+  Al submit:
+    await onSubmit(values, { copertina: foto, secondaria: fotoSecondaria });
+
+
+B) Orchestrazione — admin/src/components/admin/AdminPanel.tsx
+------------------------------------------------------------
+
+  uploadFotoCopertina(veicoloId, file):
+    FormData: foto, alt_text=file.name, is_copertina=true
+    POST /api/veicoli/{veicoloId}/foto
+
+  uploadFotoSecondaria(veicoloId, file, veicolo):
+    Elimina foto secondarie esistenti (DELETE /api/veicoli/{id}/foto/{fotoId})
+    FormData: foto, alt_text, is_copertina=false
+    POST /api/veicoli/{veicoloId}/foto
+
+  uploadPhotos() chiamato dopo creazione/modifica veicolo in handleCreate/handleUpdate
+
+
+C) API — admin/src/app/api/veicoli/[id]/foto/route.ts
+-------------------------------------------------------
+
+  POST:
+    1. requireAdmin() — verifica cookie sessione
+    2. Legge formData: foto (File), alt_text, is_copertina
+    3. Chiama uploadVeicoloFoto()
+    4. Ritorna JSON con metadati foto (201)
+
+  GET:
+    Lista foto del veicolo (solo admin autenticato)
+
+  DELETE (route separata [fotoId]):
+    Rimuove file da Storage + riga da tabella foto
+
+
+D) Servizio — admin/src/lib/services/veicoli.ts → uploadVeicoloFoto()
+---------------------------------------------------------------------
+
+  1. ensureStorageBucket() — verifica/crea bucket "veicoli"
+  2. Genera path: {veicoloId}/{timestamp}-{uuid}.{ext}
+  3. Upload buffer su Supabase Storage
+  4. Ottiene URL pubblico
+  5. Se is_copertina: rimuove flag da vecchie copertine del veicolo
+  6. INSERT in tabella foto con metadati (alt_text, ordine, mime_type, peso_bytes)
+
+
+E) Storage — admin/src/lib/supabase/storage.ts → ensureStorageBucket()
+----------------------------------------------------------------------
+
+  Verifica se bucket "veicoli" esiste.
+  Se mancante, lo crea: pubblico, max 10 MB, solo image/jpeg|png|webp|gif
+
+
+RIEPILOGO COMPORTAMENTO UPLOAD
+------------------------------
+
+  Formati accettati : jpeg, png, webp, gif
+  Limite dimensione : 10 MB per file
+  Path Storage      : {veicolo_id}/{timestamp}-{uuid}.{ext}
+  Copertina         : is_copertina=true; una sola per veicolo
+  Secondaria        : sostituisce eventuali foto non-copertina esistenti
+  Sicurezza         : API protetta da cookie sessione admin
+                      upload via service_role (non esposto al browser)
+  Eliminazione      : DELETE /api/veicoli/{id}/foto/{fotoId}
+                      rimuove file Storage + riga DB
+
+
+================================================================================
+AVVIO PROGETTO
+================================================================================
+
+  Cartella: C:\Users\info\Progetti\lilosrl-it\
+
+  AVVIA_LILO.bat     → avvia sito (3000) + admin (3001)
+  FERMA_LILO.bat     → ferma i server
+  VERIFICA_LILO.bat  → controlla che tutto risponda
+  VERIFICA_SUPABASE.bat → test connessione Supabase
+
+  Sito:   http://localhost:3000
+  Admin:  http://localhost:3001/admin/login
+  Password admin: vedi admin/.env.local → ADMIN_PASSWORD
