@@ -9,6 +9,7 @@ import {
   type CosaTrasportiId,
 } from "@/lib/cosa-trasporti";
 import { CosaTrasportiIcon } from "@/components/wizard/CosaTrasportiIcons";
+import { FLEET_VEHICLE_IMG } from "@/lib/fleet-photo-utils";
 
 export type CosaTrasportiRecommendations = Record<
   CosaTrasportiId,
@@ -100,7 +101,7 @@ export function CosaTrasportiWizard({
                           alt={`Noleggio ${item.name} Trieste`}
                           fill
                           unoptimized
-                          className="object-cover"
+                          className={FLEET_VEHICLE_IMG.resultThumb}
                           sizes="(max-width: 640px) 100vw, 50vw"
                         />
                       ) : null}

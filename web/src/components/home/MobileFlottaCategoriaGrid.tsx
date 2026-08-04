@@ -7,6 +7,7 @@ import {
   flottaCategoriaHref,
 } from "@/lib/nav-config";
 import { FLOTTA_CATEGORIA_IMAGES } from "@/lib/flotta-categoria-config";
+import { FLEET_VEHICLE_IMG } from "@/lib/fleet-photo-utils";
 import { TARIFFE_CATEGORIA } from "@/lib/tariffe-categoria";
 import type { TariffaCategoriaSlug } from "@/lib/tariffe-categoria";
 
@@ -47,7 +48,7 @@ export function MobileFlottaCategoriaGrid() {
                     alt={`Noleggio ${cat.label} Trieste`}
                     fill
                     sizes="45vw"
-                    className="object-cover object-center"
+                    className={FLEET_VEHICLE_IMG.categoryThumb}
                   />
                 </div>
                 <div className="flex flex-1 flex-col p-2.5">

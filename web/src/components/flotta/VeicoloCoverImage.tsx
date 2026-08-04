@@ -8,6 +8,7 @@ import {
 } from "@/components/flotta/VeicoloImagePlaceholder";
 import {
   FLEET_PHOTO_FRAME,
+  FLEET_VEHICLE_IMG,
   fleetPhotoAspectClass,
   isEnvironmentalFleetPhoto,
   type FleetPhotoAspect,
@@ -91,9 +92,7 @@ export function VeicoloCoverImage({
             priority={priority}
             loading={priority ? undefined : "lazy"}
             className={
-              environmental
-                ? "object-cover object-center transition duration-300 group-hover:scale-[1.02] saturate-[0.94] contrast-[1.03]"
-                : "object-contain object-center p-1 transition duration-300 group-hover:scale-[1.02] sm:p-2"
+              environmental ? FLEET_VEHICLE_IMG.environmental : FLEET_VEHICLE_IMG.studio
             }
             onError={handleError}
           />
@@ -129,9 +128,7 @@ export function FlottaHubCategoryImage({
         priority={priority}
         loading={priority ? undefined : "lazy"}
         className={
-          environmental
-            ? "object-cover object-center transition duration-300 group-hover:scale-[1.03] saturate-[0.96] contrast-[1.02]"
-            : "object-contain object-center p-2 sm:p-3"
+          environmental ? FLEET_VEHICLE_IMG.environmentalHub : FLEET_VEHICLE_IMG.studioHub
         }
       />
     </div>
