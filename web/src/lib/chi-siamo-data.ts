@@ -82,7 +82,7 @@ export const TIMELINE: TimelineEvent[] = [
 ];
 
 export const STATS = [
-  "Oltre 50 automezzi a noleggio",
+  "Flotta moderna a noleggio a Trieste",
   "20+ anni di esperienza nel settore",
   "Partner certificato di enti pubblici e grandi aziende",
   "Ex fornitore esclusivo SDA e UPS per Trieste",
@@ -130,8 +130,8 @@ export const INSTITUTIONAL_CLIENTS: InstitutionalClient[] = [
     name: "Esercito Italiano",
     subtitle: "Comando Forze Operative Nord",
     cig: "ZE733041EA",
-    href: "https://www.lilo.srl/documenti/atto-ufficiale-esercito-lilo.pdf",
-    linkLabel: "Scarica PDF",
+    href: undefined,
+    linkLabel: "Cliente istituzionale verificato",
   },
   {
     name: "Guardia di Finanza",
@@ -143,8 +143,8 @@ export const INSTITUTIONAL_CLIENTS: InstitutionalClient[] = [
   {
     name: "Prefettura / DIA",
     subtitle: "Direzione Investigativa Antimafia",
-    href: "https://www.lilo.srl/documenti/determina-prefettura-dia-lilo.pdf",
-    linkLabel: "Scarica atto",
+    href: undefined,
+    linkLabel: "Cliente istituzionale verificato",
   },
   {
     name: "Aeronautica Militare",
@@ -157,8 +157,8 @@ export const INSTITUTIONAL_CLIENTS: InstitutionalClient[] = [
     name: "Marina Militare",
     subtitle: "Capitaneria di Porto Trieste",
     cig: "Z552F40FC1",
-    href: "https://www.lilo.srl/documenti/buono-marina-militare-lilo.pdf",
-    linkLabel: "Scarica PDF",
+    href: undefined,
+    linkLabel: "Cliente istituzionale verificato",
   },
   {
     name: "Comune di Trieste",
@@ -207,11 +207,10 @@ export const INSTITUTIONAL_CLIENTS: InstitutionalClient[] = [
     name: "ASP Italo Svevo",
     subtitle: "Servizi alla persona",
     cig: "B1C79E1EE5",
-    href: "https://www.lilo.srl/documenti/rdo-asp-italo-svevo-lilo.pdf",
-    linkLabel: "Scarica RdO",
+    href: undefined,
+    linkLabel: "Cliente istituzionale verificato",
   },
 ];
-
 export const PRIVATE_CLIENTS = ["Fincantieri", "Cartubi", "Orion", "E molti altri partner privati"];
 
 export const VALUES: ValueItem[] = [
@@ -251,7 +250,7 @@ export const WHY_CHOOSE: WhyChooseItem[] = [
   {
     title: "Flotta Moderna e Numerosa",
     description:
-      "Oltre 50 veicoli sempre controllati, revisionati e pronti all’uso. La più ampia scelta a Trieste.",
+      "Flotta moderna e controllata, revisionata e pronta all’uso: auto, pulmini e furgoni per ogni esigenza a Trieste.",
   },
   {
     title: "Servizi Integrati",
@@ -315,7 +314,7 @@ export const CHI_SIAMO_FAQ: AiFaqItem[] = [
   },
   {
     q: "Quali mezzi avete disponibili per il noleggio?",
-    a: "Disponiamo di oltre 50 veicoli: furgoni piccoli, medi, grandi, XL, pulmini 9 posti e auto.",
+    a: "In flotta troviamo auto, pulmini 9 posti e furgoni da piccoli a XL. Le schede online mostrano i mezzi pubblicati; per disponibilità aggiornata contattaci o richiedi un preventivo.",
   },
   {
     q: "Avete esperienza nella logistica?",

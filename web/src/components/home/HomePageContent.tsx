@@ -42,31 +42,38 @@ interface HomePageContentProps {
 export function HomePageContent({ impostazioni }: HomePageContentProps) {
   return (
     <SitePageWrapper impostazioni={impostazioni}>
-      <main>
-        <HeroSection impostazioni={impostazioni} />
+      {/*
+        Una sola «Cosa trasporti» nel DOM (no duplicato SEO).
+        Ordine mobile: Hero → categorie → WA → guida → rest
+        Ordine desktop: Hero → guida → flotta → rest
+      */}
+      <main className="flex flex-col">
+        <div className="order-1">
+          <HeroSection impostazioni={impostazioni} />
+        </div>
 
-        {/* Mobile: Hero → categorie → WA/Chiama → guida mezzo → rest */}
-        <MobileFlottaCategoriaGrid />
-        <MobileHomePreventivoSection telefono={impostazioni.telefono_noleggio} />
-        <div className="md:hidden">
+        <div className="order-2 md:hidden">
+          <MobileFlottaCategoriaGrid />
+        </div>
+        <div className="order-3 md:hidden">
+          <MobileHomePreventivoSection telefono={impostazioni.telefono_noleggio} />
+        </div>
+
+        <div className="order-4 md:order-2">
           <Suspense fallback={cosaTrasportiFallback}>
             <CosaTrasportiSection />
           </Suspense>
         </div>
 
-        {/* Desktop: Hero → Cosa trasporti → La nostra flotta → rest */}
-        <div className="hidden md:block">
-          <Suspense fallback={cosaTrasportiFallback}>
-            <CosaTrasportiSection />
-          </Suspense>
-        </div>
-        <div className="hidden md:block">
+        <div className="order-5 hidden md:order-3 md:block">
           <Suspense fallback={<FleetPreviewSkeleton />}>
             <FleetPreviewSection />
           </Suspense>
         </div>
 
-        <HomeBelowFoldLazy impostazioni={impostazioni} />
+        <div className="order-6 md:order-4">
+          <HomeBelowFoldLazy impostazioni={impostazioni} />
+        </div>
       </main>
     </SitePageWrapper>
   );

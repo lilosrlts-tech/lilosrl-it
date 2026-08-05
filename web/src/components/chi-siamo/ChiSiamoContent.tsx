@@ -130,7 +130,7 @@ export function ChiSiamoContent({ impostazioni }: ChiSiamoContentProps) {
           <h3 className="text-xl font-semibold text-slate-900">
             Noleggio Furgoni, Pulmini 9 Posti e Auto
           </h3>
-          <p className="mt-2 text-slate-600">La più ampia flotta di Trieste per ogni esigenza</p>
+          <p className="mt-2 text-slate-600">Flotta moderna a Trieste per ogni esigenza</p>
           <BulletList items={NOLEGGIO_CATEGORIES} />
           <h4 className="mt-6 font-semibold text-slate-900">Vantaggi del noleggio LILO</h4>
           <BulletList items={serviziNoleggio} />

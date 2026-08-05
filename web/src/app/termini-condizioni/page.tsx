@@ -31,6 +31,18 @@ export default async function TerminiPage() {
 
         <div className="mt-10 space-y-8">
           <section>
+            <h2 className="text-lg font-semibold text-slate-900">Dati della società</h2>
+            <p className="mt-2 leading-relaxed text-slate-600">
+              {COMPANY.legalName}
+              <br />
+              Partita IVA: {COMPANY.vatNumber}
+              <br />
+              Sede legale: {COMPANY.legalAddress}
+              <br />
+              Email: {impostazioni.email_contatto}
+            </p>
+          </section>
+          <section>
             <h2 className="text-lg font-semibold text-slate-900">Servizi di noleggio</h2>
             <p className="mt-2 leading-relaxed text-slate-600">
               Il noleggio è soggetto a disponibilità del veicolo, verifica documenti e firma del

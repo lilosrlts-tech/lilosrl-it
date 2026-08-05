@@ -244,12 +244,20 @@ export function CookieBanner() {
               >
                 Personalizza
               </button>
-              <Link
-                href="/privacy"
-                className="font-medium text-slate-600 underline-offset-2 hover:underline"
-              >
-                Informativa sulla privacy
-              </Link>
+              <div className="flex flex-wrap gap-x-3 gap-y-1">
+                <Link
+                  href="/privacy"
+                  className="font-medium text-slate-600 underline-offset-2 hover:underline"
+                >
+                  Privacy
+                </Link>
+                <Link
+                  href="/cookie-policy"
+                  className="font-medium text-slate-600 underline-offset-2 hover:underline"
+                >
+                  Cookie Policy
+                </Link>
+              </div>
             </div>
           </div>
         </div>
