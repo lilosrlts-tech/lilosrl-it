@@ -74,8 +74,9 @@ export const COSA_TRASPORTI_USE_CASES: CosaTrasportiUseCase[] = [
     label: "Divano / mobili",
     descrizione: "Divano, tavolo, mobili di casa",
     volumeMin: 6,
-    categoriePreferite: ["furgoni-medi", "furgoni-grandi"],
-    perché: "Per divani e mobili serve almeno un furgone medio (~5–6 m³ o più).",
+    categoriePreferite: ["furgoni-grandi-citta", "furgoni-grandi", "furgoni-medi"],
+    perché:
+      "Per divani e mobili serve un furgone grande: in città da €55/giorno, oppure grande per fuori città da €60/giorno.",
   },
   {
     id: "armadio",
@@ -83,8 +84,9 @@ export const COSA_TRASPORTI_USE_CASES: CosaTrasportiUseCase[] = [
     descrizione: "Armadio alto o smontato in pezzi grandi",
     volumeMin: 8,
     altezzaMinMm: 1600,
-    categoriePreferite: ["furgoni-grandi", "furgoni-grandi-citta", "furgoni-xl"],
-    perché: "Un armadio chiede lunghezza e altezza: conviene un furgone grande.",
+    categoriePreferite: ["furgoni-grandi-citta", "furgoni-grandi", "furgoni-xl"],
+    perché:
+      "Un armadio chiede lunghezza e altezza: puoi scegliere il grande uso città (€55) o il grande fuori città (€60).",
   },
   {
     id: "moto",
@@ -100,8 +102,9 @@ export const COSA_TRASPORTI_USE_CASES: CosaTrasportiUseCase[] = [
     label: "Trasloco monolocale",
     descrizione: "Mini trasloco / stanza singola",
     volumeMin: 8,
-    categoriePreferite: ["furgoni-grandi", "furgoni-grandi-citta"],
-    perché: "Per un monolocale di solito bastano circa 8–11 m³ di vano.",
+    categoriePreferite: ["furgoni-grandi-citta", "furgoni-grandi"],
+    perché:
+      "Per un monolocale (~8–11 m³) proponiamo uso città da €55/giorno e, se serve più autonomia, grande fuori città da €60/giorno.",
   },
   {
     id: "trasloco-bilocale",
@@ -109,7 +112,8 @@ export const COSA_TRASPORTI_USE_CASES: CosaTrasportiUseCase[] = [
     descrizione: "Trasloco appartamento 2 locali",
     volumeMin: 11,
     categoriePreferite: ["furgoni-grandi-citta", "furgoni-grandi", "furgoni-xl"],
-    perché: "Un bilocale richiede volume ampio: grandi / XL.",
+    perché:
+      "Un bilocale vuole volume ampio: uso città da €55/giorno, oppure grande/XL fuori città da €60/giorno.",
   },
   {
     id: "trasloco-trilocale",
@@ -121,6 +125,16 @@ export const COSA_TRASPORTI_USE_CASES: CosaTrasportiUseCase[] = [
   },
 ];
 
+/** Casi in cui mostriamo 1 uso città (€55) + 1 grande fuori città (€60). */
+const PAIR_CITTA_E_GRANDE: ReadonlySet<CosaTrasportiId> = new Set([
+  "divano",
+  "armadio",
+  "trasloco-monolocale",
+  "trasloco-bilocale",
+]);
+
+const CAT_USO_CITTA = "furgoni-grandi-citta";
+const CAT_GRANDE_FUORI = new Set(["furgoni-grandi", "furgoni-xl"]);
 function volumeOf(v: VeicoloPubblico): number | null {
   return (
     v.specifiche_tecniche.volume_metri_cubi ??
@@ -192,9 +206,63 @@ function motivoFor(v: VeicoloPubblico, useCase: CosaTrasportiUseCase): string {
   if (useCase.id === "moto" && v.slug.toLowerCase().includes("ducato")) {
     base =
       "Questo Fiat Ducato ha la rampa di carico moto dedicata in alluminio antiscivolo: è il mezzo indicato per trasportare motocicli.";
+  } else if (PAIR_CITTA_E_GRANDE.has(useCase.id)) {
+    const cat = v.categoria?.slug ?? "";
+    if (cat === CAT_USO_CITTA) {
+      base =
+        "Opzione uso città (tariffa da €55/giorno): adatta a spostamenti urbani con buon volume di carico.";
+    } else if (CAT_GRANDE_FUORI.has(cat)) {
+      base =
+        "Opzione grande fuori città (tariffa da €60/giorno): più volume/autonomia per tratte più lunghe.";
+    }
   }
 
   return parts.length ? `${base} Consigliato: ${parts.join(", ")}.` : base;
+}
+
+function toCandidate(v: VeicoloPubblico, useCase: CosaTrasportiUseCase): CosaTrasportiCandidate {
+  return {
+    slug: v.slug,
+    name: getDisplayName(v),
+    categoriaSlug: v.categoria?.slug ?? null,
+    categoriaNome: v.categoria?.nome ?? null,
+    volumeMc: volumeOf(v),
+    portataKg: portataOf(v),
+    altezzaVanoMm: altezzaOf(v),
+    coverUrl: getCoverImage(v),
+    prezzoDa:
+      v.prezzo_promo?.giornaliero ??
+      v.prezzi.find((p) => p.tipo_tariffa === "giornaliero")?.importo ??
+      null,
+    prezzoPromoLine: v.prezzo_promo ? labelPromoDurataSecondario(v.prezzo_promo) : null,
+    score: scoreVeicolo(v, useCase),
+    motivo: motivoFor(v, useCase),
+  };
+}
+
+/**
+ * Per divano / armadio / monolocale / bilocale:
+ * 1× furgone grandi uso città (€55) + 1× grande/XL fuori città (€60).
+ */
+function pickCittaEGrande(
+  ranked: CosaTrasportiCandidate[],
+  limit: number,
+): CosaTrasportiCandidate[] {
+  const citta = ranked.find((c) => c.categoriaSlug === CAT_USO_CITTA);
+  const grande = ranked.find(
+    (c) => c.categoriaSlug != null && CAT_GRANDE_FUORI.has(c.categoriaSlug),
+  );
+
+  const picked: CosaTrasportiCandidate[] = [];
+  if (citta) picked.push(citta);
+  if (grande && grande.slug !== citta?.slug) picked.push(grande);
+
+  for (const c of ranked) {
+    if (picked.length >= limit) break;
+    if (!picked.some((p) => p.slug === c.slug)) picked.push(c);
+  }
+
+  return picked.slice(0, limit);
 }
 
 export function matchCosaTrasporti(
@@ -205,30 +273,16 @@ export function matchCosaTrasporti(
   const useCase = COSA_TRASPORTI_USE_CASES.find((u) => u.id === useCaseId);
   if (!useCase) return [];
 
-  return veicoli
-    .map((v) => {
-      const score = scoreVeicolo(v, useCase);
-      return {
-        slug: v.slug,
-        name: getDisplayName(v),
-        categoriaSlug: v.categoria?.slug ?? null,
-        categoriaNome: v.categoria?.nome ?? null,
-        volumeMc: volumeOf(v),
-        portataKg: portataOf(v),
-        altezzaVanoMm: altezzaOf(v),
-        coverUrl: getCoverImage(v),
-        prezzoDa:
-          v.prezzo_promo?.giornaliero ??
-          v.prezzi.find((p) => p.tipo_tariffa === "giornaliero")?.importo ??
-          null,
-        prezzoPromoLine: v.prezzo_promo ? labelPromoDurataSecondario(v.prezzo_promo) : null,
-        score,
-        motivo: motivoFor(v, useCase),
-      } satisfies CosaTrasportiCandidate;
-    })
+  const ranked = veicoli
+    .map((v) => toCandidate(v, useCase))
     .filter((c) => c.score > 0)
-    .sort((a, b) => b.score - a.score)
-    .slice(0, limit);
+    .sort((a, b) => b.score - a.score);
+
+  if (PAIR_CITTA_E_GRANDE.has(useCaseId) && limit >= 2) {
+    return pickCittaEGrande(ranked, limit);
+  }
+
+  return ranked.slice(0, limit);
 }
 
 /** Use case in cui il veicolo risulta un buon match (per JSON-LD / scheda). */
