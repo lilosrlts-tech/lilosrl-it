@@ -31,8 +31,9 @@ const PROMO_WEEKEND_FAQ: AiFaqItem[] = [
   },
 ];
 
-const META_TITLE = "Noleggio Furgone Uso Città Weekend Trieste da 83€ | Promo LILO S.r.l.";
-const META_DESCRIPTION = `Promo Weekend riservata ai ${OFFERTA_PROMO_CATEGORIA_LABEL}: dal sabato al lunedì a 83€ IVA inclusa. Paghi 1 giorno e mezzo, tieni il mezzo 48 ore!`;
+const META_TITLE = "Noleggio Furgone Weekend Trieste 83€ | LILO";
+const META_DESCRIPTION =
+  "Promo Weekend furgoni grandi uso città a Trieste: sabato–lunedì a 83€ IVA inclusa, 75 km. Paghi 1 giorno e mezzo, tieni il mezzo 48 ore.";
 const OG_IMAGE = `${SITE_URL}/images/promo-weekend-iveco-daily-l2h2-trieste.webp`;
 
 export async function generateMetadata(): Promise<Metadata> {

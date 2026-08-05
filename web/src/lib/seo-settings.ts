@@ -4,6 +4,7 @@ import { createPublicClient, isSupabaseConfigured } from "@/lib/supabase";
 import { isDemoMode } from "@/lib/demo-veicolo";
 import { canonicalUrl, parseRobots } from "@/lib/seo";
 import { resolveMetadataTitle } from "@/lib/metadata-title";
+import { fitSeoDescription, fitSeoTitle } from "@/lib/seo-limits";
 import { SITE_URL } from "@/lib/constants";
 import type { SeoPageKey, SeoSettings } from "@/types/seo";
 import { SEO_PAGE_PATHS } from "@/types/seo";
@@ -49,7 +50,7 @@ const DEMO_SEO: Record<SeoPageKey, SeoSettings> = {
     page_key: "tariffe",
     seo_title: "Prezzi Noleggio Auto e Furgoni Trieste | LILO S.r.l.",
     seo_description:
-      "Listino prezzi noleggio auto e furgoni a Trieste aggiornato dalla flotta LILO. Tariffe giornaliere trasparenti.",
+      "Listino prezzi noleggio auto e furgoni a Trieste aggiornato dalla flotta LILO. Tariffe giornaliere IVA inclusa, trasparenti e ritiro in sede.",
     seo_keywords: ["prezzi noleggio furgoni trieste", "tariffe autonoleggio trieste"],
     meta_robots: "index, follow",
     canonical_url: null,
@@ -59,9 +60,9 @@ const DEMO_SEO: Record<SeoPageKey, SeoSettings> = {
   },
   offerte: {
     page_key: "offerte",
-    seo_title: "Noleggio Furgone Uso Città Weekend Trieste da 83€ | Promo LILO",
+    seo_title: "Noleggio Furgone Weekend Trieste 83€ | LILO",
     seo_description:
-      "Promo Weekend riservata ai Furgoni grandi (uso città): dal sabato al lunedì a 83€ IVA inclusa. Paghi 1 giorno e mezzo, tieni il mezzo 48 ore!",
+      "Promo Weekend furgoni grandi uso città a Trieste: sabato–lunedì a 83€ IVA inclusa, 75 km. Paghi 1 giorno e mezzo, tieni il mezzo 48 ore.",
     seo_keywords: [
       "noleggio furgone weekend trieste",
       "furgoni grandi uso città",
@@ -71,16 +72,16 @@ const DEMO_SEO: Record<SeoPageKey, SeoSettings> = {
     ],
     meta_robots: "index, follow",
     canonical_url: null,
-    og_title: "Noleggio Furgone Uso Città Weekend Trieste da 83€ | Promo LILO",
+    og_title: "Noleggio Furgone Weekend Trieste 83€ | LILO",
     og_description:
-      "Promo Weekend riservata ai Furgoni grandi (uso città): dal sabato al lunedì a 83€ IVA inclusa. Paghi 1 giorno e mezzo, tieni il mezzo 48 ore!",
+      "Promo Weekend furgoni grandi uso città a Trieste: sabato–lunedì a 83€ IVA inclusa, 75 km. Paghi 1 giorno e mezzo, tieni il mezzo 48 ore.",
     updated_at: "",
   },
   "chi-siamo": {
     page_key: "chi-siamo",
     seo_title: "Chi Siamo — LILO SRL | 20 Anni di Esperienza a Trieste",
     seo_description:
-      "Dal 2003 LILO S.r.l. è leader a Trieste in trasporti, noleggio furgoni e auto, autolavaggio professionale.",
+      "Dal 2003 LILO S.r.l. è a Trieste con noleggio furgoni e auto, autolavaggio e servizi per privati, aziende e clienti istituzionali.",
     seo_keywords: ["LILO S.r.l.", "noleggio trieste", "trasporti trieste"],
     meta_robots: "index, follow",
     canonical_url: null,
@@ -92,7 +93,7 @@ const DEMO_SEO: Record<SeoPageKey, SeoSettings> = {
     page_key: "contatti",
     seo_title: "Contatti — LILO Autonoleggio Trieste",
     seo_description:
-      "Contatta LILO S.r.l. per noleggio auto e furgoni a Trieste. Telefono, email, sede in Viale Campi Elisi.",
+      "Contatta LILO S.r.l. per noleggio auto e furgoni a Trieste: telefono, WhatsApp, email e sede operativa in Viale Campi Elisi 38/b.",
     seo_keywords: ["contatti LILO trieste", "noleggio auto trieste contatti"],
     meta_robots: "index, follow",
     canonical_url: null,
@@ -104,7 +105,7 @@ const DEMO_SEO: Record<SeoPageKey, SeoSettings> = {
     page_key: "privacy",
     seo_title: "Privacy Policy | LILO S.r.l. Autonoleggio Trieste",
     seo_description:
-      "Informativa privacy e trattamento dati personali di LILO S.r.l. — noleggio auto e furgoni a Trieste.",
+      "Informativa privacy e trattamento dati personali di LILO S.r.l., autonoleggio e autolavaggio a Trieste. Diritti degli interessati e contatti del titolare.",
     seo_keywords: ["privacy LILO", "GDPR autonoleggio trieste"],
     meta_robots: "index, follow",
     canonical_url: null,
@@ -114,9 +115,9 @@ const DEMO_SEO: Record<SeoPageKey, SeoSettings> = {
   },
   "cookie-policy": {
     page_key: "cookie-policy",
-    seo_title: "Cookie Policy | LILO S.r.l.",
+    seo_title: "Cookie Policy LILO | Autonoleggio Trieste",
     seo_description:
-      "Informativa sui cookie utilizzati dal sito LILO S.r.l. e gestione del consenso.",
+      "Informativa sui cookie del sito LILO S.r.l. (noleggio e autolavaggio a Trieste): tipi di cookie, finalità e come gestire il consenso.",
     seo_keywords: ["cookie policy", "consenso cookie LILO"],
     meta_robots: "index, follow",
     canonical_url: null,
@@ -128,7 +129,7 @@ const DEMO_SEO: Record<SeoPageKey, SeoSettings> = {
     page_key: "termini-condizioni",
     seo_title: "Termini e Condizioni | LILO Autonoleggio Trieste",
     seo_description:
-      "Termini e condizioni di utilizzo del sito e dei servizi di noleggio veicoli LILO S.r.l. a Trieste.",
+      "Termini e condizioni di LILO S.r.l. per il noleggio veicoli a Trieste: obblighi del cliente, cauzione, chilometri e uso del sito web.",
     seo_keywords: ["termini noleggio", "condizioni LILO trieste"],
     meta_robots: "index, follow",
     canonical_url: null,
@@ -174,10 +175,14 @@ export async function getSeoSettings(pageKey: SeoPageKey): Promise<SeoSettings> 
 export function buildPageMetadata(seo: SeoSettings, pageKey?: SeoPageKey): Metadata {
   const path = pageKey ? SEO_PAGE_PATHS[pageKey] : "/";
   const canonical = seo.canonical_url ?? canonicalUrl(path);
-  const title = seo.seo_title;
-  const description = seo.seo_description;
-  const ogTitle = seo.og_title ?? title;
-  const ogDescription = seo.og_description ?? description;
+  const demo = pageKey ? DEMO_SEO[pageKey] : undefined;
+  const title = fitSeoTitle(seo.seo_title, demo?.seo_title ?? seo.seo_title);
+  const description = fitSeoDescription(
+    seo.seo_description,
+    demo?.seo_description ?? seo.seo_description,
+  );
+  const ogTitle = fitSeoTitle(seo.og_title ?? title, title);
+  const ogDescription = fitSeoDescription(seo.og_description ?? description, description);
 
   return {
     title: resolveMetadataTitle(title),

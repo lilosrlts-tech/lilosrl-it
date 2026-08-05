@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { SITE_URL } from "@/lib/constants";
 import { resolveMetadataTitle } from "@/lib/metadata-title";
+import {
+  buildVeicoloTitleFallback,
+  fitSeoDescription,
+  fitSeoTitle,
+} from "@/lib/seo-limits";
 import { buildVeicoloSeoDescription, getVeicoloFotoAlt, stripTargaFromPublicCopy, toAbsoluteAssetUrl } from "@/lib/veicolo-seo";
 import {
   getCoverImage,
@@ -84,19 +89,28 @@ export function buildVeicoloMetadata(veicolo: VeicoloPubblico): Metadata {
     veicolo.descrizione_breve?.trim() ||
     veicolo.descrizione_completa?.split("\n").map((l) => l.trim()).find(Boolean);
 
-  const description = stripTargaFromPublicCopy(
-    veicolo.seo_description?.trim() ||
-      descriptionFromDb ||
-      veicolo.ai_summary ||
-      buildVeicoloSeoDescription(veicolo),
+  const descriptionFallback = buildVeicoloSeoDescription(veicolo);
+  const description = fitSeoDescription(
+    stripTargaFromPublicCopy(
+      veicolo.seo_description?.trim() ||
+        descriptionFromDb ||
+        veicolo.ai_summary ||
+        descriptionFallback,
+    ),
+    descriptionFallback,
   );
 
-  const title =
-    veicolo.seo_title?.trim() ??
-    `Noleggio ${veicolo.marca} ${veicolo.modello} a Trieste | Lilo Srl`;
+  const titleFallback = buildVeicoloTitleFallback(veicolo.marca, veicolo.modello);
+  const title = fitSeoTitle(
+    veicolo.seo_title?.trim() || titleFallback,
+    titleFallback,
+  );
 
-  const ogTitle = veicolo.og_title ?? title;
-  const ogDescription = stripTargaFromPublicCopy(veicolo.og_description ?? description);
+  const ogTitle = fitSeoTitle(veicolo.og_title?.trim() || title, title);
+  const ogDescription = fitSeoDescription(
+    stripTargaFromPublicCopy(veicolo.og_description ?? description),
+    description,
+  );
   // Preferisci og_image_url esplicito, poi copertina flotta
   const imageAbsolute =
     toAbsoluteAssetUrl(veicolo.og_image_url) ?? toAbsoluteAssetUrl(getCoverImage(veicolo));
@@ -150,8 +164,11 @@ export function buildVeicoloMetadata(veicolo: VeicoloPubblico): Metadata {
     },
     twitter: {
       card: "summary_large_image",
-      title: veicolo.twitter_title ?? ogTitle,
-      description: veicolo.twitter_description ?? ogDescription,
+      title: fitSeoTitle(veicolo.twitter_title?.trim() || ogTitle, ogTitle),
+      description: fitSeoDescription(
+        veicolo.twitter_description?.trim() || ogDescription,
+        ogDescription,
+      ),
       images: imageAbsolute ? [imageAbsolute] : undefined,
     },
     other,

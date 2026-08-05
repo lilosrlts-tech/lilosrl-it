@@ -89,10 +89,10 @@ export function buildVeicoloSeoDescription(veicolo: VeicoloPubblico): string {
   const categoriaLabel = veicolo.categoria?.nome?.toLowerCase() ?? "veicolo";
 
   if (volumeText) {
-    return `Noleggia ${veicolo.marca} ${veicolo.modello} (${volumeText}) a Trieste con LILO S.r.l. ${categoriaLabel}, ritiro in sede. Preventivo rapido.`;
+    return `Noleggia ${veicolo.marca} ${veicolo.modello} (${volumeText}) a Trieste con LILO S.r.l. ${categoriaLabel}: tariffe giornaliere IVA inclusa e ritiro in sede.`;
   }
 
-  return `Noleggia ${veicolo.marca} ${veicolo.modello} a Trieste con LILO S.r.l. Tariffe trasparenti e ritiro in sede.`;
+  return `Noleggia ${veicolo.marca} ${veicolo.modello} a Trieste con LILO S.r.l. Tariffe giornaliere IVA inclusa, preventivo rapido e ritiro in sede.`;
 }
 
 export function toAbsoluteAssetUrl(path: string | null | undefined): string | undefined {

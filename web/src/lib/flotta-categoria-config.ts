@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { canonicalUrl } from "@/lib/seo";
 import { resolveMetadataTitle } from "@/lib/metadata-title";
+import { fitSeoDescription, fitSeoTitle } from "@/lib/seo-limits";
 import { FLOTTA_CATEGORIE_NAV } from "@/lib/nav-config";
 import {
   TARIFFE_CATEGORIA,
@@ -50,7 +51,7 @@ export const FLOTTA_CATEGORIA_COPY: Record<TariffaCategoriaSlug, CategoriaCopy> 
       "Auto disponibili a noleggio a Trieste: ideali per spostamenti in città, viaggi brevi e sostituzione temporanea del proprio veicolo.",
     seoTitle: "Noleggio Auto Trieste | LILO S.r.l.",
     seoDescription:
-      "Noleggio auto a Trieste con LILO S.r.l.: tariffe trasparenti, ritiro in sede e cauzione flessibile per uso in città.",
+      "Noleggio auto a Trieste con LILO S.r.l.: tariffe giornaliere IVA inclusa, ritiro in sede e cauzione flessibile per uso in città.",
   },
   "pulmini-9-posti": {
     hubDescription: "Per gruppi, eventi e trasferimenti fino a 9 passeggeri.",
@@ -58,7 +59,7 @@ export const FLOTTA_CATEGORIA_COPY: Record<TariffaCategoriaSlug, CategoriaCopy> 
       "Pulmini 9 posti a noleggio a Trieste: soluzione ideale per viaggi di gruppo, gite, eventi e trasferimenti con tutta la comodità di un unico mezzo.",
     seoTitle: "Noleggio Pulmini 9 Posti Trieste | LILO S.r.l.",
     seoDescription:
-      "Noleggio pulmini 9 posti a Trieste. Mezzi spaziosi per gruppi ed eventi, ritiro in sede LILO S.r.l.",
+      "Noleggio pulmini 9 posti a Trieste con LILO S.r.l.: mezzi spaziosi per gruppi ed eventi, tariffe IVA inclusa e ritiro in sede.",
   },
   "furgoni-piccoli": {
     hubDescription: "Compatti e maneggevoli per lavoro e traslochi leggeri in città.",
@@ -66,7 +67,7 @@ export const FLOTTA_CATEGORIA_COPY: Record<TariffaCategoriaSlug, CategoriaCopy> 
       "Furgoni piccoli a noleggio a Trieste: perfetti per consegne urbane, piccoli traslochi e lavori artigianali con vano di carico pratico.",
     seoTitle: "Noleggio Furgoni Piccoli Trieste | LILO S.r.l.",
     seoDescription:
-      "Noleggio furgoni piccoli a Trieste: mezzi compatti per lavoro e traslochi. Tariffe giornaliere trasparenti, ritiro in sede.",
+      "Noleggio furgoni piccoli a Trieste: mezzi compatti per lavoro e traslochi. Tariffe giornaliere IVA inclusa e ritiro in sede LILO.",
   },
   "furgoni-medi": {
     hubDescription: "L'equilibrio ideale tra capacità di carico e facilità di guida.",
@@ -74,7 +75,7 @@ export const FLOTTA_CATEGORIA_COPY: Record<TariffaCategoriaSlug, CategoriaCopy> 
       "Furgoni medi a noleggio a Trieste: la scelta più versatile per artigiani, commercianti e traslochi di media entità.",
     seoTitle: "Noleggio Furgoni Medi Trieste | LILO S.r.l.",
     seoDescription:
-      "Noleggio furgoni medi a Trieste con LILO S.r.l. Capacità di carico generosa, tariffe competitive e assistenza dedicata.",
+      "Noleggio furgoni medi a Trieste con LILO S.r.l.: capacità di carico generosa, tariffe giornaliere IVA inclusa e assistenza dedicata.",
   },
   "furgoni-grandi": {
     hubDescription: "Massimo spazio di carico per traslochi e trasporti professionali.",
@@ -82,16 +83,16 @@ export const FLOTTA_CATEGORIA_COPY: Record<TariffaCategoriaSlug, CategoriaCopy> 
       "Furgoni grandi a noleggio a Trieste: vano di carico ampio per traslochi, logistica e trasporto merci su lunga percorrenza.",
     seoTitle: "Noleggio Furgoni Grandi Trieste | LILO S.r.l.",
     seoDescription:
-      "Noleggio furgoni grandi a Trieste: capacità di carico elevata per professionisti e privati. Ritiro in sede LILO S.r.l.",
+      "Noleggio furgoni grandi a Trieste: capacità di carico elevata per professionisti e privati. Tariffe IVA inclusa, ritiro in sede LILO.",
   },
   "furgoni-grandi-citta": {
     hubDescription:
       "Tariffa città Trieste (50 km) e unica categoria della Promo Weekend / Offerta del Mese.",
     pageIntro:
       "Furgoni grandi dedicati all'uso cittadino a Trieste: tariffa con 50 km inclusi. È l’unica categoria a cui si applica l’Offerta del Mese / Promo Weekend (48 ore sabato–lunedì a 83€).",
-    seoTitle: "Noleggio Furgoni Grandi Uso Città Trieste | LILO S.r.l.",
+    seoTitle: "Noleggio Furgoni Grandi Uso Città Trieste | LILO",
     seoDescription:
-      "Noleggio furgoni grandi uso città a Trieste: 50 km inclusi, cauzione flessibile. Qui vale anche la Promo Weekend LILO.",
+      "Noleggio furgoni grandi uso città a Trieste: 50 km inclusi, cauzione flessibile e Promo Weekend 83€ IVA inclusa con LILO S.r.l.",
   },
   "furgoni-xl": {
     hubDescription: "La massima capacità per carichi voluminosi e trasporti speciali.",
@@ -99,7 +100,7 @@ export const FLOTTA_CATEGORIA_COPY: Record<TariffaCategoriaSlug, CategoriaCopy> 
       "Furgoni XL a noleggio a Trieste: la soluzione per chi necessita del massimo volume di carico e spazio utile.",
     seoTitle: "Noleggio Furgoni XL Trieste | LILO S.r.l.",
     seoDescription:
-      "Noleggio furgoni XL a Trieste: massima capacità di carico per professionisti. Flotta LILO S.r.l., ritiro in sede.",
+      "Noleggio furgoni XL a Trieste: massima capacità di carico per professionisti e traslochi. Tariffe IVA inclusa, flotta LILO, ritiro in sede.",
   },
 };
 
@@ -112,14 +113,16 @@ export function buildFlottaCategoriaMetadata(slug: TariffaCategoriaSlug): Metada
   const tariffa = TARIFFE_CATEGORIA[slug];
   const canonical = flottaCategoriaCanonical(slug);
   const ogImage = canonicalUrl(FLOTTA_CATEGORIA_IMAGES[slug]);
+  const title = fitSeoTitle(copy.seoTitle, copy.seoTitle);
+  const description = fitSeoDescription(copy.seoDescription, copy.seoDescription);
 
   return {
-    title: resolveMetadataTitle(copy.seoTitle),
-    description: copy.seoDescription,
+    title: resolveMetadataTitle(title),
+    description,
     alternates: { canonical },
     openGraph: {
-      title: copy.seoTitle,
-      description: copy.seoDescription,
+      title,
+      description,
       url: canonical,
       type: "website",
       locale: "it_IT",
@@ -129,14 +132,14 @@ export function buildFlottaCategoriaMetadata(slug: TariffaCategoriaSlug): Metada
           url: ogImage,
           width: 1200,
           height: 630,
-          alt: copy.seoTitle,
+          alt: title,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: copy.seoTitle,
-      description: copy.seoDescription,
+      title,
+      description,
       images: [ogImage],
     },
     keywords: [
