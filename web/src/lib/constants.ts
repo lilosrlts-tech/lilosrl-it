@@ -39,10 +39,13 @@ export const COMPANY = {
   phone: "0402471720",
   phoneE164: "+390402471720",
   email: "info@lilosrl.it",
+  /** Sede legale (privacy, titolare trattamento). */
+  legalAddress: "Via Giuseppe De Coletti, 7, 34143 Trieste (TS)",
+  /** Sede operativa noleggio (ritiro / riconsegna). */
   streetAddress: "Viale Campi Elisi 38/B",
   city: "Trieste",
   region: "Friuli-Venezia Giulia",
-  postalCode: "34132",
+  postalCode: "34143",
   country: "IT",
   geo: {
     latitude: 45.6495,

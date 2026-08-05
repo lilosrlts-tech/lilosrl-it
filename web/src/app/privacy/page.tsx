@@ -27,7 +27,7 @@ export default async function PrivacyPage() {
           <section>
             <h2 className="text-lg font-semibold text-slate-900">Titolare del trattamento</h2>
             <p className="mt-2 leading-relaxed text-slate-600">
-              {COMPANY.legalName}, con sede in {impostazioni.indirizzo_noleggio}. Email:{" "}
+              {COMPANY.legalName}, con sede legale in {COMPANY.legalAddress}. Email:{" "}
               {impostazioni.email_contatto}.
             </p>
           </section>

@@ -175,7 +175,7 @@ export const DEMO_IMPOSTAZIONI: ImpostazioniSito = {
   telefono_autolavaggio: "040 2471720",
   email_contatto: "info@lilosrl.it",
   email_preventivi: "info@lilosrl.it",
-  social_facebook: "https://www.facebook.com/LilaAutonoleggioFurgoniTrieste/",
+  social_facebook: "https://www.facebook.com/LiloAutonoleggioFurgoniTrieste",
   social_facebook_autolavaggio: "https://www.facebook.com/LiloAutolavaggioTrieste/",
   social_instagram: null,
   social_linkedin: null,

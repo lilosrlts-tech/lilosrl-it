@@ -31,7 +31,7 @@ export const DEMO_IMPOSTAZIONI: ImpostazioniSito = {
 
   email_preventivi: "info@lilosrl.it",
 
-  social_facebook: "https://www.facebook.com/LilaAutonoleggioFurgoniTrieste/",
+  social_facebook: "https://www.facebook.com/LiloAutonoleggioFurgoniTrieste",
   social_facebook_autolavaggio: "https://www.facebook.com/LiloAutolavaggioTrieste/",
 
   social_instagram: null,
@@ -131,7 +131,16 @@ export async function getImpostazioniSito(): Promise<ImpostazioniSito> {
         }
         if (!data) return { ...DEMO_IMPOSTAZIONI };
 
-        return data as ImpostazioniSito;
+        const row = data as ImpostazioniSito;
+        // Typo storico Lila → Lilo (pagina Facebook reale)
+        if (
+          row.social_facebook &&
+          /LilaAutonoleggio/i.test(row.social_facebook)
+        ) {
+          row.social_facebook =
+            "https://www.facebook.com/LiloAutonoleggioFurgoniTrieste";
+        }
+        return row;
       } catch (err) {
         console.error("[impostazioni]", err);
         return { ...DEMO_IMPOSTAZIONI };
