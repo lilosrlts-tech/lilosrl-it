@@ -110,7 +110,7 @@ export const COSA_TRASPORTI_USE_CASES: CosaTrasportiUseCase[] = [
     id: "trasloco-bilocale",
     label: "Trasloco bilocale",
     descrizione: "Trasloco appartamento 2 locali",
-    volumeMin: 11,
+    volumeMin: 10,
     categoriePreferite: ["furgoni-grandi-citta", "furgoni-grandi", "furgoni-xl"],
     perché:
       "Un bilocale vuole volume ampio: uso città da €55/giorno, oppure grande/XL fuori città da €60/giorno.",
@@ -243,21 +243,29 @@ function toCandidate(v: VeicoloPubblico, useCase: CosaTrasportiUseCase): CosaTra
 /**
  * Per divano / armadio / monolocale / bilocale:
  * 1× furgone grandi uso città (€55) + 1× grande/XL fuori città (€60).
+ * Cerca le due fasce in modo indipendente (non i primi 2 dello stesso ranking).
  */
 function pickCittaEGrande(
-  ranked: CosaTrasportiCandidate[],
+  candidates: CosaTrasportiCandidate[],
   limit: number,
 ): CosaTrasportiCandidate[] {
-  const citta = ranked.find((c) => c.categoriaSlug === CAT_USO_CITTA);
-  const grande = ranked.find(
-    (c) => c.categoriaSlug != null && CAT_GRANDE_FUORI.has(c.categoriaSlug),
-  );
+  const byScore = (a: CosaTrasportiCandidate, b: CosaTrasportiCandidate) =>
+    b.score - a.score;
+
+  const citta = [...candidates]
+    .filter((c) => c.categoriaSlug === CAT_USO_CITTA)
+    .sort(byScore)[0];
+
+  const grande = [...candidates]
+    .filter((c) => c.categoriaSlug != null && CAT_GRANDE_FUORI.has(c.categoriaSlug))
+    .sort(byScore)[0];
 
   const picked: CosaTrasportiCandidate[] = [];
   if (citta) picked.push(citta);
   if (grande && grande.slug !== citta?.slug) picked.push(grande);
 
-  for (const c of ranked) {
+  // Solo se manca una delle due fasce, completa con altri match
+  for (const c of [...candidates].sort(byScore)) {
     if (picked.length >= limit) break;
     if (!picked.some((p) => p.slug === c.slug)) picked.push(c);
   }
@@ -273,16 +281,29 @@ export function matchCosaTrasporti(
   const useCase = COSA_TRASPORTI_USE_CASES.find((u) => u.id === useCaseId);
   if (!useCase) return [];
 
-  const ranked = veicoli
-    .map((v) => toCandidate(v, useCase))
-    .filter((c) => c.score > 0)
-    .sort((a, b) => b.score - a.score);
+  const all = veicoli.map((v) => toCandidate(v, useCase));
 
   if (PAIR_CITTA_E_GRANDE.has(useCaseId) && limit >= 2) {
-    return pickCittaEGrande(ranked, limit);
+    // Pool dedicato: tutte le unità delle due fasce (anche se volume «al limite»),
+    // così bilocale non resta con due soli uso città.
+    const pool = all.filter(
+      (c) =>
+        c.categoriaSlug === CAT_USO_CITTA ||
+        (c.categoriaSlug != null && CAT_GRANDE_FUORI.has(c.categoriaSlug)),
+    );
+    const paired = pickCittaEGrande(pool, limit);
+    if (paired.length >= 2) return paired;
+    // Fallback se manca una fascia in flotta
+    return all
+      .filter((c) => c.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, limit);
   }
 
-  return ranked.slice(0, limit);
+  return all
+    .filter((c) => c.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit);
 }
 
 /** Use case in cui il veicolo risulta un buon match (per JSON-LD / scheda). */
