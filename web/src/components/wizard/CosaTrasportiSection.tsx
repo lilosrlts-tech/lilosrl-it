@@ -23,13 +23,20 @@ interface CosaTrasportiSectionProps {
   /** Link alla pagina dedicata (home). */
   showPageLink?: boolean;
   compact?: boolean;
+  /**
+   * Sulla pagina dedicata `/cosa-trasporti` usiamo H1; in home resta H2
+   * (l’H1 è già nell’hero).
+   */
+  headingLevel?: "h1" | "h2";
 }
 
 export async function CosaTrasportiSection({
   showPageLink = true,
   compact = false,
+  headingLevel = "h2",
 }: CosaTrasportiSectionProps) {
   const recommendations = await loadRecommendations();
+  const HeadingTag = headingLevel;
 
   return (
     <section
@@ -42,12 +49,12 @@ export async function CosaTrasportiSection({
           <p className="text-xs font-semibold uppercase tracking-widest text-[#D4AF37]">
             Guida al mezzo giusto
           </p>
-          <h2
+          <HeadingTag
             id="cosa-trasporti-heading"
             className="mt-2 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl"
           >
             Cosa trasporti?
-          </h2>
+          </HeadingTag>
           <p className="mt-2 text-base leading-relaxed text-slate-600">
             Non partire dalla categoria: dimmi il carico (frigo, armadio, trasloco, moto…) e ti
             proponiamo i furgoni più adatti, in base a volume, altezza vano e portata reali.

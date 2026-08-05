@@ -78,7 +78,7 @@ export default async function CosaTrasportiPage() {
             </nav>
           </div>
 
-          <CosaTrasportiSection showPageLink={false} />
+          <CosaTrasportiSection showPageLink={false} headingLevel="h1" />
 
           <div className="mx-auto max-w-6xl px-4 pb-14">
             <VeicoloFaq items={faq} />

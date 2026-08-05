@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
 import { HomePageAsync } from "@/components/home/HomePageContent";
-import { HomePageShell } from "@/components/home/HomePageShell";
 import { getPageMetadata } from "@/lib/seo-settings";
 import { buildHomeJsonLd } from "@/lib/json-ld";
 
@@ -11,16 +9,18 @@ export async function generateMetadata(): Promise<Metadata> {
   return getPageMetadata("home");
 }
 
-export default function HomePage() {
+/**
+ * Niente Suspense+HomePageShell: lo shell di fallback restava nel HTML finale
+ * (2× header/main/H1) e i crawler segnalavano Multiple H1.
+ */
+export default async function HomePage() {
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(buildHomeJsonLd()) }}
       />
-      <Suspense fallback={<HomePageShell />}>
-        <HomePageAsync />
-      </Suspense>
+      <HomePageAsync />
     </>
   );
 }
