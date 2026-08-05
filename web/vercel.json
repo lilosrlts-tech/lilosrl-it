@@ -1,0 +1,17 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    {
+      "source": "/.gestionale",
+      "destination": "https://www.gestionalelilo.it/.gestionale"
+    },
+    {
+      "source": "/.gestionale/",
+      "destination": "https://www.gestionalelilo.it/.gestionale/"
+    },
+    {
+      "source": "/.gestionale/:path*",
+      "destination": "https://www.gestionalelilo.it/.gestionale/:path*"
+    }
+  ]
+}

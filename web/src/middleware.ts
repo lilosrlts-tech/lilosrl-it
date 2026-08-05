@@ -83,6 +83,9 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)",
+    /*
+     * Esclude asset statici e il proxy gestionale PHP (/.gestionale → Aruba).
+     */
+    "/((?!_next/static|_next/image|favicon.ico|\\.gestionale(?:/.*)?$|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)",
   ],
 };
