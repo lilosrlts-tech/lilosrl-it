@@ -8,7 +8,7 @@ import {
 } from "@/lib/flotta-categoria-config";
 import { COMPANY } from "@/lib/constants";
 import { flottaCategoriaHref } from "@/lib/nav-config";
-import { TARIFFE_CATEGORIA } from "@/lib/tariffe-categoria";
+import { PREZZO_IVA_DICITURA, TARIFFE_CATEGORIA } from "@/lib/tariffe-categoria";
 import type { VeicoloPubblico } from "@/types/veicolo";
 
 interface FlottaHubProps {
@@ -59,6 +59,9 @@ export function FlottaHub({ veicoli }: FlottaHubProps) {
                 <p className="text-2xl font-extrabold text-brand-700">
                   € {tariffa.prezzoGiornaliero}
                   <span className="text-base font-semibold text-slate-600"> / giorno</span>
+                </p>
+                <p className="mt-1 text-xs font-medium text-slate-500">
+                  {PREZZO_IVA_DICITURA}
                 </p>
                 <Link
                   href={href}

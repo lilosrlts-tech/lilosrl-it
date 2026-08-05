@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { VeicoloCoverImage } from "@/components/flotta/VeicoloCoverImage";
 import { WhatsAppPreventivoCard } from "@/components/home/WhatsAppPreventivoCard";
+import { PREZZO_IVA_DICITURA } from "@/lib/tariffe-categoria";
 import type { VeicoloPlaceholderVariant } from "@/lib/veicolo-utils";
 
 const MOBILE_VISIBLE = 3;
@@ -88,6 +89,9 @@ export function FleetPreviewGrid({
                   <p className="text-2xl font-extrabold leading-none tracking-tight text-slate-900">
                     € {importo}
                     <span className="text-base font-semibold text-slate-600">/giorno</span>
+                  </p>
+                  <p className="mt-1 text-xs font-medium text-slate-500">
+                    {PREZZO_IVA_DICITURA}
                   </p>
                   {card.promoLine && (
                     <p className="mt-1 text-xs text-emerald-700">{card.promoLine}</p>

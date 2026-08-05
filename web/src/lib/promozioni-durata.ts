@@ -106,9 +106,9 @@ export function labelPromoDurataSecondario(prezzo: {
   const nome = `${r?.nome ?? ""} ${r?.descrizione_pubblica ?? ""}`.toLowerCase();
   const isMese = giorni >= 28 || /mese|mensil/.test(nome);
 
-  if (isMese) return `Da €${eq}/giorno con noleggio mensile`;
-  if (giorni > 0) return `Da €${eq}/giorno da ${giorni} giorni`;
-  return `Da €${eq}/giorno con promo durata`;
+  if (isMese) return `Da €${eq}/giorno IVA inclusa con noleggio mensile`;
+  if (giorni > 0) return `Da €${eq}/giorno IVA inclusa da ${giorni} giorni`;
+  return `Da €${eq}/giorno IVA inclusa con promo durata`;
 }
 
 let cachedRegole: PromoDurataRegola[] | null = null;

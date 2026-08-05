@@ -10,6 +10,7 @@ import {
 } from "@/lib/cosa-trasporti";
 import { CosaTrasportiIcon } from "@/components/wizard/CosaTrasportiIcons";
 import { FLEET_VEHICLE_IMG } from "@/lib/fleet-photo-utils";
+import { PREZZO_IVA_DICITURA } from "@/lib/tariffe-categoria";
 
 export type CosaTrasportiRecommendations = Record<
   CosaTrasportiId,
@@ -146,6 +147,9 @@ export function CosaTrasportiWizard({
                                 €{Math.round(item.prezzoDa)}
                               </span>
                               /giorno
+                            </p>
+                            <p className="text-xs font-medium text-slate-500">
+                              {PREZZO_IVA_DICITURA}
                             </p>
                             {item.prezzoPromoLine && (
                               <p className="text-xs text-emerald-700">{item.prezzoPromoLine}</p>

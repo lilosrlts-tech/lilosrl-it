@@ -21,6 +21,7 @@ import {
 } from "@/lib/veicolo-utils";
 import { stripTargaFromPublicCopy, cleanPublicHighlight, isUsefulPublicHighlight, sanitizePublicBrandCopy } from "@/lib/veicolo-seo";
 import { getVeicoloSintesiVendibile } from "@/lib/veicolo-sintesi";
+import { PREZZO_IVA_DICITURA } from "@/lib/tariffe-categoria";
 import { getDisplayName, getPrezzoGiornaliero } from "@/lib/veicoli";
 import type { VeicoloPubblico } from "@/types/veicolo";
 
@@ -133,6 +134,9 @@ export async function VeicoloDettaglioContent({ veicolo }: VeicoloDettaglioConte
                         € {Math.round(giornaliero)}
                       </span>
                       <span className="text-lg font-semibold text-slate-600"> / giorno</span>
+                    </p>
+                    <p className="mt-1 text-xs font-medium text-slate-500">
+                      {PREZZO_IVA_DICITURA}
                     </p>
                     {promoLine && (
                       <p className="mt-1 text-sm text-emerald-700">{promoLine}</p>

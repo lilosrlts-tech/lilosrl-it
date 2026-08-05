@@ -14,7 +14,11 @@ import {
   getPrezzoGiornaliero,
   getVeicoloFormTitle,
 } from "@/lib/veicolo-utils";
-import { getNotaCauzione, getTariffaPerVeicolo } from "@/lib/tariffe-categoria";
+import {
+  getNotaCauzione,
+  getTariffaPerVeicolo,
+  PREZZO_IVA_DICITURA,
+} from "@/lib/tariffe-categoria";
 import type { AccessorioPubblico, VeicoloPubblico } from "@/types/veicolo";
 
 type Channel = "email" | "whatsapp";
@@ -198,10 +202,15 @@ export function PreventivoForm({ veicolo, telefono = "040 2471720" }: Preventivo
 
         <div className="mt-4">
           {prezzo && (
-            <p className="text-2xl font-bold text-brand-700">
-              €{Math.round(veicolo.prezzo_promo?.giornaliero ?? prezzo.importo)}
-              <span className="text-sm font-medium text-slate-500"> / giorno</span>
-            </p>
+            <>
+              <p className="text-2xl font-bold text-brand-700">
+                €{Math.round(veicolo.prezzo_promo?.giornaliero ?? prezzo.importo)}
+                <span className="text-sm font-medium text-slate-500"> / giorno</span>
+              </p>
+              <p className="mt-1 text-xs font-medium text-slate-500">
+                {PREZZO_IVA_DICITURA}
+              </p>
+            </>
           )}
           {promoLine && <p className="mt-1 text-xs text-emerald-700">{promoLine}</p>}
           {notaKm && <p className="mt-1 text-xs text-slate-500">{notaKm}</p>}

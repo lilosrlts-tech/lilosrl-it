@@ -2,6 +2,7 @@ import {
   hasPromoDurataSconto,
   labelPromoDurataSecondario,
 } from "@/lib/promozioni-durata";
+import { PREZZO_IVA_DICITURA } from "@/lib/tariffe-categoria";
 import { getPrezzoCommercialNote, getPrezzoGiornaliero } from "@/lib/veicolo-utils";
 import type { VeicoloPubblico } from "@/types/veicolo";
 
@@ -43,6 +44,7 @@ export function VeicoloPrezzoBlock({ veicolo, variant = "card" }: VeicoloPrezzoB
         € {importo}
         <span className="text-base font-semibold text-slate-600"> / giorno</span>
       </p>
+      <p className="mt-1 text-xs font-medium text-slate-500">{PREZZO_IVA_DICITURA}</p>
       {showPromo && promoLine && (
         <p className="mt-1 text-xs text-emerald-700">{promoLine}</p>
       )}

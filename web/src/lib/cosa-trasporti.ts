@@ -76,7 +76,7 @@ export const COSA_TRASPORTI_USE_CASES: CosaTrasportiUseCase[] = [
     volumeMin: 6,
     categoriePreferite: ["furgoni-grandi-citta", "furgoni-grandi", "furgoni-medi"],
     perché:
-      "Per divani e mobili serve un furgone grande: in città da €55/giorno, oppure grande per fuori città da €60/giorno.",
+      "Per divani e mobili serve un furgone grande: in città da €55/giorno IVA inclusa, oppure grande per fuori città da €60/giorno IVA inclusa.",
   },
   {
     id: "armadio",
@@ -86,7 +86,7 @@ export const COSA_TRASPORTI_USE_CASES: CosaTrasportiUseCase[] = [
     altezzaMinMm: 1600,
     categoriePreferite: ["furgoni-grandi-citta", "furgoni-grandi", "furgoni-xl"],
     perché:
-      "Un armadio chiede lunghezza e altezza: puoi scegliere il grande uso città (€55) o il grande fuori città (€60).",
+      "Un armadio chiede lunghezza e altezza: puoi scegliere il grande uso città (€55 IVA inclusa) o il grande fuori città (€60 IVA inclusa).",
   },
   {
     id: "moto",
@@ -104,7 +104,7 @@ export const COSA_TRASPORTI_USE_CASES: CosaTrasportiUseCase[] = [
     volumeMin: 8,
     categoriePreferite: ["furgoni-grandi-citta", "furgoni-grandi"],
     perché:
-      "Per un monolocale (~8–11 m³) proponiamo uso città da €55/giorno e, se serve più autonomia, grande fuori città da €60/giorno.",
+      "Per un monolocale (~8–11 m³) proponiamo uso città da €55/giorno IVA inclusa e, se serve più autonomia, grande fuori città da €60/giorno IVA inclusa.",
   },
   {
     id: "trasloco-bilocale",
@@ -113,7 +113,7 @@ export const COSA_TRASPORTI_USE_CASES: CosaTrasportiUseCase[] = [
     volumeMin: 10,
     categoriePreferite: ["furgoni-grandi-citta", "furgoni-grandi", "furgoni-xl"],
     perché:
-      "Un bilocale vuole volume ampio: uso città da €55/giorno, oppure grande/XL fuori città da €60/giorno.",
+      "Un bilocale vuole volume ampio: uso città da €55/giorno IVA inclusa, oppure grande/XL fuori città da €60/giorno IVA inclusa.",
   },
   {
     id: "trasloco-trilocale",
@@ -210,10 +210,10 @@ function motivoFor(v: VeicoloPubblico, useCase: CosaTrasportiUseCase): string {
     const cat = v.categoria?.slug ?? "";
     if (cat === CAT_USO_CITTA) {
       base =
-        "Opzione uso città (tariffa da €55/giorno): adatta a spostamenti urbani con buon volume di carico.";
+        "Opzione uso città (tariffa da €55/giorno IVA inclusa): adatta a spostamenti urbani con buon volume di carico.";
     } else if (CAT_GRANDE_FUORI.has(cat)) {
       base =
-        "Opzione grande fuori città (tariffa da €60/giorno): più volume/autonomia per tratte più lunghe.";
+        "Opzione grande fuori città (tariffa da €60/giorno IVA inclusa): più volume/autonomia per tratte più lunghe.";
     }
   }
 

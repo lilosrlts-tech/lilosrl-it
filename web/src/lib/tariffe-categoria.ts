@@ -107,6 +107,9 @@ export function getNotaCauzione(tariffa: TariffaCategoria): string {
   return `Cauzione €${importo}: per uso in città anche in contanti; per fuori città ed estero carta di credito o debito.`;
 }
 
+/** Dicitura commerciale prezzi noleggio in vetrina (tariffe veicolo / categoria). */
+export const PREZZO_IVA_DICITURA = "IVA inclusa";
+
 /** Chiarimento operativo per contratto e pagine legali */
 export const CAUZIONE_USO_CITTA_NOTA =
   "Per «uso in città» si intende un noleggio con percorrenza entro l'area urbana di Trieste e nei limiti chilometrici previsti dalla tariffa scelta.";

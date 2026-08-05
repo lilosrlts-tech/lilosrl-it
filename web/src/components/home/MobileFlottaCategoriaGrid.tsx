@@ -8,8 +8,11 @@ import {
 } from "@/lib/nav-config";
 import { FLOTTA_CATEGORIA_IMAGES } from "@/lib/flotta-categoria-config";
 import { FLEET_VEHICLE_IMG } from "@/lib/fleet-photo-utils";
-import { TARIFFE_CATEGORIA } from "@/lib/tariffe-categoria";
-import type { TariffaCategoriaSlug } from "@/lib/tariffe-categoria";
+import {
+  PREZZO_IVA_DICITURA,
+  TARIFFE_CATEGORIA,
+  type TariffaCategoriaSlug,
+} from "@/lib/tariffe-categoria";
 
 /** Griglia categorie flotta — solo mobile, subito sotto l'hero. */
 export function MobileFlottaCategoriaGrid() {
@@ -57,7 +60,7 @@ export function MobileFlottaCategoriaGrid() {
                   </span>
                   {tariffa && (
                     <span className="mt-0.5 text-xs font-semibold text-brand-700">
-                      da €{tariffa.prezzoGiornaliero}/giorno
+                      da €{tariffa.prezzoGiornaliero}/giorno · {PREZZO_IVA_DICITURA}
                     </span>
                   )}
                 </div>

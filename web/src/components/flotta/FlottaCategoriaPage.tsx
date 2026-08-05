@@ -10,7 +10,10 @@ import {
 import { buildFlottaCategoriaJsonLd } from "@/lib/json-ld";
 import { isOffertaPromoCategoria } from "@/lib/offerta-promo";
 import { SitePageWrapper, loadImpostazioni } from "@/lib/site-page";
-import type { TariffaCategoriaSlug } from "@/lib/tariffe-categoria";
+import {
+  PREZZO_IVA_DICITURA,
+  type TariffaCategoriaSlug,
+} from "@/lib/tariffe-categoria";
 import { getPublishedVeicoli } from "@/lib/veicoli";
 
 interface FlottaCategoriaPageProps {
@@ -97,6 +100,9 @@ export async function FlottaCategoriaPage({ slug }: FlottaCategoriaPageProps) {
                 <p className="mt-1 text-3xl font-extrabold text-slate-900">
                   € {tariffa.prezzo}
                   <span className="text-lg font-semibold text-slate-600"> / giorno</span>
+                </p>
+                <p className="mt-1 text-xs font-medium text-slate-500">
+                  {PREZZO_IVA_DICITURA}
                 </p>
               </div>
               {isUsoCitta && (

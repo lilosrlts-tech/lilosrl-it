@@ -34,7 +34,7 @@ export function VeicoloPromoDurata({ prezzo }: VeicoloPromoDurataProps) {
                 {r.descrizione_pubblica || r.nome}
               </p>
               <p className="mt-0.5 text-slate-600">
-                Equivalente circa €{eq.toFixed(2)}/giorno
+                Equivalente circa €{eq.toFixed(2)}/giorno IVA inclusa
                 {r.giorni_minimo ? ` (da ${r.giorni_minimo} giorni)` : ""}
               </p>
             </li>

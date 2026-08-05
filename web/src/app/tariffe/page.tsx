@@ -29,7 +29,8 @@ export default async function TariffePage() {
           <h1 className="text-3xl font-bold text-slate-900">Prezzi e Tariffe</h1>
           <p className="mt-4 leading-relaxed text-slate-600">
             Listino generato automaticamente dalle tariffe giornaliere dei veicoli presenti in
-            flotta. Quando aggiorni un prezzo in gestione, questa pagina si aggiorna da sola.
+            flotta. Tutti i prezzi sono IVA inclusa. Quando aggiorni un prezzo in gestione, questa
+            pagina si aggiorna da sola.
           </p>
         </header>
 

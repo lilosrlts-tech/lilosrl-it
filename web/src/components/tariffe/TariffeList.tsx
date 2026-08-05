@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { SezioneListino } from "@/lib/listino-prezzi";
 import { formatEuro } from "@/lib/listino-prezzi";
 import { flottaCategoriaHref } from "@/lib/nav-config";
+import { PREZZO_IVA_DICITURA } from "@/lib/tariffe-categoria";
 
 interface TariffeListProps {
   sezioni: SezioneListino[];
@@ -32,7 +33,7 @@ export function TariffeList({ sezioni }: TariffeListProps) {
                   <span className="font-semibold text-[#D4AF37]">
                     {formatEuro(sezione.prezzoMinimo, sezione.valuta)}
                   </span>{" "}
-                  / giorno
+                  / giorno · {PREZZO_IVA_DICITURA}
                 </p>
               )}
             </div>
@@ -57,11 +58,16 @@ export function TariffeList({ sezioni }: TariffeListProps) {
                   >
                     {voce.nome}
                   </Link>
-                  <p className="text-sm text-slate-500">Tariffa giornaliera di partenza</p>
+                  <p className="text-sm text-slate-500">
+                    Tariffa giornaliera di partenza · {PREZZO_IVA_DICITURA}
+                  </p>
                 </div>
-                <p className="text-lg font-bold text-slate-900">
+                <p className="text-right text-lg font-bold text-slate-900">
                   {formatEuro(voce.importo, voce.valuta)}
                   <span className="ml-1 text-sm font-normal text-slate-500">/ giorno</span>
+                  <span className="mt-0.5 block text-xs font-normal text-slate-500">
+                    {PREZZO_IVA_DICITURA}
+                  </span>
                 </p>
               </li>
             ))}
@@ -70,9 +76,9 @@ export function TariffeList({ sezioni }: TariffeListProps) {
       ))}
 
       <p className="text-sm leading-relaxed text-slate-500">
-        I prezzi sono aggiornati automaticamente dalla flotta pubblicata. Weekend, settimane
-        lunghe e periodi speciali possono avere tariffe diverse: contattaci per un preventivo
-        preciso.
+        Tutti i prezzi del listino sono {PREZZO_IVA_DICITURA}. I prezzi sono aggiornati
+        automaticamente dalla flotta pubblicata. Weekend, settimane lunghe e periodi speciali
+        possono avere tariffe diverse: contattaci per un preventivo preciso.
       </p>
     </div>
   );
