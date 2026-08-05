@@ -102,22 +102,21 @@ export const FLEET_PHOTO_FRAME = {
 } as const;
 
 /**
- * Framing foto mezzi: su mobile i furgoni lunghi non vanno tagliati (coda a dx).
- * Da md: cover con focus ~65% per tenere più del corpo veicolo in inquadratura.
+ * Regola unica foto mezzi (mobile + desktop): sempre intero veicolo, mai tagliato.
+ * object-contain + padding leggero nello frame bianco.
  */
 export const FLEET_VEHICLE_IMG = {
   environmental:
-    "object-contain object-center p-1 transition duration-300 group-hover:scale-[1.02] saturate-[0.94] contrast-[1.03] md:object-cover md:object-[65%_center] md:p-0",
+    "object-contain object-center p-1.5 transition duration-300 group-hover:scale-[1.02] saturate-[0.94] contrast-[1.03] sm:p-2",
   environmentalHub:
-    "object-contain object-center p-1.5 transition duration-300 group-hover:scale-[1.03] saturate-[0.96] contrast-[1.02] md:object-cover md:object-[65%_center] md:p-0",
+    "object-contain object-center p-1.5 transition duration-300 group-hover:scale-[1.03] saturate-[0.96] contrast-[1.02] sm:p-2",
   studio:
-    "object-contain object-center p-1 transition duration-300 group-hover:scale-[1.02] sm:p-2",
+    "object-contain object-center p-1.5 transition duration-300 group-hover:scale-[1.02] sm:p-2",
   studioHub: "object-contain object-center p-2 sm:p-3",
   /** Thumb griglia categorie home (solo mobile). */
   categoryThumb: "object-contain object-center p-1",
   /** Risultati wizard / card compatte. */
-  resultThumb:
-    "object-contain object-center p-1 md:object-cover md:object-[65%_center] md:p-0",
+  resultThumb: "object-contain object-center p-1.5 sm:p-2",
 } as const;
 
 export type FleetPhotoAspect = "4/3" | "16/10";
