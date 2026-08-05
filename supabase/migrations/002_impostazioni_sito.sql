@@ -82,7 +82,7 @@ Domenica: 8:00 – 13:00',
   '040 2471720',
   '040 2471720',
   'info@lilosrl.it',
-  'Viale Campi Elisi 38/B, 34132 Trieste (TS)',
+  'Viale Campi Elisi 38/B, 34143 Trieste (TS)',
   'Ingresso: Via Schiaparelli 21/A — Uscita: Via G. De Coletti 7, Trieste',
   'Noleggio auto e furgoni a Trieste con LILO S.r.l.: flotta moderna, tariffe trasparenti e ritiro in sede in Viale Campi Elisi. Ideale per privati, aziende e traslochi.',
   'Autolavaggio self-service LILO a Trieste: lavaggio completo interno ed esterno, ingresso da Via Schiaparelli 21/A e uscita su Via G. De Coletti 7. Asciugatura, aspirazione e trattamenti disponibili in loco.'
