@@ -8,12 +8,17 @@
  *   - /autolavaggio resta su lilosrl.it (nessun redirect fuori dominio)
  *   - schede /car/*: mappate 301 → /flotta/... + catch-all → /flotta
  *
+ * Decisioni SEO (2026-08): slug schede senza targa → 301 da /flotta/{slug-con-targa}.
+ *
  * Status HTTP: sempre statusCode 301 (non permanent:true → 308) per tool SEO.
  * Domini secondari / apex: middleware + REDIRECT_TO_CANONICAL_HOSTS in constants.
  *
  * @see https://nextjs.org/docs/app/api-reference/config/next-config-js/redirects
  * @see docs/seo-url-migration-map.md
+ * @see veicolo-slug-renames.ts
  */
+
+import { VEICOLO_SLUG_REDIRECTS_301 } from "./veicolo-slug-renames";
 
 export interface LegacyRedirect {
   /** Path sorgente (senza dominio), es. "/furgoni" */
@@ -213,7 +218,7 @@ export const LEGACY_REDIRECTS: LegacyRedirect[] = [
   ),
   ...withTrailingVariants(
     "/car/fiat-doblo",
-    "/flotta/fiat-doblo-gh618pt",
+    "/flotta/fiat-doblo-cargo",
     "WP Fiat Doblò → scheda Next",
   ),
   ...withTrailingVariants(
@@ -228,17 +233,17 @@ export const LEGACY_REDIRECTS: LegacyRedirect[] = [
   ),
   ...withTrailingVariants(
     "/car/opel-movano",
-    "/flotta/opel-movano-gc328pk",
+    "/flotta/opel-movano-l2h2",
     "WP Opel Movano → scheda Next",
   ),
   ...withTrailingVariants(
     "/car/peugeot-boxer-l2h2",
-    "/flotta/peugeot-boxer-l2h2-ew858wc",
+    "/flotta/peugeot-boxer-l2h2",
     "WP Peugeot Boxer L2H2 → scheda Next",
   ),
   ...withTrailingVariants(
     "/car/peugeot-boxer-l2h2-2",
-    "/flotta/peugeot-boxer-l2h2-ew858wc",
+    "/flotta/peugeot-boxer-l2h2",
     "WP Peugeot Boxer L2H2 duplicato → stessa scheda",
   ),
   ...withTrailingVariants(
@@ -253,17 +258,17 @@ export const LEGACY_REDIRECTS: LegacyRedirect[] = [
   ),
   ...withTrailingVariants(
     "/car/renault-master",
-    "/flotta/renault-master-l2h2-gf883sb",
+    "/flotta/renault-master-l2h2",
     "WP Renault Master → Master L2H2",
   ),
   ...withTrailingVariants(
     "/car/ford-transit",
-    "/flotta/ford-transit-gg551rd",
+    "/flotta/ford-transit-l2h2",
     "WP Ford Transit generico → Transit grandi",
   ),
   ...withTrailingVariants(
     "/car/noleggio-furgone-a-trieste-ford-l1h1",
-    "/flotta/ford-transit-custom-gj446ak",
+    "/flotta/ford-transit-custom-l1h1-ibrido",
     "WP Ford L1H1 → Transit Custom",
   ),
   ...withTrailingVariants(
@@ -280,6 +285,15 @@ export const LEGACY_REDIRECTS: LegacyRedirect[] = [
     "/car/noleggio-furgoni-mercedes-vito-trieste",
     "/flotta/furgoni-medi",
     "WP Mercedes Vito fuori flotta → furgoni medi",
+  ),
+
+  // ── Slug schede: targa rimossa (vecchie URL → slug stabili) ───────────────
+  ...VEICOLO_SLUG_REDIRECTS_301.flatMap(({ from, to }) =>
+    withTrailingVariants(
+      `/flotta/${from}`,
+      `/flotta/${to}`,
+      `Slug con targa ${from} → ${to}`,
+    ),
   ),
 
   // Catch-all: qualsiasi /car/* non mappato → hub flotta (preserva equity SEO residua)

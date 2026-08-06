@@ -22,7 +22,7 @@ function loadEnv(path) {
 const env = loadEnv(credPath);
 const supabase = createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.SUPABASE_SERVICE_ROLE_KEY);
 
-const SLUG = "citroen-jumpy-fr523sw";
+const SLUG = "citroen-jumpy-l1h1";
 
 async function main() {
   const { data: categoria, error: catErr } = await supabase
@@ -81,7 +81,7 @@ async function main() {
     lunghezza_mm: 4983,
     larghezza_mm: 1920,
     altezza_mm: 1895,
-    og_image_url: "/images/veicoli/citroen-jumpy-fr523sw-copertina.webp",
+    og_image_url: "/images/veicoli/citroen-jumpy-l1h1-copertina.webp",
   };
 
   const { data: existing } = await supabase.from("veicoli").select("id").eq("slug", SLUG).maybeSingle();
@@ -136,8 +136,8 @@ async function main() {
     {
       veicolo_id: veicoloId,
       storage_bucket: "veicoli",
-      storage_path: "local/citroen-jumpy-fr523sw-copertina.webp",
-      url_pubblico: "/images/veicoli/citroen-jumpy-fr523sw-copertina.webp",
+      storage_path: "local/citroen-jumpy-l1h1-copertina.webp",
+      url_pubblico: "/images/veicoli/citroen-jumpy-l1h1-copertina.webp",
       alt_text:
         "Noleggio Furgone Medio Citroën Jumpy LILO Autonoleggio Trieste - Fiancata con targa FR523SW",
       ordine: 0,
@@ -146,8 +146,8 @@ async function main() {
     {
       veicolo_id: veicoloId,
       storage_bucket: "veicoli",
-      storage_path: "local/citroen-jumpy-fr523sw-posteriore.webp",
-      url_pubblico: "/images/veicoli/citroen-jumpy-fr523sw-posteriore.webp",
+      storage_path: "local/citroen-jumpy-l1h1-posteriore.webp",
+      url_pubblico: "/images/veicoli/citroen-jumpy-l1h1-posteriore.webp",
       alt_text:
         "Noleggio Furgone Medio Citroën Jumpy LILO Autonoleggio Trieste - Posteriore con targa FR523SW",
       ordine: 1,

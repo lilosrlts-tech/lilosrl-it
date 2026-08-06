@@ -1,6 +1,6 @@
 /**
  * Aggiorna Ford Transit L2H2 (GG551RD) — Furgoni Grandi.
- * Uso: cd web && node scripts/seed-ford-transit-gg551rd.mjs
+ * Uso: cd web && node scripts/seed-ford-transit-l2h2.mjs
  */
 import { createClient } from "@supabase/supabase-js";
 import { readFileSync } from "fs";
@@ -22,9 +22,9 @@ function loadEnv(path) {
 const env = loadEnv(credPath);
 const supabase = createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.SUPABASE_SERVICE_ROLE_KEY);
 
-const SLUG = "ford-transit-gg551rd";
-const COVER = "/images/veicoli/ford-transit-gg551rd-noleggio-furgoni-grandi-trieste.webp";
-const REAR = "/images/veicoli/ford-transit-gg551rd-posteriore-trieste.webp";
+const SLUG = "ford-transit-l2h2";
+const COVER = "/images/veicoli/ford-transit-l2h2-noleggio-furgoni-grandi-trieste.webp";
+const REAR = "/images/veicoli/ford-transit-l2h2-posteriore-trieste.webp";
 
 const HIGHLIGHTS = [
   "Categoria Grande: Dimensioni L2H2 ideali per traslochi e trasporto merci a Trieste.",
@@ -133,7 +133,7 @@ async function main() {
     {
       veicolo_id: veicoloId,
       storage_bucket: "veicoli",
-      storage_path: "local/ford-transit-gg551rd-noleggio-furgoni-grandi-trieste.webp",
+      storage_path: "local/ford-transit-l2h2-noleggio-furgoni-grandi-trieste.webp",
       url_pubblico: COVER,
       alt_text:
         "Noleggio Ford Transit L2H2 furgone grande presso LILO Autonoleggio Viale Campi Elisi Trieste",
@@ -144,7 +144,7 @@ async function main() {
     {
       veicolo_id: veicoloId,
       storage_bucket: "veicoli",
-      storage_path: "local/ford-transit-gg551rd-posteriore-trieste.webp",
+      storage_path: "local/ford-transit-l2h2-posteriore-trieste.webp",
       url_pubblico: REAR,
       alt_text: "Vista posteriore Ford Transit L2H2 noleggio furgoni grandi Trieste",
       titolo: "Ford Transit L2H2 posteriore Trieste",
@@ -173,7 +173,7 @@ async function main() {
   }
 
   console.log("OK — GG551RD L2H2 in furgoni-grandi");
-  console.log("Scheda: http://localhost:3000/flotta/ford-transit-gg551rd");
+  console.log("Scheda: http://localhost:3000/flotta/ford-transit-l2h2");
 }
 
 main().catch((err) => {

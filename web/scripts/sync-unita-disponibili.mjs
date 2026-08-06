@@ -24,23 +24,22 @@ function loadEnv(path) {
 const BY_SLUG = {
   // XL
   "ford-transit-l3h2": 3,
-  "nissan-interstar-l3h2-gt436zp": 2,
+  "nissan-interstar-l3h2": 2,
   "peugeot-boxer-l3h3": 2,
   // Grandi città
-  "peugeot-boxer-l2h2-ew858wc": 4,
+  "peugeot-boxer-l2h2": 4,
   "citroen-jumper-l2h2": 3,
   // Grandi
-  "ford-transit-gg551rd": 3,
-  "renault-master-l2h2-gf883sb": 4,
-  "renault-master-gg290xm": 4,
-  "opel-movano-gc328pk": 4,
+  "ford-transit-l2h2": 3,
+  "renault-master-l2h2": 4,
+  "renault-master-l2h3": 4,
+  "opel-movano-l2h2": 4,
   // Medi
-  "ford-transit-custom-gj446ak": 4,
-  "ford-transit-custom-fj932zy": 4,
+  "ford-transit-custom-l1h1-ibrido": 4,
+  "ford-transit-custom-l1h1": 4,
   "opel-vivaro": 3,
-  "citroen-jumpy-fr523sw": 3,
+  "citroen-jumpy-l1h1": 3,
   // Piccoli
-  "fiat-doblo-gh618pt": 3,
   "fiat-doblo-cargo": 3,
   "toyota-proace-city": 2,
   // Auto

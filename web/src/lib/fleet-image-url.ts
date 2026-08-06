@@ -10,31 +10,34 @@ export const LOCAL_FLEET_IMAGE_BY_SLUG: Record<string, string> = {
       return cover ? [[veicolo.slug, cover]] : [];
     }),
   ),
-  "citroen-jumpy-fr523sw": "/images/veicoli/citroen-jumpy-noleggio-furgoni-medi-trieste.webp",
+  "citroen-jumpy-l1h1": "/images/veicoli/citroen-jumpy-noleggio-furgoni-medi-trieste.webp",
   "fiat-doblo-cargo": "/images/veicoli/fiat-doblo-noleggio-furgoni-piccoli-trieste.webp",
-  "fiat-doblo-gh618pt": "/images/veicoli/fiat-doblo-noleggio-furgoni-piccoli-trieste.webp",
   "toyota-proace-city":
     "/images/flotta/furgone-piccolo-toyota-proace-city-trieste-front.webp",
   "fiat-ducato-l1h1": "/images/veicoli/fiat-ducato-l1h1-noleggio-trieste.webp",
-  "ford-transit-custom-gj446ak":
+  "ford-transit-custom-l1h1-ibrido":
     "/images/veicoli/ford-transit-custom-noleggio-trieste-viale-campi-elisi.webp",
-  "ford-transit-custom-fj932zy":
+  "ford-transit-custom-l1h1":
     "/images/veicoli/ford-transit-custom-noleggio-furgoni-medi-trieste.webp",
-  "ford-transit-l2h2": "/images/veicoli/ford-transit-l2h2-noleggio-trieste.webp",
-  "ford-transit-gg551rd":
+  "ford-transit-l2h2-citta": "/images/veicoli/ford-transit-l2h2-noleggio-trieste.webp",
+  "ford-transit-l2h2":
     "/images/veicoli/ford-transit-gg551rd-noleggio-furgoni-grandi-trieste.webp",
   "citroen-jumper-l2h2": "/images/veicoli/furgone-citroen-jumper-l2h2-trieste.webp",
   "opel-vivaro": "/images/veicoli/furgone-opel-vivaro-trieste.webp",
   "ford-transit-l3h2": "/images/veicoli/ford-transit-l3h2-passo-lungo-noleggio.webp",
-  "citroen-jumper-es772tn": "/images/veicoli/citroen-jumper-noleggio-furgoni-trieste.webp",
-  "nissan-interstar-l3h2-gt436zp":
+  "citroen-jumper-l1h1": "/images/veicoli/citroen-jumper-noleggio-furgoni-trieste.webp",
+  "nissan-interstar-l3h2":
     "/images/veicoli/nissan-interstar-l3h2-noleggio-furgoni-xl-trieste.webp",
+  "peugeot-boxer-l2h2":
+    "/images/veicoli/peugeot-boxer-l2h2-noleggio-furgoni-grandi-citta-trieste.webp",
+  "renault-master-l2h2": "/images/veicoli/renault-master-noleggio-furgoni-grandi-trieste.webp",
+  "renault-master-l2h3": "/images/veicoli/renault-master-passo-medio-noleggio-lilo.webp",
+  "opel-movano-l2h2": "/images/veicoli/opel-movano-noleggio-furgoni-grandi-trieste.webp",
   "renault-trafic-9-posti": "/images/veicoli/renault-trafic-9-posti-noleggio-trieste.webp",
   "nissan-primastar-9-posti": "/images/veicoli/nissan-primastar-9-posti-frontale.webp",
   "volvo-s40": "/images/veicoli/volvo-s40-noleggio-trieste.webp",
   "citroen-c3": "/images/veicoli/citroen-c3-grigia-trieste.webp",
   "peugeot-boxer-l3h3": "/images/veicoli/furgone-peugeot-boxer-l3h3-trieste.webp",
-  "peugeot-boxer-l3h3-ix345ij": "/images/veicoli/furgone-peugeot-boxer-l3h3-trieste.webp",
   "iveco-daily-35-12": "/images/flotta/furgone-grande-iveco-daily-l2h2-trieste-front.webp",
   "iveco-daily-70-17": "/images/flotta/iveco-daily-noleggio-furgoni-xl-trieste.webp",
 };

@@ -44,7 +44,7 @@ export const FLEET_SPECS_BY_TARGA: Record<string, FleetVehicleSpecRecord> = {
     alimentazione: "Diesel",
   },
   FR523SW: {
-    slug: "citroen-jumpy-fr523sw",
+    slug: "citroen-jumpy-l1h1",
     targa: "FR523SW",
     marca: "Citroën",
     modello: "Jumpy",
@@ -62,7 +62,7 @@ export const FLEET_SPECS_BY_TARGA: Record<string, FleetVehicleSpecRecord> = {
     alimentazione: "Diesel",
   },
   GH618PT: {
-    slug: "fiat-doblo-gh618pt",
+    slug: "fiat-doblo-cargo",
     targa: "GH618PT",
     marca: "Fiat",
     modello: "Doblò",
@@ -98,7 +98,7 @@ export const FLEET_SPECS_BY_TARGA: Record<string, FleetVehicleSpecRecord> = {
     alimentazione: "Diesel",
   },
   DV344HD: {
-    slug: "ford-transit-l2h2",
+    slug: "ford-transit-l2h2-citta",
     targa: "DV344HD",
     marca: "Ford",
     modello: "Transit",
@@ -116,7 +116,7 @@ export const FLEET_SPECS_BY_TARGA: Record<string, FleetVehicleSpecRecord> = {
     alimentazione: "Diesel",
   },
   ES772TN: {
-    slug: "citroen-jumper-es772tn",
+    slug: "citroen-jumper-l1h1",
     targa: "ES772TN",
     marca: "Citroën",
     modello: "Jumper",
@@ -134,7 +134,7 @@ export const FLEET_SPECS_BY_TARGA: Record<string, FleetVehicleSpecRecord> = {
     alimentazione: "Diesel",
   },
   GJ446AK: {
-    slug: "ford-transit-custom-gj446ak",
+    slug: "ford-transit-custom-l1h1-ibrido",
     targa: "GJ446AK",
     marca: "Ford",
     modello: "Transit Custom",
@@ -152,7 +152,7 @@ export const FLEET_SPECS_BY_TARGA: Record<string, FleetVehicleSpecRecord> = {
     alimentazione: "Ibrido Diesel/Elettrico",
   },
   GG551RD: {
-    slug: "ford-transit-gg551rd",
+    slug: "ford-transit-l2h2",
     targa: "GG551RD",
     marca: "Ford",
     modello: "Transit",
@@ -190,7 +190,7 @@ export const FLEET_SPECS_BY_TARGA: Record<string, FleetVehicleSpecRecord> = {
     alimentazione: "Diesel",
   },
   EW858WC: {
-    slug: "peugeot-boxer-l2h2-ew858wc",
+    slug: "peugeot-boxer-l2h2",
     targa: "EW858WC",
     marca: "Peugeot",
     modello: "Boxer",
@@ -208,7 +208,7 @@ export const FLEET_SPECS_BY_TARGA: Record<string, FleetVehicleSpecRecord> = {
     alimentazione: "Diesel",
   },
   GF883SB: {
-    slug: "renault-master-l2h2-gf883sb",
+    slug: "renault-master-l2h2",
     targa: "GF883SB",
     marca: "Renault",
     modello: "Master",
@@ -226,7 +226,7 @@ export const FLEET_SPECS_BY_TARGA: Record<string, FleetVehicleSpecRecord> = {
     alimentazione: "Diesel",
   },
   GT436ZP: {
-    slug: "nissan-interstar-l3h2-gt436zp",
+    slug: "nissan-interstar-l3h2",
     targa: "GT436ZP",
     marca: "Nissan",
     modello: "Interstar",
@@ -262,7 +262,7 @@ export const FLEET_SPECS_BY_TARGA: Record<string, FleetVehicleSpecRecord> = {
     alimentazione: "Diesel",
   },
   GC328PK: {
-    slug: "opel-movano-gc328pk",
+    slug: "opel-movano-l2h2",
     targa: "GC328PK",
     marca: "Opel",
     modello: "Movano",
@@ -280,7 +280,7 @@ export const FLEET_SPECS_BY_TARGA: Record<string, FleetVehicleSpecRecord> = {
     alimentazione: "Diesel",
   },
   GG290XM: {
-    slug: "renault-master-gg290xm",
+    slug: "renault-master-l2h3",
     targa: "GG290XM",
     marca: "Renault",
     modello: "Master",

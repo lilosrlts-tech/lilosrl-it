@@ -694,27 +694,27 @@ export const DEMO_VEICOLI: VeicoloPubblico[] = [
   },
   {
     id: "00000000-0000-0000-0000-000000000001",
-    slug: "ford-transit-350m-dv344hd",
-    targa: "DV344HD",
+    slug: "ford-transit-l2h2",
+    targa: "GG551RD",
     marca: "Ford",
     modello: "Transit",
-    versione: "350M 2.2",
-    anno_immatricolazione: 2019,
+    versione: "L2H2",
+    anno_immatricolazione: 2021,
     colore: "Bianco",
     alimentazione: "Diesel",
     cambio: "Manuale",
     posti: 3,
     porte: 4,
-    titolo_pubblico: "Ford Transit 350M — Noleggio furgone Trieste",
-    sottotitolo: "Ideale per traslochi e trasporto merci",
+    titolo_pubblico: "Ford Transit L2H2 — Noleggio furgone grande Trieste",
+    sottotitolo: "Passo medio, tetto alto: ideale traslochi e merci",
     descrizione_breve:
-      "Furgone Ford Transit 350M diesel, ideale per traslochi e trasporto merci a Trieste e provincia.",
+      "Furgone Ford Transit L2H2 diesel, ideale per traslochi e trasporto merci a Trieste e provincia.",
     descrizione_completa:
-      "Il Ford Transit 350M è un furgone capiente e affidabile, perfetto per traslochi, consegne e lavori artigianali. Disponibile presso la sede LILO di Trieste, Viale Campi Elisi 38/B.",
-    seo_title: "Noleggio Ford Transit 350M Trieste | LILO Autonoleggio",
+      "Il Ford Transit L2H2 è un furgone capiente e affidabile, perfetto per traslochi, consegne e lavori artigianali. Disponibile presso la sede LILO di Trieste, Viale Campi Elisi 38/B.",
+    seo_title: "Noleggio Ford Transit L2H2 Trieste | LILO Autonoleggio",
     seo_description:
-      "Noleggia un Ford Transit 350M a Trieste. Furgone diesel, ampio vano di carico. Prenota online o chiama il 040 2471720.",
-    seo_keywords: ["noleggio furgone trieste", "ford transit noleggio"],
+      "Noleggia un Ford Transit L2H2 a Trieste. Furgone diesel, ampio vano di carico. Prenota online o chiama il 040 2471720.",
+    seo_keywords: ["noleggio furgone trieste", "ford transit noleggio", "furgoni grandi trieste"],
     meta_robots: "index, follow",
     canonical_url: null,
     og_title: null,
@@ -724,8 +724,8 @@ export const DEMO_VEICOLI: VeicoloPubblico[] = [
     twitter_description: null,
     json_ld: null,
     ai_summary:
-      "Furgone Ford Transit 350M 2.2 diesel disponibile a noleggio presso LILO S.r.l. a Trieste. Adatto a traslochi e trasporto merci.",
-    ai_highlights: ["8,6 m³", "Diesel", "Ideale traslochi", "Ritiro a Trieste"],
+      "Furgone Ford Transit L2H2 diesel disponibile a noleggio presso LILO S.r.l. a Trieste. Adatto a traslochi e trasporto merci.",
+    ai_highlights: ["~10 m³", "Diesel", "Ideale traslochi", "Ritiro a Trieste"],
     ai_faq: [
       {
         q: "Quale patente serve per il Ford Transit?",
@@ -737,37 +737,37 @@ export const DEMO_VEICOLI: VeicoloPubblico[] = [
       },
     ],
     ai_context: "Servizio di noleggio a Trieste e provincia. Ritiro in sede.",
-    categoria: cat("furgoni-medi"),
+    categoria: cat("furgoni-grandi"),
     specifiche_tecniche: specs({
-      portata_kg: 1074,
-      volume_carico_mc: 5.23,
-      volume_metri_cubi: 5.23,
-      portata_utile_kg: 1074,
+      portata_kg: 1166,
+      volume_carico_mc: 10,
+      volume_metri_cubi: 10,
+      portata_utile_kg: 1166,
       trazione: "Anteriore",
-      passo: "Corto",
-      tetto: "Basso",
+      passo: "Medio",
+      tetto: "Alto",
       sensori_parcheggio: true,
-      lunghezza_mm: 4999,
-      larghezza_mm: 1959,
-      altezza_mm: 1971,
-      vano_lunghezza_mm: 2537,
-      vano_larghezza_mm: 1662,
-      vano_altezza_mm: 1387,
-      lunghezza_vano_mm: 2537,
-      larghezza_vano_mm: 1662,
-      altezza_vano_mm: 1387,
+      lunghezza_mm: 5531,
+      larghezza_mm: 2059,
+      altezza_mm: 2470,
+      vano_lunghezza_mm: 3044,
+      vano_larghezza_mm: 1784,
+      vano_altezza_mm: 1886,
+      lunghezza_vano_mm: 3044,
+      larghezza_vano_mm: 1784,
+      altezza_vano_mm: 1886,
     }),
     prezzi: [{ tipo_tariffa: "giornaliero", importo: 55, valuta: "EUR", descrizione: "100 km inclusi / Assicurazione base" }],
     foto: [
       demoFoto(
         "demo-foto-1",
-        DEMO_IMAGES.furgoneMedio,
-        "Ford Transit 350M — furgone bianco per noleggio a Trieste",
+        "/images/veicoli/ford-transit-gg551rd-noleggio-furgoni-grandi-trieste.webp",
+        "Ford Transit L2H2 — furgone bianco per noleggio a Trieste",
       ),
       {
         id: "demo-foto-2",
-        url_pubblico: DEMO_IMAGES.furgoneMedio,
-        alt_text: "Vano di carico Ford Transit — noleggio furgone Trieste",
+        url_pubblico: "/images/veicoli/ford-transit-gg551rd-posteriore-trieste.webp",
+        alt_text: "Vano di carico Ford Transit L2H2 — noleggio furgone Trieste",
         titolo: "Vano di carico",
         didascalia: null,
         ordine: 1,
@@ -776,8 +776,8 @@ export const DEMO_VEICOLI: VeicoloPubblico[] = [
     ],
   },
   {
-    id: "demo-citroen-jumpy-fr523sw",
-    slug: "citroen-jumpy-fr523sw",
+    id: "demo-citroen-jumpy-l1h1",
+    slug: "citroen-jumpy-l1h1",
     targa: "FR523SW",
     marca: "Citroën",
     modello: "Jumpy",
@@ -965,8 +965,8 @@ export const DEMO_VEICOLI: VeicoloPubblico[] = [
     ],
   },
   {
-    id: "demo-ford-transit-l2h2",
-    slug: "ford-transit-l2h2",
+    id: "demo-ford-transit-l2h2-citta",
+    slug: "ford-transit-l2h2-citta",
     targa: "DV344HD",
     marca: "Ford",
     modello: "Transit",
@@ -1468,7 +1468,7 @@ export const DEMO_VEICOLI: VeicoloPubblico[] = [
 ];
 
 /** @deprecated Usare DEMO_VEICOLI[3] — mantenuto per compatibilità */
-export const DEMO_VEICOLO = DEMO_VEICOLI.find((v) => v.slug === "ford-transit-350m-dv344hd")!;
+export const DEMO_VEICOLO = DEMO_VEICOLI.find((v) => v.slug === "ford-transit-l2h2-citta")!;
 
 export const DEMO_SLUGS = DEMO_VEICOLI.map((v) => v.slug);
 

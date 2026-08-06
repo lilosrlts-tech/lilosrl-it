@@ -59,13 +59,13 @@ Pattern storico: `/car/{slug}/` → `/flotta/{slug}`.
 | `/car/renault-renault-trafic-9-posti/` | `/flotta/renault-trafic-9-posti` |
 | `/car/nissan-primastar/` | `/flotta/nissan-primastar-9-posti` |
 | `/car/opel-vivaro/` | `/flotta/opel-vivaro` |
-| `/car/fiat-doblo/` | `/flotta/fiat-doblo-gh618pt` |
+| `/car/fiat-doblo/` | `/flotta/fiat-doblo-cargo` |
 | `/car/fiat-ducato-l1h1/` | `/flotta/fiat-ducato-l1h1` |
-| `/car/ford-transit/` | da mappare |
+| `/car/ford-transit/` | `/flotta/ford-transit-l2h2` |
 | `/car/ford-transit-l3h2-furgone/` | `/flotta/ford-transit-l3h2` |
-| `/car/opel-movano/` | `/flotta/opel-movano-gc328pk` |
-| `/car/renault-master/` | Master L2H2 / GG290XM |
-| `/car/peugeot-boxer-l2h2/` | `/flotta/peugeot-boxer-l2h2-ew858wc` |
+| `/car/opel-movano/` | `/flotta/opel-movano-l2h2` |
+| `/car/renault-master/` | `/flotta/renault-master-l2h2` |
+| `/car/peugeot-boxer-l2h2/` | `/flotta/peugeot-boxer-l2h2` |
 | `/car/peugeot-boxer-l2h2-2/` | duplicato L2H2 |
 | `/car/peugeot-boxer-2/` | probabile XL / L3H3 |
 | `/car/iveco-iveco-daily/` | `/flotta/iveco-daily-35-12` |

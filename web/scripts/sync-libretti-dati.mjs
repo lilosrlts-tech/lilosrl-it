@@ -40,7 +40,7 @@ const BY_SLUG = {
     lunghezza_mm: 5998,
     larghezza_mm: 2050,
   },
-  "citroen-jumpy-fr523sw": {
+  "citroen-jumpy-l1h1": {
     targa: "FR523SW",
     marca: "Citroën",
     modello: "Jumpy",
@@ -53,7 +53,7 @@ const BY_SLUG = {
     lunghezza_mm: 4959,
     larghezza_mm: 1920,
   },
-  "fiat-doblo-gh618pt": {
+  "fiat-doblo-cargo": {
     targa: "GH618PT",
     marca: "Fiat",
     modello: "Doblò",
@@ -111,7 +111,7 @@ const BY_SLUG = {
     lunghezza_mm: 5230,
     larghezza_mm: 1974,
   },
-  "citroen-jumper-es772tn": {
+  "citroen-jumper-l1h1": {
     targa: "ES772TN",
     marca: "Citroën",
     modello: "Jumper",
@@ -125,7 +125,7 @@ const BY_SLUG = {
     lunghezza_mm: 4963,
     larghezza_mm: 2050,
   },
-  "ford-transit-custom-gj446ak": {
+  "ford-transit-custom-l1h1-ibrido": {
     targa: "GJ446AK",
     marca: "Ford",
     modello: "Transit Custom",
@@ -138,7 +138,7 @@ const BY_SLUG = {
     lunghezza_mm: 4972,
     larghezza_mm: 2032,
   },
-  "ford-transit-gg551rd": {
+  "ford-transit-l2h2": {
     targa: "GG551RD",
     marca: "Ford",
     modello: "Transit",
@@ -171,7 +171,7 @@ const BY_SLUG = {
     titolo_pubblico: "Ford Transit L3H2 — Furgone XL Trieste",
     sottotitolo: "Passo lungo, gran volume per traslochi e carichi massimi",
   },
-  "peugeot-boxer-l2h2-ew858wc": {
+  "peugeot-boxer-l2h2": {
     targa: "EW858WC",
     marca: "Peugeot",
     modello: "Boxer",
@@ -185,7 +185,7 @@ const BY_SLUG = {
     lunghezza_mm: 5413,
     larghezza_mm: 2050,
   },
-  "renault-master-l2h2-gf883sb": {
+  "renault-master-l2h2": {
     targa: "GF883SB",
     marca: "Renault",
     modello: "Master",
@@ -198,7 +198,7 @@ const BY_SLUG = {
     lunghezza_mm: 5548,
     larghezza_mm: 2070,
   },
-  "nissan-interstar-l3h2-gt436zp": {
+  "nissan-interstar-l3h2": {
     targa: "GT436ZP",
     marca: "Nissan",
     modello: "Interstar",
@@ -227,7 +227,7 @@ const BY_SLUG = {
     larghezza_mm: 1956,
     passo: "Normale",
   },
-  "opel-movano-gc328pk": {
+  "opel-movano-l2h2": {
     targa: "GC328PK",
     marca: "Opel",
     modello: "Movano",
@@ -241,7 +241,7 @@ const BY_SLUG = {
     lunghezza_mm: 5548,
     larghezza_mm: 2070,
   },
-  "renault-master-gg290xm": {
+  "renault-master-l2h3": {
     targa: "GG290XM",
     marca: "Renault",
     modello: "Master",

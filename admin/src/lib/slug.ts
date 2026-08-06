@@ -8,13 +8,20 @@ export function slugify(value: string): string {
     .replace(/-{2,}/g, "-");
 }
 
+/**
+ * Slug pubblico stabile: marca + modello + eventuale taglia/versione (es. L2H2).
+ * La targa NON entra nell’URL (si aggiorna il mezzo senza cambiare link SEO).
+ */
 export function buildVeicoloSlug(
   marca: string,
   modello: string,
-  targa: string
+  versione?: string | null,
 ): string {
-  const base = slugify(`${marca}-${modello}-${targa}`);
-  return base || slugify(targa);
+  const parts = [marca, modello];
+  const v = versione?.trim();
+  if (v) parts.push(v);
+  const base = slugify(parts.join("-"));
+  return base || slugify(`${marca}-${modello}`) || "veicolo";
 }
 
 export function buildCategoriaSlug(nome: string): string {

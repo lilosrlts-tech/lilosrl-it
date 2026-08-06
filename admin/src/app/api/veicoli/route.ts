@@ -43,7 +43,8 @@ export async function POST(request: NextRequest) {
     const { prezzo_giornaliero, accessori_ids, ...veicoloData } = parsed;
 
     const slug =
-      parsed.slug ?? buildVeicoloSlug(parsed.marca, parsed.modello, parsed.targa);
+      parsed.slug ??
+      buildVeicoloSlug(parsed.marca, parsed.modello, parsed.versione);
 
     const veicolo = await createVeicolo({
       ...veicoloData,
@@ -126,7 +127,11 @@ async function createVeicoloFromForm(request: NextRequest) {
   const parsed = veicoloCreateSchema.parse(raw);
   const { prezzo_giornaliero, ...veicoloData } = parsed;
 
-  const slug = buildVeicoloSlug(parsed.marca, parsed.modello, parsed.targa);
+  const slug = buildVeicoloSlug(
+    parsed.marca,
+    parsed.modello,
+    parsed.versione,
+  );
   const veicolo = await createVeicolo({
     ...veicoloData,
     slug,

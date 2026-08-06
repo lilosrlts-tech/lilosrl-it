@@ -23,7 +23,7 @@ const env = loadEnv(credPath);
 const supabase = createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.SUPABASE_SERVICE_ROLE_KEY);
 
 const SLUG = "peugeot-boxer-l3h3";
-const LEGACY_SLUG = "peugeot-boxer-l3h3-ix345ij";
+const LEGACY_SLUG = "peugeot-boxer-l3h3";
 
 const HIGHLIGHTS = [
   "📦 Configurazione Extra Large L3H3: Volume di carico massimo (circa 15 m³) con tetto super alto ed estensione in lunghezza.",

@@ -45,8 +45,12 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
 
     const payload: Record<string, unknown> = { ...veicoloData };
 
-    if (parsed.marca && parsed.modello && parsed.targa && !parsed.slug) {
-      payload.slug = buildVeicoloSlug(parsed.marca, parsed.modello, parsed.targa);
+    if (parsed.marca && parsed.modello && !parsed.slug) {
+      payload.slug = buildVeicoloSlug(
+        parsed.marca,
+        parsed.modello,
+        parsed.versione,
+      );
     }
 
     const action = body.action as string | undefined;

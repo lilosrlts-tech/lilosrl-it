@@ -49,7 +49,7 @@ const BY_SLUG = {
     ...vano(3705, 1870, 2172, 1422, 15),
     sensori_parcheggio: true, // foto retro: sensori su paraurti
   },
-  "peugeot-boxer-l2h2-ew858wc": {
+  "peugeot-boxer-l2h2": {
     ...vano(3120, 1870, 1932, 1422, 11.5),
     sensori_parcheggio: true,
   },
@@ -57,7 +57,7 @@ const BY_SLUG = {
     ...vano(3120, 1870, 1932, 1422, 11.5),
     sensori_parcheggio: true, // foto retro FT240AN
   },
-  "citroen-jumper-es772tn": {
+  "citroen-jumper-l1h1": {
     ...vano(2670, 1870, 1662, 1422, 8),
     sensori_parcheggio: true,
   },
@@ -67,18 +67,18 @@ const BY_SLUG = {
   },
 
   // ——— Ford Transit Custom L1H1 (gen. precedente, ~6 m³) ———
-  "ford-transit-custom-fj932zy": {
+  "ford-transit-custom-l1h1": {
     ...vano(2555, 1775, 1406, 1390, 6),
     sensori_parcheggio: true,
   },
-  "ford-transit-custom-gj446ak": {
+  "ford-transit-custom-l1h1-ibrido": {
     ...vano(2555, 1775, 1406, 1390, 6),
     sensori_parcheggio: true,
   },
 
   // ——— Ford Transit grande ———
   // GG551RD: esterni 5531 → L2; volume 10 → H2 FWD OEM
-  "ford-transit-gg551rd": {
+  "ford-transit-l2h2": {
     ...vano(3044, 1784, 1886, 1392, 10),
     sensori_parcheggio: true,
   },
@@ -94,21 +94,21 @@ const BY_SLUG = {
   },
 
   // ——— Master / Movano / Interstar ———
-  "renault-master-l2h2-gf883sb": {
+  "renault-master-l2h2": {
     ...vano(3083, 1765, 1894, 1380, 10.8),
     sensori_parcheggio: true,
   },
   // Volume dichiarato ~12 → L2H3 OEM 12,3 m³
-  "renault-master-gg290xm": {
+  "renault-master-l2h3": {
     ...vano(3083, 1765, 2144, 1380, 12.3),
     sensori_parcheggio: true,
   },
-  "opel-movano-gc328pk": {
+  "opel-movano-l2h2": {
     ...vano(3083, 1765, 1894, 1380, 10.8),
     sensori_parcheggio: true,
   },
   // Versione L3H2: volume corretto 13 m³ (14,8 = L3H3)
-  "nissan-interstar-l3h2-gt436zp": {
+  "nissan-interstar-l3h2": {
     ...vano(3733, 1765, 1894, 1380, 13),
     sensori_parcheggio: true,
   },
@@ -120,12 +120,12 @@ const BY_SLUG = {
   },
 
   // ——— Medi / piccoli ———
-  "citroen-jumpy-fr523sw": {
+  "citroen-jumpy-l1h1": {
     ...vano(2512, 1636, 1397, 1258, 5.3),
     sensori_parcheggio: true,
   },
   // Doblò Cargo SWB (esterno 4406): lunghezza utile OEM 1820
-  "fiat-doblo-gh618pt": {
+  "fiat-doblo-cargo": {
     ...vano(1820, 1714, 1305, 1230, 3.4),
     sensori_parcheggio: true,
   },

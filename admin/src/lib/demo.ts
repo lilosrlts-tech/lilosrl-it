@@ -118,7 +118,7 @@ export const DEMO_VEICOLI: VeicoloDettaglio[] = [
     vano_larghezza_mm: 1662,
     vano_altezza_mm: 1387,
     note_interne: null,
-    slug: "ford-transit-350m-dv344hd",
+    slug: "ford-transit-l2h2-citta",
     pubblicato: true,
     attivo: true,
     in_evidenza: true,
