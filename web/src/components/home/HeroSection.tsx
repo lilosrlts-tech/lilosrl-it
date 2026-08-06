@@ -1,19 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
-import { preload } from "react-dom";
 import type { ImpostazioniSito } from "@/types/impostazioni";
 import { PhoneLink } from "@/components/shared/PhoneLink";
 
 const HERO_IMAGE = "/images/hero-home.webp";
-const HERO_WIDTH = 1600;
-const HERO_HEIGHT = 560;
 
 interface HeroSectionProps {
   impostazioni: ImpostazioniSito;
 }
 
 export function HeroSection({ impostazioni }: HeroSectionProps) {
-  preload(HERO_IMAGE, { as: "image", fetchPriority: "high" });
   return (
     <section
       className="relative isolate w-full overflow-hidden bg-slate-800 text-white"
@@ -24,12 +20,12 @@ export function HeroSection({ impostazioni }: HeroSectionProps) {
         <Image
           src={HERO_IMAGE}
           alt="Furgone LILO in Piazza Unità d'Italia, Trieste"
-          width={HERO_WIDTH}
-          height={HERO_HEIGHT}
+          fill
           priority
-          unoptimized
+          fetchPriority="high"
+          quality={72}
           sizes="100vw"
-          className="absolute inset-0 h-full w-full object-cover object-[62%_center]"
+          className="object-cover object-[62%_center]"
         />
         <div
           className="absolute inset-0 bg-gradient-to-r from-slate-900/82 via-slate-900/50 to-transparent"
@@ -87,12 +83,12 @@ export function HeroSection({ impostazioni }: HeroSectionProps) {
                 </PhoneLink>
               </div>
 
-              <p className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs text-slate-200/90 sm:mt-4 sm:text-sm">
+              <p className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs text-slate-200 sm:mt-4 sm:text-sm">
                 <span className="tracking-wide text-amber-300" aria-hidden="true">
                   ★★★★★
                 </span>
                 <span>Recensioni Google</span>
-                <span className="text-white/40" aria-hidden="true">
+                <span className="text-white/50" aria-hidden="true">
                   ·
                 </span>
                 <span>20+ anni di esperienza a Trieste</span>

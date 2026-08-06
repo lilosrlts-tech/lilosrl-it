@@ -29,7 +29,7 @@ export function InstitutionalPartnersSection() {
               </span>
               {index < PARTNERS.length - 1 && (
                 <span
-                  className="hidden text-[#D4AF37] sm:inline"
+                  className="hidden text-[#A16207] sm:inline"
                   aria-hidden="true"
                 >
                   •

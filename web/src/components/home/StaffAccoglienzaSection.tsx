@@ -1,4 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
+import { GOLD_TEXT } from "@/lib/nav-config";
 
 const GOLD = "#D4AF37";
 const STAFF_IMAGE = "/images/lilo-staff-accoglienza-trieste.webp";
@@ -22,15 +24,14 @@ export function StaffAccoglienzaSection() {
         <div className="relative order-2 lg:order-1">
           <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg shadow-slate-200/60 ring-1 ring-slate-100">
             <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src={STAFF_IMAGE}
                 alt="Staff del desk di accoglienza LILO Autonoleggio a Trieste in Viale Campi Elisi 38/b"
                 title="Team LILO Autonoleggio Trieste"
                 width={STAFF_IMAGE_WIDTH}
                 height={STAFF_IMAGE_HEIGHT}
-                loading="lazy"
-                decoding="async"
+                sizes="(max-width: 1024px) 100vw, 560px"
+                quality={75}
                 className="h-full w-full object-cover object-center"
               />
               <div
@@ -56,7 +57,7 @@ export function StaffAccoglienzaSection() {
         <div className="order-1 lg:order-2">
           <p
             className="text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm"
-            style={{ color: GOLD }}
+            style={{ color: GOLD_TEXT }}
           >
             Perché sceglierci
           </p>

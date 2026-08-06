@@ -20,7 +20,8 @@ export function LiloLogo({ variant = "default" }: LiloLogoProps) {
         height={56}
         className={imageClass}
         style={{ width: "auto", height: "auto" }}
-        priority={variant === "default"}
+        // Non competere con l'hero LCP: il logo resta eager via layout ma senza preload high.
+        fetchPriority="low"
       />
     </Link>
   );

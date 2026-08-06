@@ -1,6 +1,8 @@
 import type { AiFaqItem } from "@/types/veicolo";
 
 export const GOLD = "#D4AF37";
+/** Testo oro su sfondo chiaro (WCAG AA). */
+export const GOLD_TEXT = "#A16207";
 
 export interface TimelineEvent {
   year: string;
