@@ -1,4 +1,8 @@
 import { SITE_URL } from "@/lib/constants";
+import {
+  getLocalFleetImageFallback,
+  resolveVeicoloCoverUrl,
+} from "@/lib/fleet-image-url";
 import type { FotoPubblica, VeicoloPubblico } from "@/types/veicolo";
 
 export type VeicoloFotoVista = "fiancata" | "posteriore" | "copertina";
@@ -102,13 +106,28 @@ export function toAbsoluteAssetUrl(path: string | null | undefined): string | un
   return `${SITE_URL}${trimmed.startsWith("/") ? trimmed : `/${trimmed}`}`;
 }
 
+/**
+ * URL immagine assolute per JSON-LD (GSC richiede `image` obbligatorio).
+ * Ordine: foto, og_image, fallback locale/categoria, logo sito.
+ */
 export function getVeicoloImageUrlsForSchema(veicolo: VeicoloPubblico): string[] {
-  const urls = veicolo.foto
-    .map((f) => toAbsoluteAssetUrl(f.url_pubblico))
-    .filter((url): url is string => Boolean(url));
+  const seen = new Set<string>();
+  const urls: string[] = [];
 
-  const og = toAbsoluteAssetUrl(veicolo.og_image_url);
-  if (og && !urls.includes(og)) urls.unshift(og);
+  const push = (raw: string | null | undefined) => {
+    const abs = toAbsoluteAssetUrl(raw);
+    if (!abs || seen.has(abs)) return;
+    seen.add(abs);
+    urls.push(abs);
+  };
+
+  for (const f of veicolo.foto) {
+    push(f.url_pubblico);
+  }
+  push(veicolo.og_image_url);
+  push(resolveVeicoloCoverUrl(veicolo));
+  push(getLocalFleetImageFallback(veicolo.slug, veicolo.categoria?.slug));
+  push("/logo-lilo.jpg");
 
   return urls;
 }

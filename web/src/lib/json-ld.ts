@@ -9,13 +9,15 @@ import {
   getFlottaCategoriaNavLabel,
 } from "@/lib/flotta-categoria-config";
 import {
-  getCoverImage,
   getDisplayName,
   getPrezzoGiornaliero,
 } from "@/lib/veicoli";
 import { isFurgoneCategory } from "@/lib/specifiche-tecniche-utils";
 import { useCasesForVeicolo } from "@/lib/cosa-trasporti";
-import { getVeicoloFotoAlt, getVeicoloImageUrlsForSchema, stripTargaFromPublicCopy } from "@/lib/veicolo-seo";
+import {
+  getVeicoloImageUrlsForSchema,
+  stripTargaFromPublicCopy,
+} from "@/lib/veicolo-seo";
 import { veicoloCanonicalUrl } from "@/lib/seo";
 import {
   getNotaCauzione,
@@ -55,14 +57,12 @@ function autoRentalProvider() {
   };
 }
 
-/** Tipi schema: Vehicle/Car; Product solo se c’è un’Offer valida (requisito GSC). */
-function schemaTypes(
-  categoriaSlug: string | undefined,
-  withProduct: boolean,
-): string[] {
-  const types = categoriaSlug === "auto" ? ["Car", "Vehicle"] : ["Vehicle"];
-  if (withProduct) types.push("Product");
-  return types;
+/**
+ * Tipi schema per noleggio: Car/Vehicle (non Product).
+ * Product attiva i controlli Merchant (spedizione/resi) non pertinenti all’autonoleggio.
+ */
+function schemaTypes(categoriaSlug: string | undefined): string[] {
+  return categoriaSlug === "auto" ? ["Car", "Vehicle"] : ["Vehicle"];
 }
 
 function formatSchemaPrice(importo: number): string {
@@ -71,7 +71,16 @@ function formatSchemaPrice(importo: number): string {
 
 type PrezzoSchema = { importo: number; valuta: string };
 
-/** Offer giornaliera per noleggio — sempre con price / currency / availability (GSC Product). */
+function buildVeicoloDescription(veicolo: VeicoloPubblico): string {
+  return stripTargaFromPublicCopy(
+    veicolo.ai_summary?.trim() ||
+      veicolo.descrizione_breve?.trim() ||
+      veicolo.seo_description?.trim() ||
+      `Noleggio ${veicolo.marca} ${veicolo.modello} a Trieste presso LILO S.r.l. Tariffe giornaliere IVA inclusa, ritiro in sede.`,
+  );
+}
+
+/** Offer giornaliera per noleggio — price / currency / availability (GSC). */
 function buildDailyRentalOffer(params: {
   name: string;
   canonical: string;
@@ -135,28 +144,33 @@ function buildDailyRentalOffer(params: {
   };
 }
 
-/** Evita Product senza offers/review/aggregateRating in JSON-LD custom da CMS. */
+/** Rimuove Product da JSON-LD custom (evita Schede commercianti / spedizioni-resi). */
 function sanitizeCustomJsonLd(
   raw: Record<string, unknown>,
   offer: Record<string, unknown> | null,
   canonical: string,
+  images: string[],
+  description: string,
+  brandName: string,
 ): Record<string, unknown> {
   const custom: Record<string, unknown> = { ...raw, url: canonical };
   const type = custom["@type"];
-  const types = Array.isArray(type) ? type.map(String) : type != null ? [String(type)] : [];
-  const isProduct = types.includes("Product");
+  let types = Array.isArray(type) ? type.map(String) : type != null ? [String(type)] : [];
 
-  if (isProduct) {
-    if (offer && custom.offers == null) {
-      custom.offers = offer;
-    } else if (!offer && custom.offers == null && !custom.review && !custom.aggregateRating) {
-      custom["@type"] = types.filter((t) => t !== "Product");
-      if ((custom["@type"] as string[]).length === 0) {
-        custom["@type"] = "Vehicle";
-      } else if ((custom["@type"] as string[]).length === 1) {
-        custom["@type"] = (custom["@type"] as string[])[0];
-      }
+  if (types.includes("Product")) {
+    types = types.filter((t) => t !== "Product");
+    if (!types.includes("Vehicle") && !types.includes("Car")) {
+      types.push("Vehicle");
     }
+  }
+  if (types.length === 0) types = ["Vehicle"];
+  custom["@type"] = types.length === 1 ? types[0] : types;
+
+  if (offer && custom.offers == null) custom.offers = offer;
+  if (!custom.image && images.length > 0) custom.image = images;
+  if (!custom.description) custom.description = description;
+  if (!custom.brand) {
+    custom.brand = { "@type": "Brand", name: brandName };
   }
 
   return custom;
@@ -343,9 +357,7 @@ export function buildVeicoloJsonLd(veicolo: VeicoloPubblico): Record<string, unk
   const canonical = veicoloCanonicalUrl(veicolo.slug);
   const prezzo = getPrezzoGiornaliero(veicolo);
   const images = getVeicoloImageUrlsForSchema(veicolo);
-  const coverFoto =
-    veicolo.foto.find((f) => f.is_copertina) ?? veicolo.foto[0] ?? null;
-  const imageAlt = getVeicoloFotoAlt(veicolo, coverFoto);
+  const description = buildVeicoloDescription(veicolo);
 
   const categoriaNome = veicolo.categoria?.nome ?? "Veicolo";
   const cargo = resolveCargoSpecs(veicolo);
@@ -375,7 +387,7 @@ export function buildVeicoloJsonLd(veicolo: VeicoloPubblico): Record<string, unk
         additionalProperty: offerAdditional,
       })
     : null;
-  const types = schemaTypes(veicolo.categoria?.slug, Boolean(offers));
+  const types = schemaTypes(veicolo.categoria?.slug);
 
   const keywordParts = [
     ...useCases.map((u) => u.label),
@@ -393,20 +405,18 @@ export function buildVeicoloJsonLd(veicolo: VeicoloPubblico): Record<string, unk
     "@type": types,
     "@id": `${canonical}#veicolo`,
     name,
-    description: stripTargaFromPublicCopy(
-      veicolo.ai_summary ??
-        veicolo.descrizione_breve ??
-        `Noleggio ${veicolo.marca} ${veicolo.modello} a Trieste presso LILO S.r.l.`,
-    ),
+    description,
     url: canonical,
-    image:
-      images.length > 0
-        ? images.map((url) => ({ "@type": "ImageObject", url, caption: imageAlt }))
-        : undefined,
+    // URL assoluti (stringhe): requisito GSC; almeno una grazie al fallback logo.
+    image: images,
     category: categoriaNome,
     keywords: keywordParts.filter(Boolean).join(", "),
     brand: {
       "@type": "Brand",
+      name: veicolo.marca,
+    },
+    manufacturer: {
+      "@type": "Organization",
       name: veicolo.marca,
     },
     model: veicolo.modello,
@@ -448,7 +458,16 @@ export function buildVeicoloJsonLd(veicolo: VeicoloPubblico): Record<string, unk
   if (faqPage) graph.push(faqPage);
 
   if (veicolo.json_ld && Object.keys(veicolo.json_ld).length > 0) {
-    graph.push(sanitizeCustomJsonLd(veicolo.json_ld, offers, canonical));
+    graph.push(
+      sanitizeCustomJsonLd(
+        veicolo.json_ld,
+        offers,
+        canonical,
+        images,
+        description,
+        veicolo.marca,
+      ),
+    );
   }
 
   return {
@@ -783,15 +802,19 @@ export function buildFlottaCategoriaJsonLd(
             const name = getDisplayName(veicolo);
             const prezzo = getPrezzoGiornaliero(veicolo);
             const itemUrl = veicoloCanonicalUrl(veicolo.slug);
+            const images = getVeicoloImageUrlsForSchema(veicolo);
+            const isAuto = veicolo.categoria?.slug === "auto";
             const item: Record<string, unknown> = {
-              "@type": prezzo ? "Product" : "Vehicle",
+              "@type": isAuto ? ["Car", "Vehicle"] : "Vehicle",
               name,
-              description: (() => {
-                const raw = veicolo.descrizione_breve ?? veicolo.ai_summary ?? undefined;
-                return raw ? stripTargaFromPublicCopy(raw) : undefined;
-              })(),
-              image: getCoverImage(veicolo) ?? undefined,
+              description: buildVeicoloDescription(veicolo),
+              image: images,
               url: itemUrl,
+              brand: {
+                "@type": "Brand",
+                name: veicolo.marca,
+              },
+              model: veicolo.modello,
             };
             if (prezzo) {
               item.offers = {
