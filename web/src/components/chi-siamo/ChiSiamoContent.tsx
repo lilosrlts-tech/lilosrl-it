@@ -11,7 +11,6 @@ import {
   CHI_SIAMO_FAQ,
   CHI_SIAMO_HERO,
   GOLD,
-  GOLD_TEXT,
   INSTITUTIONAL_CLIENTS,
   MISSION_BULLETS,
   MISSION_TEXT,
@@ -59,7 +58,7 @@ export function ChiSiamoContent({ impostazioni }: ChiSiamoContentProps) {
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:py-14">
       <header className="max-w-4xl">
-        <p className="text-sm font-semibold uppercase tracking-wider" style={{ color: GOLD_TEXT }}>
+        <p className="text-sm font-semibold uppercase tracking-wider" style={{ color: GOLD }}>
           Chi Siamo
         </p>
         <h1 className="mt-2 text-2xl font-bold leading-tight text-slate-900 sm:text-3xl lg:text-4xl">
@@ -85,7 +84,7 @@ export function ChiSiamoContent({ impostazioni }: ChiSiamoContentProps) {
             >
               <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-6">
                 <span
-                  className="inline-flex w-fit max-w-full shrink-0 self-start rounded-full px-3 py-1 text-xs font-bold text-slate-900 sm:text-sm"
+                  className="inline-flex w-fit max-w-full shrink-0 self-start rounded-full px-3 py-1 text-xs font-bold text-white sm:text-sm"
                   style={{ backgroundColor: GOLD }}
                 >
                   {event.year}
@@ -137,7 +136,7 @@ export function ChiSiamoContent({ impostazioni }: ChiSiamoContentProps) {
           <BulletList items={serviziNoleggio} />
           <Link
             href="/flotta"
-            className="mt-6 inline-block rounded-full px-5 py-2.5 text-sm font-semibold text-slate-900"
+            className="mt-6 inline-block rounded-full px-5 py-2.5 text-sm font-semibold text-white"
             style={{ backgroundColor: GOLD }}
           >
             Scopri la flotta
@@ -157,7 +156,7 @@ export function ChiSiamoContent({ impostazioni }: ChiSiamoContentProps) {
           <Link
             href="/autolavaggio"
             className="mt-6 inline-block font-semibold hover:underline"
-            style={{ color: GOLD_TEXT }}
+            style={{ color: GOLD }}
           >
             Vai all&apos;autolavaggio →
           </Link>
@@ -190,7 +189,7 @@ export function ChiSiamoContent({ impostazioni }: ChiSiamoContentProps) {
                 <p className="mt-1 text-sm text-slate-500">{client.subtitle}</p>
               )}
               {client.cig && (
-                <p className="mt-2 text-xs font-medium text-slate-500">CIG: {client.cig}</p>
+                <p className="mt-2 text-xs font-medium text-slate-400">CIG: {client.cig}</p>
               )}
               {client.href ? (
                 <a
@@ -198,7 +197,7 @@ export function ChiSiamoContent({ impostazioni }: ChiSiamoContentProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-auto pt-4 text-sm font-semibold hover:underline"
-                  style={{ color: GOLD_TEXT }}
+                  style={{ color: GOLD }}
                 >
                   {client.linkLabel ?? "Documentazione"} →
                 </a>
@@ -230,7 +229,7 @@ export function ChiSiamoContent({ impostazioni }: ChiSiamoContentProps) {
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {VALUES.map((value) => (
             <div key={value.title} className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-              <h3 className="font-semibold" style={{ color: GOLD_TEXT }}>
+              <h3 className="font-semibold" style={{ color: GOLD }}>
                 {value.title}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-slate-600">{value.description}</p>
@@ -252,7 +251,7 @@ export function ChiSiamoContent({ impostazioni }: ChiSiamoContentProps) {
             34143 Trieste (TS)
           </p>
           <p className="mt-3 text-sm">
-            <PhoneLink phone={tel} className="font-semibold hover:underline" style={{ color: GOLD_TEXT }}>
+            <PhoneLink phone={tel} className="font-semibold hover:underline" style={{ color: GOLD }}>
               {tel}
             </PhoneLink>
             <br />
@@ -300,24 +299,19 @@ export function ChiSiamoContent({ impostazioni }: ChiSiamoContentProps) {
         <VeicoloFaq items={CHI_SIAMO_FAQ} />
       </section>
 
-      <section
-        className="mt-12 rounded-2xl px-6 py-8 text-center text-slate-900 sm:px-10"
-        style={{ backgroundColor: GOLD }}
-      >
+      <section className="mt-12 rounded-2xl px-6 py-8 text-center text-white sm:px-10" style={{ backgroundColor: GOLD }}>
         <h2 className="text-xl font-bold">Hai bisogno di un preventivo?</h2>
-        <p className="mt-2 text-slate-800">
-          Contattaci per noleggio, autolavaggio o soluzioni aziendali.
-        </p>
+        <p className="mt-2 text-white/90">Contattaci per noleggio, autolavaggio o soluzioni aziendali.</p>
         <div className="mt-5 flex flex-wrap justify-center gap-3">
           <PhoneLink
             phone={tel}
-            className="rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white hover:bg-slate-800"
+            className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-slate-900 hover:bg-slate-100"
           >
             Chiama {tel}
           </PhoneLink>
           <Link
             href="/contatti"
-            className="rounded-full border border-slate-900/40 px-5 py-2.5 text-sm font-semibold text-slate-900 hover:bg-black/5"
+            className="rounded-full border border-white/60 px-5 py-2.5 text-sm font-semibold text-white hover:bg-white/10"
           >
             Contatti
           </Link>

@@ -125,7 +125,7 @@ export function CookieBanner() {
           {/* Mobile: foglio basso senza oscurare tutta la pagina */}
           <div className="max-h-[min(70vh,32rem)] w-full overflow-y-auto rounded-t-2xl border border-slate-200 bg-white p-4 shadow-[0_-8px_30px_rgba(15,23,42,0.15)] sm:max-h-[92vh] sm:max-w-2xl sm:rounded-2xl sm:p-8 sm:shadow-2xl">
             <div className="mx-auto mb-3 h-1 w-10 rounded-full bg-slate-200 sm:hidden" aria-hidden="true" />
-            <p className="text-xs font-medium text-slate-600">{hostLabel()}</p>
+            <p className="text-xs font-medium text-slate-400">{hostLabel()}</p>
             <h2
               id="cookie-consent-title"
               className="mt-1 text-base font-bold leading-snug text-slate-900 sm:mt-2 sm:text-center sm:text-xl"

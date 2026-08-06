@@ -1,6 +1,4 @@
-import Image from "next/image";
 import Link from "next/link";
-import { GOLD_TEXT } from "@/lib/nav-config";
 
 const GOLD = "#D4AF37";
 const AUTOLAVAGGIO_IMAGE = "/images/staff-autolavaggio-lilo-trieste.webp";
@@ -24,7 +22,7 @@ export function AutolavaggioPromoSection() {
         <div>
           <p
             className="text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm"
-            style={{ color: GOLD_TEXT }}
+            style={{ color: GOLD }}
           >
             Servizi LILO
           </p>
@@ -64,13 +62,14 @@ export function AutolavaggioPromoSection() {
         <div className="relative">
           <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg shadow-slate-200/60 ring-1 ring-slate-100">
             <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
-              <Image
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src={AUTOLAVAGGIO_IMAGE}
                 alt="Team e Staff Autolavaggio Professionale Lilo SRL Trieste"
                 width={AUTOLAVAGGIO_IMAGE_WIDTH}
                 height={AUTOLAVAGGIO_IMAGE_HEIGHT}
-                sizes="(max-width: 1024px) 100vw, 560px"
-                quality={75}
+                loading="lazy"
+                decoding="async"
                 className="h-full w-full object-cover object-center"
               />
               <div

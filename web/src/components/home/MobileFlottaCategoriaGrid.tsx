@@ -21,7 +21,7 @@ export function MobileFlottaCategoriaGrid() {
       className="border-b border-slate-200 bg-white px-4 py-6 md:hidden"
       aria-labelledby="mobile-flotta-categorie-heading"
     >
-      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#A16207]">
+      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#D4AF37]">
         Flotta noleggio
       </p>
       <h2

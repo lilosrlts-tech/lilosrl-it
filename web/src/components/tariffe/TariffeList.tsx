@@ -30,7 +30,7 @@ export function TariffeList({ sezioni }: TariffeListProps) {
               {sezione.prezzoMinimo != null && (
                 <p className="mt-1 text-sm text-slate-600">
                   A partire da{" "}
-                  <span className="font-semibold text-[#A16207]">
+                  <span className="font-semibold text-[#D4AF37]">
                     {formatEuro(sezione.prezzoMinimo, sezione.valuta)}
                   </span>{" "}
                   / giorno · {PREZZO_IVA_DICITURA}

@@ -41,7 +41,7 @@ export default async function TariffePage() {
         <div className="mt-8 flex flex-wrap gap-3">
           <Link
             href="/flotta"
-            className="rounded-full bg-[#D4AF37] px-5 py-2.5 text-sm font-semibold text-slate-900 hover:opacity-90"
+            className="rounded-full bg-[#D4AF37] px-5 py-2.5 text-sm font-semibold text-white hover:opacity-90"
           >
             Vedi la flotta
           </Link>
