@@ -1,0 +1,11 @@
+{
+  "name": "lilosrl-it",
+  "private": true,
+  "description": "Script operativi root (backup DB, ecc.)",
+  "scripts": {
+    "backup": "node scripts/backup-db.mjs"
+  },
+  "devDependencies": {
+    "pg": "^8.22.0"
+  }
+}

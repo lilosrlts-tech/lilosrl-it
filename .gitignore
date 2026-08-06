@@ -13,6 +13,10 @@ node_modules/
 **/CREDENZIALI.env
 supabase/CREDENZIALI.env
 
+# Dump DB locali (piano Free: niente backup automatici Supabase)
+backups/
+*.sql.dump
+
 # OS / IDE
 .DS_Store
 Thumbs.db
