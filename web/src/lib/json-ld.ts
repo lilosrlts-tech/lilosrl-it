@@ -55,10 +55,111 @@ function autoRentalProvider() {
   };
 }
 
-/** Tipi schema: Vehicle in testa per furgoni/pulmini (AI + Google). */
-function schemaTypes(categoriaSlug: string | undefined): string[] {
-  if (categoriaSlug === "auto") return ["Car", "Vehicle", "Product"];
-  return ["Vehicle", "Product"];
+/** Tipi schema: Vehicle/Car; Product solo se c’è un’Offer valida (requisito GSC). */
+function schemaTypes(
+  categoriaSlug: string | undefined,
+  withProduct: boolean,
+): string[] {
+  const types = categoriaSlug === "auto" ? ["Car", "Vehicle"] : ["Vehicle"];
+  if (withProduct) types.push("Product");
+  return types;
+}
+
+function formatSchemaPrice(importo: number): string {
+  return (Math.round(importo * 100) / 100).toFixed(2);
+}
+
+type PrezzoSchema = { importo: number; valuta: string };
+
+/** Offer giornaliera per noleggio — sempre con price / currency / availability (GSC Product). */
+function buildDailyRentalOffer(params: {
+  name: string;
+  canonical: string;
+  prezzo: PrezzoSchema;
+  additionalProperty?: Record<string, unknown>[];
+}): Record<string, unknown> {
+  const { name, canonical, prezzo, additionalProperty } = params;
+  const price = formatSchemaPrice(prezzo.importo);
+  const priceCurrency = prezzo.valuta || "EUR";
+
+  return {
+    "@type": "Offer",
+    "@id": `${canonical}#offerta`,
+    name: `Tariffa giornaliera — ${name}`,
+    price,
+    priceCurrency,
+    availability: "https://schema.org/InStock",
+    url: canonical,
+    businessFunction: "https://schema.org/LeaseOut",
+    priceSpecification: {
+      "@type": "UnitPriceSpecification",
+      price,
+      priceCurrency,
+      unitText: "DAY",
+      referenceQuantity: {
+        "@type": "QuantitativeValue",
+        value: 1,
+        unitCode: "DAY",
+      },
+    },
+    additionalProperty:
+      additionalProperty && additionalProperty.length > 0
+        ? additionalProperty
+        : undefined,
+    seller: autoRentalProvider(),
+    availableAtOrFrom: {
+      "@type": "Place",
+      name: "LILO Autonoleggio — Viale Campi Elisi 38/B",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: COMPANY.streetAddress,
+        addressLocality: COMPANY.city,
+        postalCode: COMPANY.postalCode,
+        addressRegion: COMPANY.region,
+        addressCountry: COMPANY.country,
+      },
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: COMPANY.geo.latitude,
+        longitude: COMPANY.geo.longitude,
+      },
+    },
+    areaServed: {
+      "@type": "City",
+      name: "Trieste",
+      containedInPlace: {
+        "@type": "AdministrativeArea",
+        name: "Friuli-Venezia Giulia",
+      },
+    },
+  };
+}
+
+/** Evita Product senza offers/review/aggregateRating in JSON-LD custom da CMS. */
+function sanitizeCustomJsonLd(
+  raw: Record<string, unknown>,
+  offer: Record<string, unknown> | null,
+  canonical: string,
+): Record<string, unknown> {
+  const custom: Record<string, unknown> = { ...raw, url: canonical };
+  const type = custom["@type"];
+  const types = Array.isArray(type) ? type.map(String) : type != null ? [String(type)] : [];
+  const isProduct = types.includes("Product");
+
+  if (isProduct) {
+    if (offer && custom.offers == null) {
+      custom.offers = offer;
+    } else if (!offer && custom.offers == null && !custom.review && !custom.aggregateRating) {
+      custom["@type"] = types.filter((t) => t !== "Product");
+      if ((custom["@type"] as string[]).length === 0) {
+        custom["@type"] = "Vehicle";
+      } else if ((custom["@type"] as string[]).length === 1) {
+        custom["@type"] = (custom["@type"] as string[])[0];
+      }
+    }
+  }
+
+  return custom;
 }
 
 function quantitativeMm(value: number) {
@@ -247,7 +348,6 @@ export function buildVeicoloJsonLd(veicolo: VeicoloPubblico): Record<string, unk
   const imageAlt = getVeicoloFotoAlt(veicolo, coverFoto);
 
   const categoriaNome = veicolo.categoria?.nome ?? "Veicolo";
-  const types = schemaTypes(veicolo.categoria?.slug);
   const cargo = resolveCargoSpecs(veicolo);
   const useCases = useCasesForVeicolo(veicolo);
   const additionalProperty = buildVehicleAdditionalProperties(veicolo);
@@ -266,6 +366,16 @@ export function buildVeicoloJsonLd(veicolo: VeicoloPubblico): Record<string, unk
       propertyValue("Km inclusi / condizioni", getNotaKmInclusi(tariffa)),
     );
   }
+
+  const offers = prezzo
+    ? buildDailyRentalOffer({
+        name,
+        canonical,
+        prezzo,
+        additionalProperty: offerAdditional,
+      })
+    : null;
+  const types = schemaTypes(veicolo.categoria?.slug, Boolean(offers));
 
   const keywordParts = [
     ...useCases.map((u) => u.label),
@@ -314,55 +424,7 @@ export function buildVeicoloJsonLd(veicolo: VeicoloPubblico): Record<string, unk
     vehicleInteriorHeight:
       cargo.altezzaMm != null ? quantitativeMm(cargo.altezzaMm) : undefined,
     additionalProperty: additionalProperty.length > 0 ? additionalProperty : undefined,
-    offers: prezzo
-      ? {
-          "@type": "Offer",
-          "@id": `${canonical}#offerta`,
-          name: `Tariffa giornaliera — ${name}`,
-          price: prezzo.importo,
-          priceCurrency: prezzo.valuta,
-          availability: "https://schema.org/InStock",
-          url: canonical,
-          priceSpecification: {
-            "@type": "UnitPriceSpecification",
-            price: prezzo.importo,
-            priceCurrency: prezzo.valuta,
-            unitText: "DAY",
-            referenceQuantity: {
-              "@type": "QuantitativeValue",
-              value: 1,
-              unitCode: "DAY",
-            },
-          },
-          additionalProperty: offerAdditional.length > 0 ? offerAdditional : undefined,
-          seller: autoRentalProvider(),
-          availableAtOrFrom: {
-            "@type": "Place",
-            name: "LILO Autonoleggio — Viale Campi Elisi 38/B",
-            address: {
-              "@type": "PostalAddress",
-              streetAddress: COMPANY.streetAddress,
-              addressLocality: COMPANY.city,
-              postalCode: COMPANY.postalCode,
-              addressRegion: COMPANY.region,
-              addressCountry: COMPANY.country,
-            },
-            geo: {
-              "@type": "GeoCoordinates",
-              latitude: COMPANY.geo.latitude,
-              longitude: COMPANY.geo.longitude,
-            },
-          },
-          areaServed: {
-            "@type": "City",
-            name: "Trieste",
-            containedInPlace: {
-              "@type": "AdministrativeArea",
-              name: "Friuli-Venezia Giulia",
-            },
-          },
-        }
-      : undefined,
+    offers: offers ?? undefined,
     provider: autoRentalProvider(),
     locationCreated: {
       "@type": "Place",
@@ -386,7 +448,7 @@ export function buildVeicoloJsonLd(veicolo: VeicoloPubblico): Record<string, unk
   if (faqPage) graph.push(faqPage);
 
   if (veicolo.json_ld && Object.keys(veicolo.json_ld).length > 0) {
-    graph.push({ ...veicolo.json_ld, url: canonical });
+    graph.push(sanitizeCustomJsonLd(veicolo.json_ld, offers, canonical));
   }
 
   return {
@@ -634,13 +696,20 @@ export function buildOfferteJsonLd(faqItems: AiFaqItem[]): Record<string, unknow
           priceCurrency: "EUR",
           availability: "https://schema.org/InStock",
           url: canonical,
+          businessFunction: "https://schema.org/LeaseOut",
           category: "Furgoni grandi (uso città)",
           seller: { "@id": `${SITE_URL}/#organization` },
           itemOffered: {
-            "@type": "Product",
-            name: "Noleggio Furgone grande uso città L2H2",
+            "@type": "Service",
+            name: "Noleggio Furgone grande uso città L2H2 — Promo Weekend",
+            serviceType: "Noleggio furgone",
             category: "Furgoni grandi (uso città)",
             url: `${SITE_URL}/flotta/furgoni-grandi-citta`,
+            provider: { "@id": `${SITE_URL}/#organization` },
+            areaServed: {
+              "@type": "City",
+              name: "Trieste",
+            },
           },
         },
       },
@@ -713,27 +782,32 @@ export function buildFlottaCategoriaJsonLd(
           itemListElement: veicoli.map((veicolo, index) => {
             const name = getDisplayName(veicolo);
             const prezzo = getPrezzoGiornaliero(veicolo);
+            const itemUrl = veicoloCanonicalUrl(veicolo.slug);
+            const item: Record<string, unknown> = {
+              "@type": prezzo ? "Product" : "Vehicle",
+              name,
+              description: (() => {
+                const raw = veicolo.descrizione_breve ?? veicolo.ai_summary ?? undefined;
+                return raw ? stripTargaFromPublicCopy(raw) : undefined;
+              })(),
+              image: getCoverImage(veicolo) ?? undefined,
+              url: itemUrl,
+            };
+            if (prezzo) {
+              item.offers = {
+                "@type": "Offer",
+                price: formatSchemaPrice(prezzo.importo),
+                priceCurrency: prezzo.valuta || "EUR",
+                availability: "https://schema.org/InStock",
+                url: itemUrl,
+                businessFunction: "https://schema.org/LeaseOut",
+              };
+            }
             return {
               "@type": "ListItem",
               position: index + 1,
-              url: veicoloCanonicalUrl(veicolo.slug),
-              item: {
-                "@type": "Product",
-                name,
-                description: (() => {
-                  const raw = veicolo.descrizione_breve ?? veicolo.ai_summary ?? undefined;
-                  return raw ? stripTargaFromPublicCopy(raw) : undefined;
-                })(),
-                image: getCoverImage(veicolo) ?? undefined,
-                offers: prezzo
-                  ? {
-                      "@type": "Offer",
-                      price: prezzo.importo,
-                      priceCurrency: prezzo.valuta,
-                      availability: "https://schema.org/InStock",
-                    }
-                  : undefined,
-              },
+              url: itemUrl,
+              item,
             };
           }),
         },

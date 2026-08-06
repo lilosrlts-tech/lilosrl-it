@@ -95,10 +95,7 @@ export async function VeicoloDettaglioContent({ veicolo }: VeicoloDettaglioConte
           </nav>
 
           <div className="grid gap-10 lg:grid-cols-[1fr_380px]">
-            <article itemScope itemType="https://schema.org/Product">
-              <meta itemProp="name" content={name} />
-              <link itemProp="url" href={canonical} />
-
+            <article>
               <header className="mb-6">
                 {veicolo.categoria && (
                   <p className="text-sm font-semibold uppercase tracking-wider text-brand-600">
@@ -119,20 +116,12 @@ export async function VeicoloDettaglioContent({ veicolo }: VeicoloDettaglioConte
                   <p className="mt-2 text-lg text-slate-600">{sottotitolo}</p>
                 )}
                 {giornaliero != null && (
-                  <div
-                    className="mt-4"
-                    itemProp="offers"
-                    itemScope
-                    itemType="https://schema.org/Offer"
-                  >
-                    <meta itemProp="priceCurrency" content={prezzo?.valuta ?? "EUR"} />
+                  <div className="mt-4">
                     <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                       Tariffa giornaliera
                     </p>
                     <p className="text-3xl font-extrabold tracking-tight text-slate-900">
-                      <span itemProp="price" content={String(Math.round(giornaliero))}>
-                        € {Math.round(giornaliero)}
-                      </span>
+                      <span>€ {Math.round(giornaliero)}</span>
                       <span className="text-lg font-semibold text-slate-600"> / giorno</span>
                     </p>
                     <p className="mt-1 text-xs font-medium text-slate-500">
