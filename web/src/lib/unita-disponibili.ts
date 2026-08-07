@@ -22,6 +22,7 @@ export const UNITA_DISPONIBILI_BY_SLUG: Record<string, number> = {
   "citroen-jumpy-l1h1": 3,
   // Piccoli
   "fiat-doblo-cargo": 3,
+  "fiat-doblo": 1,
   "toyota-proace-city": 2,
   // Auto
   "citroen-c3": 3,

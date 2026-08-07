@@ -12,6 +12,7 @@ export const LOCAL_FLEET_IMAGE_BY_SLUG: Record<string, string> = {
   ),
   "citroen-jumpy-l1h1": "/images/veicoli/citroen-jumpy-noleggio-furgoni-medi-trieste.webp",
   "fiat-doblo-cargo": "/images/veicoli/fiat-doblo-noleggio-furgoni-piccoli-trieste.webp",
+  "fiat-doblo": "/images/veicoli/fiat-doblo-blu-noleggio-furgoni-piccoli-trieste.webp",
   "toyota-proace-city":
     "/images/flotta/furgone-piccolo-toyota-proace-city-trieste-front.webp",
   "fiat-ducato-l1h1": "/images/veicoli/fiat-ducato-l1h1-noleggio-trieste.webp",
