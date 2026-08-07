@@ -39,10 +39,16 @@ export function HeroSection({ impostazioni }: HeroSectionProps) {
         <div className="relative z-10 flex h-full items-center px-4 py-8 sm:px-6 sm:py-0">
           <div className="mx-auto w-full max-w-6xl">
             <div className="max-w-lg">
-              <p className="text-xs font-semibold uppercase tracking-widest text-[#D4AF37] sm:text-sm">
-                {impostazioni.hero_badge_home}
-              </p>
-              <h1 className="mt-2 text-2xl font-bold leading-tight sm:text-4xl">
+              {impostazioni.hero_badge_home?.trim() ? (
+                <p className="text-xs font-semibold uppercase tracking-widest text-[#D4AF37] sm:text-sm">
+                  {impostazioni.hero_badge_home}
+                </p>
+              ) : null}
+              <h1
+                className={`text-2xl font-bold leading-tight sm:text-4xl ${
+                  impostazioni.hero_badge_home?.trim() ? "mt-2" : ""
+                }`}
+              >
                 {impostazioni.hero_titolo_home}
               </h1>
               <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-slate-100 sm:mt-3 sm:line-clamp-none sm:text-base">
