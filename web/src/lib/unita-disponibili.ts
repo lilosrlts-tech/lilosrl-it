@@ -27,6 +27,7 @@ export const UNITA_DISPONIBILI_BY_SLUG: Record<string, number> = {
   // Auto
   "citroen-c3": 3,
   "opel-karl": 2,
+  "volkswagen-polo": 1,
   // Pulmini
   "renault-trafic-9-posti": 3,
   "nissan-primastar-9-posti": 3,

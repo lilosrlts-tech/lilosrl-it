@@ -343,6 +343,20 @@ const BY_SLUG = {
     lunghezza_mm: 3676,
     larghezza_mm: 1632,
   },
+  "volkswagen-polo": {
+    targa: "FW152KR",
+    marca: "Volkswagen",
+    modello: "Polo",
+    versione: "1.0 59 kW",
+    anno_immatricolazione: 2019,
+    colore: "Rosso",
+    alimentazione: "Benzina",
+    cambio: "Manuale",
+    posti: 5,
+    porte: 5,
+    lunghezza_mm: 4053,
+    larghezza_mm: 1751,
+  },
 };
 
 async function main() {
