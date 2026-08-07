@@ -49,7 +49,7 @@ export const DEMO_IMPOSTAZIONI: ImpostazioniSito = {
 
   hero_titolo_home: "Noleggio auto e furgoni a Trieste",
 
-  hero_badge_home: "Trieste · Piazza Unità d'Italia",
+  hero_badge_home: "Trieste",
 
   home_punti_forza_titolo: "I punti di forza che fanno la differenza",
 

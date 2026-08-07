@@ -12,7 +12,6 @@ import { flottaCategoriaHref } from "@/lib/nav-config";
 import { labelPromoDurataSecondario } from "@/lib/promozioni-durata";
 import { TARIFFE_CATEGORIA } from "@/lib/tariffe-categoria";
 import {
-  getDisplayName,
   getPrezzoCommercialNote,
   getPrezzoGiornaliero,
   getUnitaDisponibiliLabel,
@@ -30,7 +29,8 @@ export async function FleetPreviewSection() {
   const cards: FleetPreviewCardData[] = FLOTTA_CATEGORIA_SLUGS.map((slug) => {
     const tariffa = TARIFFE_CATEGORIA[slug];
     const veicolo = pickCategoriaVetrinaVeicolo(slug, veicoli);
-    const href = veicolo ? `/flotta/${veicolo.slug}` : flottaCategoriaHref(slug);
+    // Card categoria → hub categoria (non scheda singolo mezzo)
+    const href = flottaCategoriaHref(slug);
     const cover = veicolo
       ? pickCategoriaHubCover(slug, veicoli, FLOTTA_CATEGORIA_IMAGES[slug]) ||
         getVeicoloCoverUrl(veicolo)
@@ -38,7 +38,7 @@ export async function FleetPreviewSection() {
     const fallback = veicolo
       ? getVeicoloCoverFallbackUrl(veicolo)
       : FLOTTA_CATEGORIA_IMAGES[slug];
-    const title = veicolo ? getDisplayName(veicolo) : tariffa.label;
+    const title = tariffa.label;
     const spec = veicolo ? getVeicoloCardSpec(veicolo) : "Tariffe giornaliere trasparenti";
     const alt = veicolo
       ? getVeicoloCoverAlt(veicolo)

@@ -46,7 +46,7 @@ export const LOCAL_FLEET_IMAGE_BY_SLUG: Record<string, string> = {
 
 /** Fallback per categoria quando manca la foto specifica del veicolo. */
 export const LOCAL_FLEET_IMAGE_BY_CATEGORY: Record<string, string> = {
-  auto: "/images/veicoli/volvo-s40-noleggio-trieste.webp",
+  auto: "/images/veicoli/volkswagen-polo-noleggio-auto-trieste.webp",
   "pulmini-9-posti": "/images/veicoli/renault-trafic-9-posti-noleggio-trieste.webp",
   "furgoni-piccoli":
     "/images/flotta/furgone-piccolo-toyota-proace-city-trieste-front.webp",

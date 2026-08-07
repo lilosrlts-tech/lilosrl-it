@@ -23,7 +23,7 @@ export function HeroSection({ impostazioni }: HeroSectionProps) {
       <div className="relative min-h-[320px] w-full sm:aspect-[20/7] sm:min-h-0 sm:max-h-[440px]">
         <Image
           src={HERO_IMAGE}
-          alt="Furgone LILO in Piazza Unità d'Italia, Trieste"
+          alt="Furgone LILO a Trieste"
           width={HERO_WIDTH}
           height={HERO_HEIGHT}
           priority

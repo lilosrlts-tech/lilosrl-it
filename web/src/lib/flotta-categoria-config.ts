@@ -24,7 +24,7 @@ export function flottaCategoriaCanonical(slug: TariffaCategoriaSlug): string {
 
 /** Immagini di fallback per le card hub (foto rappresentative LILO). */
 export const FLOTTA_CATEGORIA_IMAGES: Record<TariffaCategoriaSlug, string> = {
-  auto: "/images/veicoli/volvo-s40-noleggio-trieste.webp",
+  auto: "/images/veicoli/volkswagen-polo-noleggio-auto-trieste.webp",
   "pulmini-9-posti": "/images/veicoli/renault-trafic-9-posti-noleggio-trieste.webp",
   "furgoni-piccoli":
     "/images/flotta/furgone-piccolo-toyota-proace-city-trieste-front.webp",

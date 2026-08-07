@@ -59,6 +59,7 @@ export function pickCategoriaHubCover(
 
 /** Slug veicolo preferito in vetrina home per categoria (foto + titolo card). */
 export const CATEGORIA_VETRINA_VEICOLO_SLUG: Record<string, string> = {
+  auto: "volkswagen-polo",
   "furgoni-piccoli": "toyota-proace-city",
   "furgoni-medi": "ford-transit-custom-l1h1-ibrido",
   "furgoni-grandi": "ford-transit-l2h2",
