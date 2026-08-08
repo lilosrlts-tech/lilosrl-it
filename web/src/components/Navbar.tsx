@@ -1,9 +1,10 @@
 "use client";
 
-import type { CSSProperties } from "react";
+import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import {
   AUTOLAVAGGIO_URL,
   FLOTTA_CATEGORIE_NAV,
@@ -157,8 +158,17 @@ function FlottaDropdown({ pathname, onNavigate }: { pathname: string; onNavigate
 
 export function Navbar({ phone, phoneDisplay, offertaAttiva = true }: NavbarProps) {
   const pathname = usePathname();
+  const panelId = useId();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [flottaMobileOpen, setFlottaMobileOpen] = useState(false);
+  const [portalReady, setPortalReady] = useState(false);
+  /** Evita chiusura immediata su iOS (stesso tap apre e colpisce il backdrop). */
+  const backdropArmedRef = useRef(false);
+  const armTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    setPortalReady(true);
+  }, []);
 
   useEffect(() => {
     setMobileOpen(false);
@@ -166,11 +176,50 @@ export function Navbar({ phone, phoneDisplay, offertaAttiva = true }: NavbarProp
   }, [pathname]);
 
   useEffect(() => {
-    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    if (armTimerRef.current) {
+      clearTimeout(armTimerRef.current);
+      armTimerRef.current = null;
+    }
+
+    if (!mobileOpen) {
+      backdropArmedRef.current = false;
+      document.body.style.overflow = "";
+      return;
+    }
+
+    document.body.style.overflow = "hidden";
+    backdropArmedRef.current = false;
+    armTimerRef.current = setTimeout(() => {
+      backdropArmedRef.current = true;
+      armTimerRef.current = null;
+    }, 350);
+
     return () => {
+      if (armTimerRef.current) {
+        clearTimeout(armTimerRef.current);
+        armTimerRef.current = null;
+      }
       document.body.style.overflow = "";
     };
   }, [mobileOpen]);
+
+  function closeMobileMenu() {
+    setMobileOpen(false);
+    setFlottaMobileOpen(false);
+  }
+
+  function toggleMobileMenu() {
+    setMobileOpen((open) => {
+      if (open) setFlottaMobileOpen(false);
+      return !open;
+    });
+  }
+
+  function onBackdropPointerDown(event: ReactPointerEvent<HTMLDivElement>) {
+    event.preventDefault();
+    if (!backdropArmedRef.current) return;
+    closeMobileMenu();
+  }
 
   const phoneButton = (
     <PhoneLink
@@ -184,6 +233,112 @@ export function Navbar({ phone, phoneDisplay, offertaAttiva = true }: NavbarProp
   );
 
   const simpleLinks = buildSimpleLinks(offertaAttiva);
+
+  const mobileDrawer =
+    portalReady &&
+    createPortal(
+      <>
+        <div
+          className={`fixed inset-0 top-[4.5rem] z-[60] bg-black/30 transition-opacity duration-200 lg:hidden ${
+            mobileOpen ? "opacity-100" : "pointer-events-none opacity-0"
+          }`}
+          onPointerDown={onBackdropPointerDown}
+          aria-hidden="true"
+        />
+        <nav
+          id={panelId}
+          className={`fixed right-0 top-[4.5rem] z-[70] h-[calc(100dvh-4.5rem)] w-full max-w-sm overflow-y-auto border-l border-slate-200 bg-white p-5 shadow-xl transition-transform duration-200 lg:hidden ${
+            mobileOpen ? "translate-x-0" : "translate-x-full pointer-events-none"
+          }`}
+          aria-label="Menu mobile"
+          aria-hidden={!mobileOpen}
+          onPointerDown={(event) => event.stopPropagation()}
+        >
+          <ul className="space-y-1">
+            <li>
+              <Link
+                href="/"
+                className={`block rounded-lg px-4 py-3 ${navLinkClass(isNavActive(pathname, "/"))}`}
+                style={navLinkStyle(isNavActive(pathname, "/"))}
+                onClick={closeMobileMenu}
+              >
+                Inizio
+              </Link>
+            </li>
+
+            <li>
+              <button
+                type="button"
+                className={`flex w-full items-center justify-between rounded-lg px-4 py-3 text-left ${navLinkClass(isFlottaActive(pathname))}`}
+                style={navLinkStyle(isFlottaActive(pathname))}
+                aria-expanded={flottaMobileOpen}
+                onClick={() => setFlottaMobileOpen((open) => !open)}
+              >
+                Flotta Noleggio
+                <ChevronIcon
+                  className={`h-4 w-4 transition ${flottaMobileOpen ? "rotate-180" : ""}`}
+                />
+              </button>
+              {flottaMobileOpen && (
+                <ul className="ml-3 mt-1 space-y-0.5 border-l border-slate-200 pl-3">
+                  <li>
+                    <Link
+                      href="/flotta"
+                      className={`rounded-lg ${dropdownLinkPrimaryClass}`}
+                      onClick={closeMobileMenu}
+                    >
+                      Tutta la flotta
+                    </Link>
+                  </li>
+                  {FLOTTA_CATEGORIE_NAV.map((categoria) => (
+                    <li key={categoria.slug}>
+                      <Link
+                        href={flottaCategoriaHref(categoria.slug)}
+                        className={`rounded-lg ${dropdownLinkClass}`}
+                        onClick={closeMobileMenu}
+                      >
+                        {categoria.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+
+            <li>
+              <a
+                href={AUTOLAVAGGIO_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block rounded-lg px-4 py-3 font-medium text-slate-700 hover:bg-slate-50"
+                onClick={closeMobileMenu}
+              >
+                Autolavaggio
+              </a>
+            </li>
+
+            {simpleLinks.map((item) => {
+              const active = isNavActive(pathname, item.href);
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className={`block rounded-lg px-4 py-3 ${navLinkClass(active)}`}
+                    style={navLinkStyle(active)}
+                    onClick={closeMobileMenu}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+
+          <div className="mt-6 border-t border-slate-100 pt-6">{phoneButton}</div>
+        </nav>
+      </>,
+      document.body,
+    );
 
   return (
     <>
@@ -242,112 +397,18 @@ export function Navbar({ phone, phoneDisplay, offertaAttiva = true }: NavbarProp
           type="button"
           className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-slate-700"
           aria-expanded={mobileOpen}
-          aria-controls="mobile-nav-panel"
+          aria-controls={panelId}
           aria-label={mobileOpen ? "Chiudi menu" : "Apri menu"}
-          onClick={() => setMobileOpen((open) => !open)}
+          onClick={(event) => {
+            event.stopPropagation();
+            toggleMobileMenu();
+          }}
         >
           <MenuIcon open={mobileOpen} />
         </button>
       </div>
 
-      {mobileOpen && (
-        <div
-          className="fixed inset-0 top-[4.5rem] z-40 bg-black/30 lg:hidden"
-          onClick={() => setMobileOpen(false)}
-          aria-hidden="true"
-        />
-      )}
-
-      <nav
-        id="mobile-nav-panel"
-        className={`fixed right-0 top-[4.5rem] z-50 h-[calc(100vh-4.5rem)] w-full max-w-sm overflow-y-auto border-l border-slate-200 bg-white p-5 shadow-xl transition-transform duration-200 lg:hidden ${
-          mobileOpen ? "translate-x-0" : "translate-x-full pointer-events-none"
-        }`}
-        aria-label="Menu mobile"
-        aria-hidden={!mobileOpen}
-      >
-        <ul className="space-y-1">
-          <li>
-            <Link
-              href="/"
-              className={`block rounded-lg px-4 py-3 ${navLinkClass(isNavActive(pathname, "/"))}`}
-              style={navLinkStyle(isNavActive(pathname, "/"))}
-              onClick={() => setMobileOpen(false)}
-            >
-              Inizio
-            </Link>
-          </li>
-
-          <li>
-            <button
-              type="button"
-              className={`flex w-full items-center justify-between rounded-lg px-4 py-3 text-left ${navLinkClass(isFlottaActive(pathname))}`}
-              style={navLinkStyle(isFlottaActive(pathname))}
-              aria-expanded={flottaMobileOpen}
-              onClick={() => setFlottaMobileOpen((open) => !open)}
-            >
-              Flotta Noleggio
-              <ChevronIcon
-                className={`h-4 w-4 transition ${flottaMobileOpen ? "rotate-180" : ""}`}
-              />
-            </button>
-            {flottaMobileOpen && (
-              <ul className="ml-3 mt-1 space-y-0.5 border-l border-slate-200 pl-3">
-                <li>
-                  <Link
-                    href="/flotta"
-                    className={`rounded-lg ${dropdownLinkPrimaryClass}`}
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    Tutta la flotta
-                  </Link>
-                </li>
-                {FLOTTA_CATEGORIE_NAV.map((categoria) => (
-                  <li key={categoria.slug}>
-                    <Link
-                      href={flottaCategoriaHref(categoria.slug)}
-                      className={`rounded-lg ${dropdownLinkClass}`}
-                      onClick={() => setMobileOpen(false)}
-                    >
-                      {categoria.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </li>
-
-          <li>
-            <a
-              href={AUTOLAVAGGIO_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block rounded-lg px-4 py-3 font-medium text-slate-700 hover:bg-slate-50"
-              onClick={() => setMobileOpen(false)}
-            >
-              Autolavaggio
-            </a>
-          </li>
-
-          {simpleLinks.map((item) => {
-            const active = isNavActive(pathname, item.href);
-            return (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className={`block rounded-lg px-4 py-3 ${navLinkClass(active)}`}
-                  style={navLinkStyle(active)}
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-
-        <div className="mt-6 border-t border-slate-100 pt-6">{phoneButton}</div>
-      </nav>
+      {mobileDrawer}
     </>
   );
 }
