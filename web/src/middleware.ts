@@ -38,6 +38,7 @@ const ALLOWED_TOP_LEVEL = new Set([
   "api",
   "sitemap.xml",
   "robots.txt",
+  "llms.txt",
   "manifest.webmanifest",
   "manifest.json",
   "icon",

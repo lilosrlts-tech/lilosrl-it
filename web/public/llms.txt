@@ -1,0 +1,32 @@
+# LILO S.r.l.
+
+> Noleggio furgoni, pulmini 9 posti e auto a Trieste, più autolavaggio in sede. Ritiro in Viale Campi Elisi 38/b.
+
+Sito ufficiale di LILO Autonoleggio e Furgoni Trieste. Tariffe IVA inclusa, flotta aggiornata e preventivo online.
+
+## Pagine principali
+
+- [Home](https://www.lilosrl.it/): Panoramica servizi di noleggio e autolavaggio a Trieste
+- [Flotta](https://www.lilosrl.it/flotta): Tutti i veicoli disponibili a noleggio
+- [Tariffe](https://www.lilosrl.it/tariffe): Prezzi giornalieri per categoria
+- [Cosa trasporti](https://www.lilosrl.it/cosa-trasporti): Guida per scegliere il mezzo in base al carico
+- [Offerte](https://www.lilosrl.it/offerte): Promo e offerte del mese
+- [Autolavaggio](https://www.lilosrl.it/autolavaggio): Servizio autolavaggio in sede
+- [Chi siamo](https://www.lilosrl.it/chi-siamo): Storia e sede LILO a Trieste
+- [Contatti](https://www.lilosrl.it/contatti): Telefono, WhatsApp, mappa e orari
+
+## Categorie flotta
+
+- [Auto](https://www.lilosrl.it/flotta/auto): Auto a noleggio per mobilità urbana ed extraurbana
+- [Pulmini 9 posti](https://www.lilosrl.it/flotta/pulmini-9-posti): Trasferimenti e gruppi fino a 9 passeggeri
+- [Furgoni piccoli](https://www.lilosrl.it/flotta/furgoni-piccoli): Furgoni compatti per lavoro e traslochi leggeri
+- [Furgoni medi](https://www.lilosrl.it/flotta/furgoni-medi): Equilibrio tra capacità di carico e maneggevolezza
+- [Furgoni grandi](https://www.lilosrl.it/flotta/furgoni-grandi): Spazio ampio per traslochi e trasporti professionali
+- [Furgoni grandi città](https://www.lilosrl.it/flotta/furgoni-grandi-citta): Tariffa città Trieste e promo weekend
+- [Furgoni XL](https://www.lilosrl.it/flotta/furgoni-xl): Massima capacità per carichi voluminosi
+
+## Optional
+
+- [Privacy](https://www.lilosrl.it/privacy): Informativa privacy
+- [Cookie policy](https://www.lilosrl.it/cookie-policy): Informativa cookie
+- [Termini e condizioni](https://www.lilosrl.it/termini-condizioni): Condizioni di noleggio
