@@ -1,10 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
-import { preload } from "react-dom";
 import type { ImpostazioniSito } from "@/types/impostazioni";
 import { PhoneLink } from "@/components/shared/PhoneLink";
 
-const HERO_IMAGE = "/images/hero-home.webp";
+/** Desktop / fallback (1600×560). */
+const HERO_DESKTOP = "/images/hero-home.webp";
+/** Tablet / large phone — ~39 KB. */
+const HERO_800 = "/images/hero-home-800.webp";
+/** Phone — ~23 KB. */
+const HERO_640 = "/images/hero-home-640.webp";
+
 const HERO_WIDTH = 1600;
 const HERO_HEIGHT = 560;
 
@@ -12,25 +17,64 @@ interface HeroSectionProps {
   impostazioni: ImpostazioniSito;
 }
 
+/**
+ * Hero LCP: varianti WebP statiche per viewport (niente download 1600px su mobile)
+ * + preload mirato con media query. next/image resta sul fallback desktop.
+ */
 export function HeroSection({ impostazioni }: HeroSectionProps) {
-  preload(HERO_IMAGE, { as: "image", fetchPriority: "high" });
   return (
     <section
       className="relative isolate w-full overflow-hidden bg-slate-800 text-white"
       aria-label="Presentazione LILO Autonoleggio Trieste"
     >
+      {/* Preload solo l’asset del viewport — non blocca gli altri script */}
+      <link
+        rel="preload"
+        as="image"
+        href={HERO_640}
+        type="image/webp"
+        media="(max-width: 640px)"
+        fetchPriority="high"
+      />
+      <link
+        rel="preload"
+        as="image"
+        href={HERO_800}
+        type="image/webp"
+        media="(min-width: 641px) and (max-width: 1023px)"
+        fetchPriority="high"
+      />
+      <link
+        rel="preload"
+        as="image"
+        href={HERO_DESKTOP}
+        type="image/webp"
+        media="(min-width: 1024px)"
+        fetchPriority="high"
+      />
+
       {/* Mobile: altezza da contenuto (no clip). Da sm: ratio panoramico. */}
       <div className="relative min-h-[320px] w-full sm:aspect-[20/7] sm:min-h-0 sm:max-h-[440px]">
-        <Image
-          src={HERO_IMAGE}
-          alt="Furgone LILO a Trieste"
-          width={HERO_WIDTH}
-          height={HERO_HEIGHT}
-          priority
-          unoptimized
-          sizes="100vw"
-          className="absolute inset-0 h-full w-full object-cover object-[62%_center]"
-        />
+        <picture>
+          <source media="(max-width: 640px)" srcSet={HERO_640} type="image/webp" />
+          <source
+            media="(max-width: 1023px)"
+            srcSet={HERO_800}
+            type="image/webp"
+          />
+          <Image
+            src={HERO_DESKTOP}
+            alt="Furgone LILO a Trieste"
+            width={HERO_WIDTH}
+            height={HERO_HEIGHT}
+            /* Preload via <link media> sopra: evita che Next scarichi il 1600px su mobile */
+            fetchPriority="high"
+            unoptimized
+            sizes="(max-width: 640px) 100vw, (max-width: 1023px) 100vw, 1600px"
+            className="absolute inset-0 h-full w-full object-cover object-[62%_center]"
+            decoding="async"
+          />
+        </picture>
         <div
           className="absolute inset-0 bg-gradient-to-r from-slate-900/82 via-slate-900/50 to-transparent"
           aria-hidden="true"
