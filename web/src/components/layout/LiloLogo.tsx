@@ -20,7 +20,9 @@ export function LiloLogo({ variant = "default" }: LiloLogoProps) {
         height={56}
         className={imageClass}
         style={{ width: "auto", height: "auto" }}
-        priority={variant === "default"}
+        loading="eager"
+        fetchPriority="low"
+        decoding="async"
       />
     </Link>
   );

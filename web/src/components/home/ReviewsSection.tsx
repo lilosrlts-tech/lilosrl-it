@@ -2,7 +2,11 @@ import { REVIEWS, GOOGLE_NOLEGGIO_REVIEWS_URL } from "@/lib/reviews";
 
 function Stars({ rating }: { rating: number }) {
   return (
-    <div className="flex gap-0.5 text-amber-700" aria-label={`${rating} stelle su 5`}>
+    <div
+      role="img"
+      aria-label={`${rating} stelle su 5`}
+      className="flex gap-0.5 text-amber-700"
+    >
       {Array.from({ length: 5 }).map((_, i) => (
         <span key={i} aria-hidden="true">
           {i < rating ? "★" : "☆"}

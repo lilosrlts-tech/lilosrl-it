@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { ImpostazioniSito } from "@/types/impostazioni";
 import { PhoneLink } from "@/components/shared/PhoneLink";
+import { SITE_URL } from "@/lib/constants";
 
 /** Desktop / fallback (1600×560). */
 export const HERO_DESKTOP = "/images/hero-home.webp";
@@ -10,17 +11,18 @@ export const HERO_800 = "/images/hero-home-800.webp";
 /** Phone — ~23 KB. */
 export const HERO_640 = "/images/hero-home-640.webp";
 
-const HERO_WIDTH = 1600;
-const HERO_HEIGHT = 560;
+const HERO_640_ABS = `${SITE_URL}${HERO_640}`;
+const HERO_800_ABS = `${SITE_URL}${HERO_800}`;
+const HERO_DESKTOP_ABS = `${SITE_URL}${HERO_DESKTOP}`;
 
 interface HeroSectionProps {
   impostazioni: ImpostazioniSito;
 }
 
 /**
- * Hero LCP: next/image con priority + eager (no lazy).
- * Preload responsive con media query: vedi HomeHeroPreloads in page.tsx (head).
- * src = 640px così il preload automatico di `priority` non tira il 1600px su mobile;
+ * Hero LCP: next/image con priority (no lazy).
+ * Preload in <head>: HomeHeroPreloads + react-dom preload (mobile).
+ * src = 640px così il preload di `priority` non tira il 1600px su mobile;
  * <picture> sceglie 800/desktop sui viewport più grandi.
  */
 export function HeroSection({ impostazioni }: HeroSectionProps) {
@@ -40,7 +42,6 @@ export function HeroSection({ impostazioni }: HeroSectionProps) {
             width={640}
             height={224}
             priority
-            loading="eager"
             fetchPriority="high"
             unoptimized
             sizes="100vw"
@@ -128,14 +129,18 @@ export function HeroSection({ impostazioni }: HeroSectionProps) {
   );
 }
 
-/** Preload hero in <head> (React 19 hoisting) — solo l’asset del viewport. */
+/**
+ * Preload hero in <head> (React 19 hoisting).
+ * URL assoluti + media query: un solo asset per viewport.
+ * Il preload mobile è già avviato anche da page.tsx via react-dom.preload.
+ */
 export function HomeHeroPreloads() {
   return (
     <>
       <link
         rel="preload"
         as="image"
-        href={HERO_640}
+        href={HERO_640_ABS}
         type="image/webp"
         media="(max-width: 640px)"
         fetchPriority="high"
@@ -143,7 +148,7 @@ export function HomeHeroPreloads() {
       <link
         rel="preload"
         as="image"
-        href={HERO_800}
+        href={HERO_800_ABS}
         type="image/webp"
         media="(min-width: 641px) and (max-width: 1023px)"
         fetchPriority="high"
@@ -151,7 +156,7 @@ export function HomeHeroPreloads() {
       <link
         rel="preload"
         as="image"
-        href={HERO_DESKTOP}
+        href={HERO_DESKTOP_ABS}
         type="image/webp"
         media="(min-width: 1024px)"
         fetchPriority="high"
