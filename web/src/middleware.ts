@@ -21,6 +21,101 @@ function isVercelPreview(host: string): boolean {
 }
 
 /**
+ * Path di primo livello validi sul sito Next (non vanno in fallback 301).
+ * Le regole esplicite in legacy-redirects.ts restano la fonte per i path noti.
+ */
+const ALLOWED_TOP_LEVEL = new Set([
+  "flotta",
+  "tariffe",
+  "contatti",
+  "chi-siamo",
+  "cosa-trasporti",
+  "offerte",
+  "autolavaggio",
+  "privacy",
+  "cookie-policy",
+  "termini-condizioni",
+  "api",
+  "sitemap.xml",
+  "robots.txt",
+  "manifest.webmanifest",
+  "manifest.json",
+  "icon",
+  "apple-icon",
+  "opengraph-image",
+  "twitter-image",
+  "favicon.ico",
+]);
+
+/**
+ * Root categorie storiche (lilo.srl conservava il path al passaggio di dominio).
+ * Duplicato difensivo rispetto a next.config redirects.
+ */
+const CATEGORY_ROOT_TO_FLOTTA: ReadonlyMap<string, string> = new Map([
+  ["auto", "/flotta/auto"],
+  ["pulmini-9-posti", "/flotta/pulmini-9-posti"],
+  ["pulmini", "/flotta/pulmini-9-posti"],
+  ["furgoni-piccoli", "/flotta/furgoni-piccoli"],
+  ["furgoni-medi", "/flotta/furgoni-medi"],
+  ["furgoni-grandi", "/flotta/furgoni-grandi"],
+  ["furgoni-grandi-citta", "/flotta/furgoni-grandi-citta"],
+  ["furgoni-xl", "/flotta/furgoni-xl"],
+  ["furgoni", "/flotta/furgoni-medi"],
+]);
+
+function getRequestHost(request: NextRequest): string {
+  const hostHeader =
+    request.headers.get("x-forwarded-host") ??
+    request.headers.get("host") ??
+    request.nextUrl.hostname;
+  return normalizeHost(hostHeader);
+}
+
+/**
+ * 301 verso path (e host canonico in produzione).
+ * In locale / preview Vercel resta sullo stesso host per testare le regole.
+ */
+function redirect301(request: NextRequest, pathname: string): NextResponse {
+  const host = getRequestHost(request);
+  const hostname = request.nextUrl.hostname;
+
+  if (isLocalDev(hostname) || isVercelPreview(host)) {
+    const url = request.nextUrl.clone();
+    url.pathname = pathname;
+    url.search = "";
+    return NextResponse.redirect(url, 301);
+  }
+
+  return NextResponse.redirect(new URL(pathname, CANONICAL_ORIGIN), 301);
+}
+
+/**
+ * Path legacy / sconosciuti → 301.
+ * Ordine: categorie root note, poi catch-all verso /flotta.
+ */
+function maybeRedirectUnknownPath(request: NextRequest): NextResponse | null {
+  const { pathname } = request.nextUrl;
+  if (pathname === "/" || pathname === "") return null;
+
+  const segments = pathname.split("/").filter(Boolean);
+  const first = segments[0]?.toLowerCase();
+  if (!first) return null;
+
+  // Root categoria storica → /flotta/{categoria}
+  const categoryDest = CATEGORY_ROOT_TO_FLOTTA.get(first);
+  if (categoryDest && segments.length === 1) {
+    return redirect301(request, categoryDest);
+  }
+
+  // Path noti dell’app → passa
+  if (ALLOWED_TOP_LEVEL.has(first)) return null;
+  if (first.startsWith("_next") || first.startsWith(".")) return null;
+
+  // Catch-all: qualsiasi altro URL root legacy → hub flotta (azzera 404)
+  return redirect301(request, "/flotta");
+}
+
+/**
  * Redirect 301 host → https://www.lilosrl.it
  *
  * Copre:
@@ -38,20 +133,19 @@ export function middleware(request: NextRequest) {
   if (request.nextUrl.pathname === "/flotta") {
     const categoria = request.nextUrl.searchParams.get("categoria");
     if (categoria && isFlottaCategoriaSlug(categoria)) {
-      const url = request.nextUrl.clone();
-      url.pathname = `/flotta/${categoria}`;
-      url.search = "";
-      return NextResponse.redirect(url, 301);
+      return redirect301(request, `/flotta/${categoria}`);
     }
   }
+
+  // Path legacy (categorie root) + catch-all 404 → /flotta
+  const pathRedirect = maybeRedirectUnknownPath(request);
+  if (pathRedirect) return pathRedirect;
 
   if (isLocalDev(hostname)) {
     return NextResponse.next();
   }
 
-  const hostHeader =
-    request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? hostname;
-  const host = normalizeHost(hostHeader);
+  const host = getRequestHost(request);
 
   if (isVercelPreview(host)) {
     return NextResponse.next();

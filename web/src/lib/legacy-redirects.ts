@@ -7,8 +7,10 @@
  *   - /flotta-noleggio e /flotta-noleggio-2 → /flotta
  *   - /autolavaggio resta su lilosrl.it (nessun redirect fuori dominio)
  *   - schede /car/*: mappate 301 → /flotta/... + catch-all → /flotta
+ *   - root categorie (/pulmini-9-posti, /furgoni-*, /auto) → /flotta/...
  *
  * Decisioni SEO (2026-08): slug schede senza targa → 301 da /flotta/{slug-con-targa}.
+ * Decisioni SEO (2026-08): fallback path sconosciuti → /flotta (middleware).
  *
  * Status HTTP: sempre statusCode 301 (non permanent:true → 308) per tool SEO.
  * Domini secondari / apex: middleware + REDIRECT_TO_CANONICAL_HOSTS in constants.
@@ -162,6 +164,44 @@ export const LEGACY_REDIRECTS: LegacyRedirect[] = [
   ...withTrailingVariants("/noleggio", "/flotta", "Sezione noleggio generica → flotta"),
   ...withTrailingVariants("/parco-auto", "/flotta", "Alias parco auto → flotta"),
   ...withTrailingVariants("/about", "/chi-siamo", "Alias about → Chi Siamo"),
+
+  // ── Categorie root (lilo.srl / WP) → /flotta/... ─────────────────────────
+  // Critico: dominio lilo.srl fa 301 conservando il path; senza queste regole → 404.
+  ...withTrailingVariants(
+    "/pulmini-9-posti",
+    "/flotta/pulmini-9-posti",
+    "Root categoria pulmini → /flotta/pulmini-9-posti",
+  ),
+  ...withTrailingVariants(
+    "/pulmini",
+    "/flotta/pulmini-9-posti",
+    "Alias /pulmini → categoria pulmini",
+  ),
+  ...withTrailingVariants(
+    "/furgoni-piccoli",
+    "/flotta/furgoni-piccoli",
+    "Root categoria furgoni piccoli → /flotta/furgoni-piccoli",
+  ),
+  ...withTrailingVariants(
+    "/furgoni-medi",
+    "/flotta/furgoni-medi",
+    "Root categoria furgoni medi → /flotta/furgoni-medi",
+  ),
+  ...withTrailingVariants(
+    "/furgoni-grandi",
+    "/flotta/furgoni-grandi",
+    "Root categoria furgoni grandi → /flotta/furgoni-grandi",
+  ),
+  ...withTrailingVariants(
+    "/furgoni-grandi-citta",
+    "/flotta/furgoni-grandi-citta",
+    "Root categoria furgoni grandi città → /flotta/furgoni-grandi-citta",
+  ),
+  ...withTrailingVariants(
+    "/furgoni-xl",
+    "/flotta/furgoni-xl",
+    "Root categoria furgoni XL → /flotta/furgoni-xl",
+  ),
 
   // ── Pattern dettaglio (slug) — utili se indicizzati; /car/* = fase 2 ──────
   {
