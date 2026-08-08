@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { HomePageAsync } from "@/components/home/HomePageContent";
+import { HomeHeroPreloads } from "@/components/home/HeroSection";
 import { getPageMetadata } from "@/lib/seo-settings";
 import { buildHomeJsonLd } from "@/lib/json-ld";
 
@@ -16,6 +17,8 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function HomePage() {
   return (
     <>
+      {/* React 19: link hoisted in <head> per LCP hero mobile */}
+      <HomeHeroPreloads />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(buildHomeJsonLd()) }}

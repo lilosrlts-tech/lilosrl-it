@@ -67,6 +67,7 @@ export function FleetPreviewGrid({
                   variant={card.variant}
                   placeholderLabel={card.title}
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  priority={false}
                 />
                 <span className="absolute left-3 top-3 z-10 rounded-full bg-white/90 px-2 py-0.5 text-xs font-medium text-slate-700">
                   {card.categoryLabel}

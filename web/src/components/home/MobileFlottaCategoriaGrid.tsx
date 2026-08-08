@@ -51,6 +51,8 @@ export function MobileFlottaCategoriaGrid() {
                     alt={`Noleggio ${cat.label} Trieste`}
                     fill
                     sizes="45vw"
+                    loading="lazy"
+                    fetchPriority="low"
                     className={FLEET_VEHICLE_IMG.categoryThumb}
                   />
                 </div>

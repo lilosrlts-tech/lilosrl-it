@@ -4,11 +4,11 @@ import type { ImpostazioniSito } from "@/types/impostazioni";
 import { PhoneLink } from "@/components/shared/PhoneLink";
 
 /** Desktop / fallback (1600×560). */
-const HERO_DESKTOP = "/images/hero-home.webp";
+export const HERO_DESKTOP = "/images/hero-home.webp";
 /** Tablet / large phone — ~39 KB. */
-const HERO_800 = "/images/hero-home-800.webp";
+export const HERO_800 = "/images/hero-home-800.webp";
 /** Phone — ~23 KB. */
-const HERO_640 = "/images/hero-home-640.webp";
+export const HERO_640 = "/images/hero-home-640.webp";
 
 const HERO_WIDTH = 1600;
 const HERO_HEIGHT = 560;
@@ -18,8 +18,10 @@ interface HeroSectionProps {
 }
 
 /**
- * Hero LCP: varianti WebP statiche per viewport (niente download 1600px su mobile)
- * + preload mirato con media query. next/image resta sul fallback desktop.
+ * Hero LCP: next/image con priority + eager (no lazy).
+ * Preload responsive con media query: vedi HomeHeroPreloads in page.tsx (head).
+ * src = 640px così il preload automatico di `priority` non tira il 1600px su mobile;
+ * <picture> sceglie 800/desktop sui viewport più grandi.
  */
 export function HeroSection({ impostazioni }: HeroSectionProps) {
   return (
@@ -27,50 +29,21 @@ export function HeroSection({ impostazioni }: HeroSectionProps) {
       className="relative isolate w-full overflow-hidden bg-slate-800 text-white"
       aria-label="Presentazione LILO Autonoleggio Trieste"
     >
-      {/* Preload solo l’asset del viewport — non blocca gli altri script */}
-      <link
-        rel="preload"
-        as="image"
-        href={HERO_640}
-        type="image/webp"
-        media="(max-width: 640px)"
-        fetchPriority="high"
-      />
-      <link
-        rel="preload"
-        as="image"
-        href={HERO_800}
-        type="image/webp"
-        media="(min-width: 641px) and (max-width: 1023px)"
-        fetchPriority="high"
-      />
-      <link
-        rel="preload"
-        as="image"
-        href={HERO_DESKTOP}
-        type="image/webp"
-        media="(min-width: 1024px)"
-        fetchPriority="high"
-      />
-
       {/* Mobile: altezza da contenuto (no clip). Da sm: ratio panoramico. */}
       <div className="relative min-h-[320px] w-full sm:aspect-[20/7] sm:min-h-0 sm:max-h-[440px]">
         <picture>
-          <source media="(max-width: 640px)" srcSet={HERO_640} type="image/webp" />
-          <source
-            media="(max-width: 1023px)"
-            srcSet={HERO_800}
-            type="image/webp"
-          />
+          <source media="(min-width: 1024px)" srcSet={HERO_DESKTOP} type="image/webp" />
+          <source media="(min-width: 641px)" srcSet={HERO_800} type="image/webp" />
           <Image
-            src={HERO_DESKTOP}
+            src={HERO_640}
             alt="Furgone LILO a Trieste"
-            width={HERO_WIDTH}
-            height={HERO_HEIGHT}
-            /* Preload via <link media> sopra: evita che Next scarichi il 1600px su mobile */
+            width={640}
+            height={224}
+            priority
+            loading="eager"
             fetchPriority="high"
             unoptimized
-            sizes="(max-width: 640px) 100vw, (max-width: 1023px) 100vw, 1600px"
+            sizes="100vw"
             className="absolute inset-0 h-full w-full object-cover object-[62%_center]"
             decoding="async"
           />
@@ -152,5 +125,37 @@ export function HeroSection({ impostazioni }: HeroSectionProps) {
         </div>
       </div>
     </section>
+  );
+}
+
+/** Preload hero in <head> (React 19 hoisting) — solo l’asset del viewport. */
+export function HomeHeroPreloads() {
+  return (
+    <>
+      <link
+        rel="preload"
+        as="image"
+        href={HERO_640}
+        type="image/webp"
+        media="(max-width: 640px)"
+        fetchPriority="high"
+      />
+      <link
+        rel="preload"
+        as="image"
+        href={HERO_800}
+        type="image/webp"
+        media="(min-width: 641px) and (max-width: 1023px)"
+        fetchPriority="high"
+      />
+      <link
+        rel="preload"
+        as="image"
+        href={HERO_DESKTOP}
+        type="image/webp"
+        media="(min-width: 1024px)"
+        fetchPriority="high"
+      />
+    </>
   );
 }
