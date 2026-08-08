@@ -11,6 +11,7 @@ import {
   CHI_SIAMO_FAQ,
   CHI_SIAMO_HERO,
   GOLD,
+  GOLD_TEXT,
   INSTITUTIONAL_CLIENTS,
   MISSION_BULLETS,
   MISSION_TEXT,
@@ -58,7 +59,7 @@ export function ChiSiamoContent({ impostazioni }: ChiSiamoContentProps) {
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:py-14">
       <header className="max-w-4xl">
-        <p className="text-sm font-semibold uppercase tracking-wider" style={{ color: GOLD }}>
+        <p className="text-sm font-semibold uppercase tracking-wider" style={{ color: GOLD_TEXT }}>
           Chi Siamo
         </p>
         <h1 className="mt-2 text-2xl font-bold leading-tight text-slate-900 sm:text-3xl lg:text-4xl">
@@ -106,13 +107,13 @@ export function ChiSiamoContent({ impostazioni }: ChiSiamoContentProps) {
 
       <section className="mt-16 rounded-2xl bg-slate-900 px-6 py-10 text-white sm:px-10">
         <h2 className="text-2xl font-bold sm:text-3xl">LILO SRL Oggi: Eccellenza e Affidabilità a Trieste</h2>
-        <h3 className="mt-6 text-lg font-semibold" style={{ color: GOLD }}>
+        <h3 className="mt-6 text-lg font-semibold" style={{ color: GOLD_TEXT }}>
           I Nostri Numeri
         </h3>
         <ul className="mt-4 grid gap-3 sm:grid-cols-2">
           {STATS.map((stat) => (
             <li key={stat} className="flex items-start gap-2 text-slate-200">
-              <span className="text-lg" style={{ color: GOLD }} aria-hidden="true">
+              <span className="text-lg" style={{ color: GOLD_TEXT }} aria-hidden="true">
                 ✓
               </span>
               {stat}
@@ -156,7 +157,7 @@ export function ChiSiamoContent({ impostazioni }: ChiSiamoContentProps) {
           <Link
             href="/autolavaggio"
             className="mt-6 inline-block font-semibold hover:underline"
-            style={{ color: GOLD }}
+            style={{ color: GOLD_TEXT }}
           >
             Vai all&apos;autolavaggio →
           </Link>
@@ -197,7 +198,7 @@ export function ChiSiamoContent({ impostazioni }: ChiSiamoContentProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-auto pt-4 text-sm font-semibold hover:underline"
-                  style={{ color: GOLD }}
+                  style={{ color: GOLD_TEXT }}
                 >
                   {client.linkLabel ?? "Documentazione"} →
                 </a>
@@ -229,7 +230,7 @@ export function ChiSiamoContent({ impostazioni }: ChiSiamoContentProps) {
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {VALUES.map((value) => (
             <div key={value.title} className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-              <h3 className="font-semibold" style={{ color: GOLD }}>
+              <h3 className="font-semibold" style={{ color: GOLD_TEXT }}>
                 {value.title}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-slate-600">{value.description}</p>
@@ -251,7 +252,7 @@ export function ChiSiamoContent({ impostazioni }: ChiSiamoContentProps) {
             34143 Trieste (TS)
           </p>
           <p className="mt-3 text-sm">
-            <PhoneLink phone={tel} className="font-semibold hover:underline" style={{ color: GOLD }}>
+            <PhoneLink phone={tel} className="font-semibold hover:underline" style={{ color: GOLD_TEXT }}>
               {tel}
             </PhoneLink>
             <br />

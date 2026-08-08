@@ -1,4 +1,6 @@
 export const GOLD = "#D4AF37";
+/** Oro scuro per testo piccolo su sfondo chiaro (WCAG AA ≥ 4.5:1). */
+export const GOLD_TEXT = "#8B6B0E";
 
 export const AUTOLAVAGGIO_URL = "https://www.autolavaggiolilo.it";
 

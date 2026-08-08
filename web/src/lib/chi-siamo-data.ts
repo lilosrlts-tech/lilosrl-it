@@ -1,6 +1,8 @@
 import type { AiFaqItem } from "@/types/veicolo";
 
 export const GOLD = "#D4AF37";
+/** Oro scuro per titoli/etichette su sfondo chiaro (WCAG AA). */
+export const GOLD_TEXT = "#8B6B0E";
 
 export interface TimelineEvent {
   year: string;

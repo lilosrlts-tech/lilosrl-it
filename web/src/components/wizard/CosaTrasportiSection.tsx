@@ -46,7 +46,7 @@ export async function CosaTrasportiSection({
     >
       <div className="mx-auto max-w-6xl px-4">
         <div className="mb-8 max-w-2xl">
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#D4AF37]">
+          <p className="text-xs font-semibold uppercase tracking-widest text-[#8B6B0E]">
             Guida al mezzo giusto
           </p>
           <HeadingTag

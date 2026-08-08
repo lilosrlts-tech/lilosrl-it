@@ -89,14 +89,14 @@ export function WhatsAppPreventivoCard({
       className="flex h-full scroll-mt-24 flex-col overflow-hidden rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50/80 via-white to-slate-50 shadow-sm sm:col-span-2 lg:col-span-2"
       aria-labelledby={headingId}
     >
-      <div className="border-b border-emerald-100 bg-emerald-600 px-5 py-4 text-white">
-        <p className="text-xs font-bold uppercase tracking-[0.18em] text-emerald-100">
+      <div className="border-b border-emerald-800 bg-emerald-700 px-5 py-4 text-white">
+        <p className="text-xs font-bold uppercase tracking-[0.18em] text-white">
           Preventivo rapido
         </p>
-        <h3 id={headingId} className="mt-1 text-xl font-bold tracking-tight">
+        <h3 id={headingId} className="mt-1 text-xl font-bold tracking-tight text-white">
           Richiedi su WhatsApp
         </h3>
-        <p className="mt-1 text-sm text-emerald-50">
+        <p className="mt-1 text-sm text-white">
           Compila i campi (km e destinazione sono obbligatori): ti apriamo una chat con il messaggio
           già pronto per {COMPANY.name} ({COMPANY.phone}).
         </p>

@@ -1,6 +1,6 @@
 import Link from "next/link";
+import { GOLD_TEXT } from "@/lib/nav-config";
 
-const GOLD = "#D4AF37";
 const AUTOLAVAGGIO_IMAGE = "/images/staff-autolavaggio-lilo-trieste.webp";
 const AUTOLAVAGGIO_IMAGE_WIDTH = 1024;
 const AUTOLAVAGGIO_IMAGE_HEIGHT = 576;
@@ -22,7 +22,7 @@ export function AutolavaggioPromoSection() {
         <div>
           <p
             className="text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm"
-            style={{ color: GOLD }}
+            style={{ color: GOLD_TEXT }}
           >
             Servizi LILO
           </p>

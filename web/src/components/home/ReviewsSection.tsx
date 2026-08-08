@@ -2,9 +2,11 @@ import { REVIEWS, GOOGLE_NOLEGGIO_REVIEWS_URL } from "@/lib/reviews";
 
 function Stars({ rating }: { rating: number }) {
   return (
-    <div className="flex gap-0.5 text-amber-400" aria-label={`${rating} stelle su 5`}>
+    <div className="flex gap-0.5 text-amber-700" aria-label={`${rating} stelle su 5`}>
       {Array.from({ length: 5 }).map((_, i) => (
-        <span key={i}>{i < rating ? "★" : "☆"}</span>
+        <span key={i} aria-hidden="true">
+          {i < rating ? "★" : "☆"}
+        </span>
       ))}
     </div>
   );
@@ -29,18 +31,18 @@ export function ReviewsSection() {
             >
               <div className="flex items-center justify-between gap-2">
                 <Stars rating={review.rating} />
-                <span className="text-xs text-slate-400">{review.source}</span>
+                <span className="text-xs font-medium text-slate-600">{review.source}</span>
               </div>
               <p className="mt-3 text-sm leading-relaxed text-slate-700">&ldquo;{review.text}&rdquo;</p>
               <p className="mt-3 text-sm font-medium text-slate-900">
                 {review.author}
-                <span className="font-normal text-slate-400"> · {review.dateLabel}</span>
+                <span className="font-normal text-slate-600"> · {review.dateLabel}</span>
               </p>
             </article>
           ))}
         </div>
 
-        <p className="mt-6 text-center text-sm text-slate-500">
+        <p className="mt-6 text-center text-sm text-slate-600">
           <a
             href={GOOGLE_NOLEGGIO_REVIEWS_URL}
             target="_blank"

@@ -1,6 +1,6 @@
 import Link from "next/link";
+import { GOLD_TEXT } from "@/lib/nav-config";
 
-const GOLD = "#D4AF37";
 const STAFF_IMAGE = "/images/lilo-staff-accoglienza-trieste.webp";
 const STAFF_IMAGE_WIDTH = 1024;
 const STAFF_IMAGE_HEIGHT = 682;
@@ -56,7 +56,7 @@ export function StaffAccoglienzaSection() {
         <div className="order-1 lg:order-2">
           <p
             className="text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm"
-            style={{ color: GOLD }}
+            style={{ color: GOLD_TEXT }}
           >
             Perché sceglierci
           </p>
