@@ -17,6 +17,10 @@ import type { VeicoloPubblico } from "@/types/veicolo";
 /** Forza sempre il dominio canonico www.lilosrl.it (HTTPS, no duplicati). */
 export function canonicalUrl(path: string): string {
   const normalized = path.startsWith("/") ? path : `/${path}`;
+  // Home: Google preferisce spesso lo slash finale; allineiamo il tag canonical.
+  if (normalized === "/") {
+    return `${SITE_URL}/`;
+  }
   return `${SITE_URL}${normalized}`;
 }
 

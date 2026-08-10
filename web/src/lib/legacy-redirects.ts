@@ -336,6 +336,24 @@ export const LEGACY_REDIRECTS: LegacyRedirect[] = [
     ),
   ),
 
+  // ── Gestionale (ex rewrite → Aruba 403 ai crawler) ───────────────────────
+  // 301 HTTPS sul dominio gestionale: GSC su lilosrl.it vede redirect, non 403.
+  {
+    source: "/.gestionale",
+    destination: "https://www.gestionalelilo.it/.gestionale",
+    note: "Proxy legacy → redirect HTTPS gestionale (evita 403 Aruba in GSC)",
+  },
+  {
+    source: "/.gestionale/",
+    destination: "https://www.gestionalelilo.it/.gestionale/",
+    note: "Proxy legacy trailing → gestionale HTTPS",
+  },
+  {
+    source: "/.gestionale/:path*",
+    destination: "https://www.gestionalelilo.it/.gestionale/:path*",
+    note: "Proxy legacy sottopercorsi → gestionale HTTPS",
+  },
+
   // Catch-all: qualsiasi /car/* non mappato → hub flotta (preserva equity SEO residua)
   {
     source: "/car/:slug",
@@ -371,4 +389,25 @@ export function getActiveRedirectRules(): NextRedirectRule[] {
   return toNextRedirectRules().filter(
     (rule) => rule.source !== rule.destination && Boolean(rule.source) && Boolean(rule.destination),
   );
+}
+
+/**
+ * Mappa path esatti (senza slash finale, senza parametri dinamici) → destinazione.
+ * Usata dal middleware per 301 one-hop anche su URL con trailing slash.
+ */
+let exactPathRedirectCache: Map<string, string> | null = null;
+
+export function getExactPathRedirectMap(): ReadonlyMap<string, string> {
+  if (exactPathRedirectCache) return exactPathRedirectCache;
+  const map = new Map<string, string>();
+  for (const rule of LEGACY_REDIRECTS) {
+    if (rule.source.includes(":")) continue;
+    const key = rule.source.replace(/\/+$/, "") || "/";
+    if (key === "/" && rule.destination === "/") continue;
+    if (!map.has(key)) {
+      map.set(key, rule.destination);
+    }
+  }
+  exactPathRedirectCache = map;
+  return map;
 }

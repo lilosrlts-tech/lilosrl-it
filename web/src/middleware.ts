@@ -5,6 +5,7 @@ import {
   REDIRECT_TO_CANONICAL_HOSTS,
 } from "@/lib/constants";
 import { isFlottaCategoriaSlug } from "@/lib/flotta-categoria-config";
+import { getExactPathRedirectMap } from "@/lib/legacy-redirects";
 
 const LOCAL_HOSTS = new Set(["localhost", "127.0.0.1", "::1"]);
 
@@ -90,15 +91,28 @@ function redirect301(request: NextRequest, pathname: string): NextResponse {
   return NextResponse.redirect(new URL(pathname, CANONICAL_ORIGIN), 301);
 }
 
+function stripTrailingSlash(pathname: string): string {
+  if (pathname === "/" || !pathname.endsWith("/")) return pathname;
+  return pathname.replace(/\/+$/, "") || "/";
+}
+
 /**
- * Path legacy / sconosciuti → 301.
- * Ordine: categorie root note, poi catch-all verso /flotta.
+ * Path legacy / sconosciuti / trailing slash → 301 (one-hop dove possibile).
  */
 function maybeRedirectUnknownPath(request: NextRequest): NextResponse | null {
   const { pathname } = request.nextUrl;
   if (pathname === "/" || pathname === "") return null;
 
-  const segments = pathname.split("/").filter(Boolean);
+  const hasTrailingSlash = pathname.length > 1 && pathname.endsWith("/");
+  const normalized = stripTrailingSlash(pathname);
+
+  // Mappa esatta legacy (con o senza slash in ingresso → destinazione finale)
+  const exactDest = getExactPathRedirectMap().get(normalized);
+  if (exactDest && exactDest !== normalized) {
+    return redirect301(request, exactDest);
+  }
+
+  const segments = normalized.split("/").filter(Boolean);
   const first = segments[0]?.toLowerCase();
   if (!first) return null;
 
@@ -106,6 +120,11 @@ function maybeRedirectUnknownPath(request: NextRequest): NextResponse | null {
   const categoryDest = CATEGORY_ROOT_TO_FLOTTA.get(first);
   if (categoryDest && segments.length === 1) {
     return redirect301(request, categoryDest);
+  }
+
+  // Solo slash finale su path valido dell’app → 301 senza slash (no 308 Next)
+  if (hasTrailingSlash && ALLOWED_TOP_LEVEL.has(first)) {
+    return redirect301(request, normalized);
   }
 
   // Path noti dell’app → passa
@@ -138,7 +157,7 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  // Path legacy (categorie root) + catch-all 404 → /flotta
+  // Path legacy (categorie root) + trailing slash + catch-all → destinazione finale
   const pathRedirect = maybeRedirectUnknownPath(request);
   if (pathRedirect) return pathRedirect;
 
@@ -179,7 +198,8 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     /*
-     * Esclude asset statici e il proxy gestionale PHP (/.gestionale → Aruba).
+     * Esclude asset statici. /.gestionale è gestito da vercel.json → 301 HTTPS gestionale
+     * (niente rewrite verso Aruba che risponde 403 ai crawler).
      */
     "/((?!_next/static|_next/image|favicon.ico|\\.gestionale(?:/.*)?$|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)",
   ],

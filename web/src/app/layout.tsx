@@ -22,9 +22,7 @@ export const metadata: Metadata = {
   },
   description:
     "Noleggio auto e furgoni a Trieste. Flotta moderna, tariffe trasparenti, ritiro in sede in Viale Campi Elisi.",
-  alternates: {
-    canonical: SITE_URL,
-  },
+  // Canonical per-pagina: impostato in generateMetadata di ogni route (no default home qui).
   openGraph: {
     type: "website",
     locale: "it_IT",

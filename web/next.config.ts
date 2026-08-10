@@ -2,6 +2,12 @@ import type { NextConfig } from "next";
 import { getActiveRedirectRules } from "./src/lib/legacy-redirects";
 
 const nextConfig: NextConfig = {
+  /**
+   * Evita il 308 automatico di Next sullo slash finale (catena 308→301 in GSC).
+   * Trailing slash → destinazione finale gestita da redirects 301 + middleware.
+   */
+  skipTrailingSlashRedirect: true,
+
   images: {
     formats: ["image/avif", "image/webp"],
     /** Include 640/800 per LCP mobile (hero e full-bleed). */
