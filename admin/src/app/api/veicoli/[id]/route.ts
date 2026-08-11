@@ -5,7 +5,6 @@ import {
   jsonSuccess,
   requireAdmin,
 } from "@/lib/api-utils";
-import { buildVeicoloSlug } from "@/lib/slug";
 import { setVeicoloAccessori } from "@/lib/services/accessori";
 import {
   deleteVeicolo,
@@ -45,12 +44,13 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
 
     const payload: Record<string, unknown> = { ...veicoloData };
 
-    if (parsed.marca && parsed.modello && !parsed.slug) {
-      payload.slug = buildVeicoloSlug(
-        parsed.marca,
-        parsed.modello,
-        parsed.versione,
-      );
+    // Mai rigenerare lo slug in update: marca/modello/versione cambiano i dettagli
+    // ma l’URL SEO deve restare stabile (es. /flotta/volkswagen-polo).
+    // Nuovo slug solo se inviato esplicitamente nel body.
+    if (parsed.slug) {
+      payload.slug = parsed.slug;
+    } else {
+      delete payload.slug;
     }
 
     const action = body.action as string | undefined;

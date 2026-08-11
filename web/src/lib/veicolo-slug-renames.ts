@@ -23,6 +23,8 @@ export const VEICOLO_SLUG_RENAMES: ReadonlyArray<{ from: string; to: string }> =
   // Legacy demo / alias
   { from: "ford-transit-350m-dv344hd", to: "ford-transit-l2h2-citta" },
   { from: "peugeot-boxer-l3h3-ix345ij", to: "peugeot-boxer-l3h3" },
+  // Admin aveva rigenerato lo slug includendo la versione motore
+  { from: "volkswagen-polo-1-0-59-kw", to: "volkswagen-polo" },
 ];
 
 /**
