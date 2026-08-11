@@ -22,9 +22,7 @@ export interface PrezzoGiornaliero {
 
 export function getPrezzoGiornaliero(veicolo: VeicoloPubblico): PrezzoGiornaliero | null {
   // Prezzo reale da admin/Supabase: ha sempre priorità sulla tariffa categoria hardcoded.
-  const prezzo = veicolo.prezzi.find(
-    (p) => p.tipo_tariffa === "giornaliero" && p.attivo !== false,
-  );
+  const prezzo = veicolo.prezzi.find((p) => p.tipo_tariffa === "giornaliero");
   if (prezzo) {
     return { importo: Number(prezzo.importo), valuta: prezzo.valuta || "EUR" };
   }
