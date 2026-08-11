@@ -12,6 +12,9 @@ node_modules/
 .env*.local
 **/CREDENZIALI.env
 supabase/CREDENZIALI.env
+**/.vercel-prod-secrets.tmp
+admin/.vercel
+web/.vercel
 
 # Dump DB locali (piano Free: niente backup automatici Supabase)
 backups/

@@ -19,15 +19,18 @@ PASSO 3 — VERIFICA
   Deve comparire "OK" su tutte le righe verdi.
 
 LINK DA USARE (copia nel browser):
-  http://localhost:3000
-  http://localhost:3000/contatti
-  http://localhost:3001/admin
-  Password admin: lilo2024
+  Sito pubblico:     https://www.lilosrl.it
+  Admin flotta:      https://lilosrl-admin.vercel.app/admin/login
+  Admin (locale):    http://localhost:3001/admin/login
+  Password admin online: vedi messaggio Cursor / Vercel env ADMIN_PASSWORD
+  Password admin locale: vedi admin/.env.local → ADMIN_PASSWORD
 
 IMPORTANTE:
-  - Usa SOLO "localhost" (non lilosrl.it)
+  - Sito pubblico: usa www.lilosrl.it (non solo localhost)
+  - Admin online: stesso Supabase del sito (nessun progetto DB extra)
+  - In locale: AVVIA_LILO.bat → localhost:3000 + :3001
   - La prima apertura è lenta (20-30 sec): è normale
   - Se la pagina è bianca: premi Ctrl+F5
-  - Non chiudere le finestre nere mentre usi il sito
+  - Non chiudere le finestre nere mentre usi i server locali
 
 Se VERIFICA_LILO mostra errori rossi, scrivi cosa dice e ti aiuto.

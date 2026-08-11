@@ -8,6 +8,8 @@ const PROTECTED_API_PREFIXES = [
   "/api/veicoli",
   "/api/impostazioni-sito",
   "/api/seo-settings",
+  "/api/accessori",
+  "/api/promozioni",
 ];
 
 export async function middleware(request: NextRequest) {
@@ -51,5 +53,7 @@ export const config = {
     "/api/veicoli/:path*",
     "/api/impostazioni-sito",
     "/api/seo-settings",
+    "/api/accessori/:path*",
+    "/api/promozioni/:path*",
   ],
 };

@@ -4,6 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "LILO Admin — Flotta autonoleggio",
   description: "Pannello di gestione flotta LILO S.r.l.",
+  robots: { index: false, follow: false, googleBot: { index: false, follow: false } },
 };
 
 export default function RootLayout({
