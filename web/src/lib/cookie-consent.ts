@@ -82,10 +82,23 @@ export function applyGoogleConsent(prefs: CookiePreferences): void {
   };
 
   w.dataLayer = w.dataLayer || [];
-  if (typeof w.gtag === "function") {
-    w.gtag("consent", "update", payload);
-  } else {
-    w.dataLayer.push(["consent", "update", payload]);
+  // Stub gtag come nello snippet ufficiale (Arguments, non array).
+  if (typeof w.gtag !== "function") {
+    w.gtag = function gtag() {
+      // eslint-disable-next-line prefer-rest-params
+      w.dataLayer!.push(arguments);
+    };
+  }
+  w.gtag("consent", "update", payload);
+
+  // Dopo il grant, la page_view iniziale era bloccata dal default "denied":
+  // reinviarla altrimenti GA4 resta a 0 finché l’utente non cambia pagina.
+  if (prefs.analytics) {
+    w.gtag("event", "page_view", {
+      page_location: window.location.href,
+      page_path: window.location.pathname + window.location.search,
+      page_title: document.title,
+    });
   }
 }
 

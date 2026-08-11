@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Inter } from "next/font/google";
 import { GoogleTags } from "@/components/analytics/GoogleTags";
 import { GooglePhoneConversion } from "@/components/analytics/GooglePhoneConversion";
 import { GoogleContactTracking } from "@/components/analytics/GoogleContactTracking";
+import { GoogleAnalyticsRouteListener } from "@/components/analytics/GoogleAnalyticsRouteListener";
 import { CookieConsent } from "@/components/layout/CookieConsent";
 import { GOOGLE_SITE_VERIFICATION } from "@/lib/google-config";
 import { SITE_URL, COMPANY } from "@/lib/constants";
@@ -47,6 +49,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <GoogleTags />
         <GooglePhoneConversion />
         <GoogleContactTracking />
+        <Suspense fallback={null}>
+          <GoogleAnalyticsRouteListener />
+        </Suspense>
         {children}
         <CookieConsent />
       </body>
