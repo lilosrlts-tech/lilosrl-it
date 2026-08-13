@@ -181,7 +181,8 @@ export function buildPageMetadata(seo: SeoSettings, pageKey?: SeoPageKey): Metad
     seo.seo_description,
     demo?.seo_description ?? seo.seo_description,
   );
-  const ogTitle = fitSeoTitle(seo.og_title ?? title, title);
+  // Ahrefs: <title> e og:title devono coincidere esattamente.
+  const ogTitle = title;
   const ogDescription = fitSeoDescription(seo.og_description ?? description, description);
 
   return {

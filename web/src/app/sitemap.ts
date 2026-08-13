@@ -23,7 +23,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticEntries: MetadataRoute.Sitemap = (
     Object.entries(SEO_PAGE_PATHS) as [SeoPageKey, string][]
   ).map(([key, path]) => ({
-    url: `${SITE_URL}${path === "/" ? "" : path}`,
+    url: path === "/" ? `${SITE_URL}/` : `${SITE_URL}${path}`,
     lastModified: now,
     changeFrequency: key === "home" || key === "flotta" ? "daily" : "weekly",
     priority: STATIC_PRIORITIES[key] ?? 0.6,

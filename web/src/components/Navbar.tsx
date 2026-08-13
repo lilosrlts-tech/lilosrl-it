@@ -98,6 +98,8 @@ interface NavbarProps {
 
 function buildSimpleLinks(offertaAttiva: boolean) {
   const links = [
+    { href: "/tariffe", label: "Tariffe" },
+    { href: "/cosa-trasporti", label: "Cosa trasporti?" },
     ...(offertaAttiva ? [{ href: "/offerte", label: "Offerta del Mese" }] : []),
     { href: "/chi-siamo", label: "Chi Siamo" },
     { href: "/contatti", label: "Contatti" },

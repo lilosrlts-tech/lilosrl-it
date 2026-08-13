@@ -37,12 +37,12 @@ function autoRentalRef() {
 }
 
 /**
- * LocalBusiness / AutoRental completo (campi Google + SEMrush:
- * @type, name, address, telephone, url, image).
+ * AutoRental (sottotipo di LocalBusiness) — tipo singolo standard schema.org.
+ * Campi richiesti Google/Ahrefs: name, address, telephone, url, image.
  */
 function autoRentalProvider() {
   return {
-    "@type": ["AutoRental", "LocalBusiness"] as const,
+    "@type": "AutoRental" as const,
     "@id": AUTO_RENTAL_ID,
     name: COMPANY.name,
     legalName: COMPANY.legalName,
@@ -50,7 +50,11 @@ function autoRentalProvider() {
     telephone: COMPANY.phoneE164,
     email: COMPANY.email,
     image: SITE_LOGO_URL,
-    logo: SITE_LOGO_URL,
+    logo: {
+      "@type": "ImageObject" as const,
+      url: SITE_LOGO_URL,
+      caption: "LILO S.r.l. — Autonoleggio Trieste",
+    },
     priceRange: "€€",
     currenciesAccepted: "EUR",
     paymentAccepted: "Cash, Credit Card, Debit Card",
@@ -75,11 +79,11 @@ function autoRentalProvider() {
 }
 
 /**
- * Tipi schema per noleggio: Car/Vehicle (non Product).
- * Product attiva i controlli Merchant (spedizione/resi) non pertinenti all’autonoleggio.
+ * Tipo schema veicolo: un solo tipo concreto (Car o Vehicle).
+ * Array multi-tipo (es. Car+Vehicle) genera warning di convalida Ahrefs/schema.org.
  */
-function schemaTypes(categoriaSlug: string | undefined): string[] {
-  return categoriaSlug === "auto" ? ["Car", "Vehicle"] : ["Vehicle"];
+function schemaType(categoriaSlug: string | undefined): "Car" | "Vehicle" {
+  return categoriaSlug === "auto" ? "Car" : "Vehicle";
 }
 
 function formatSchemaPrice(importo: number): string {
@@ -97,14 +101,13 @@ function buildVeicoloDescription(veicolo: VeicoloPubblico): string {
   );
 }
 
-/** Offer giornaliera per noleggio — price / currency / availability (GSC). */
+/** Offer giornaliera per noleggio — solo proprietà valide su schema.org/Offer. */
 function buildDailyRentalOffer(params: {
   name: string;
   canonical: string;
   prezzo: PrezzoSchema;
-  additionalProperty?: Record<string, unknown>[];
 }): Record<string, unknown> {
-  const { name, canonical, prezzo, additionalProperty } = params;
+  const { name, canonical, prezzo } = params;
   const price = formatSchemaPrice(prezzo.importo);
   const priceCurrency = prezzo.valuta || "EUR";
 
@@ -121,17 +124,13 @@ function buildDailyRentalOffer(params: {
       "@type": "UnitPriceSpecification",
       price,
       priceCurrency,
-      unitText: "DAY",
+      unitCode: "DAY",
       referenceQuantity: {
         "@type": "QuantitativeValue",
         value: 1,
         unitCode: "DAY",
       },
     },
-    additionalProperty:
-      additionalProperty && additionalProperty.length > 0
-        ? additionalProperty
-        : undefined,
     seller: autoRentalRef(),
     availableAtOrFrom: {
       "@type": "Place",
@@ -176,12 +175,28 @@ function sanitizeCustomJsonLd(
 
   if (types.includes("Product")) {
     types = types.filter((t) => t !== "Product");
-    if (!types.includes("Vehicle") && !types.includes("Car")) {
-      types.push("Vehicle");
-    }
   }
-  if (types.length === 0) types = ["Vehicle"];
-  custom["@type"] = types.length === 1 ? types[0] : types;
+  // Un solo tipo concreto: evita warning Ahrefs su multi-type ridondanti.
+  if (types.includes("Car")) {
+    types = ["Car"];
+  } else if (types.includes("Vehicle")) {
+    types = ["Vehicle"];
+  } else if (types.length === 0) {
+    types = ["Vehicle"];
+  } else {
+    types = [types[0]];
+  }
+  custom["@type"] = types[0];
+
+  // Proprietà non valide su Vehicle/Car secondo schema.org
+  delete custom.provider;
+  delete custom.locationCreated;
+  delete custom.keywords;
+  if (custom.offers && typeof custom.offers === "object" && !Array.isArray(custom.offers)) {
+    const offers = { ...(custom.offers as Record<string, unknown>) };
+    delete offers.additionalProperty;
+    custom.offers = offers;
+  }
 
   if (offer && custom.offers == null) custom.offers = offer;
   if (!custom.image && images.length > 0) custom.image = images;
@@ -378,48 +393,21 @@ export function buildVeicoloJsonLd(veicolo: VeicoloPubblico): Record<string, unk
 
   const categoriaNome = veicolo.categoria?.nome ?? "Veicolo";
   const cargo = resolveCargoSpecs(veicolo);
-  const useCases = useCasesForVeicolo(veicolo);
   const additionalProperty = buildVehicleAdditionalProperties(veicolo);
-  const tariffa = getTariffaPerVeicolo(veicolo);
   const faqItems = buildVeicoloFaqEntities(veicolo);
   const faqPage = buildVeicoloFaqPageJsonLd(veicolo, faqItems);
-
-  const offerAdditional: Record<string, unknown>[] = [];
-  if (tariffa) {
-    offerAdditional.push(
-      propertyValue("Cauzione", tariffa.cauzioneEuro, {
-        unitCode: "EUR",
-        unitText: "EUR",
-        description: getNotaCauzione(tariffa),
-      }),
-      propertyValue("Km inclusi / condizioni", getNotaKmInclusi(tariffa)),
-    );
-  }
 
   const offers = prezzo
     ? buildDailyRentalOffer({
         name,
         canonical,
         prezzo,
-        additionalProperty: offerAdditional,
       })
     : null;
-  const types = schemaTypes(veicolo.categoria?.slug);
-
-  const keywordParts = [
-    ...useCases.map((u) => u.label),
-    "noleggio Trieste",
-    categoriaNome,
-  ];
-  if (cargo.volumeMc != null) {
-    keywordParts.push(`${String(cargo.volumeMc).replace(".", ",")} m³`);
-  }
-  if (cargo.portataKg != null) {
-    keywordParts.push(`portata ${cargo.portataKg} kg`);
-  }
+  const type = schemaType(veicolo.categoria?.slug);
 
   const generated: Record<string, unknown> = {
-    "@type": types,
+    "@type": type,
     "@id": `${canonical}#veicolo`,
     name,
     description,
@@ -427,7 +415,6 @@ export function buildVeicoloJsonLd(veicolo: VeicoloPubblico): Record<string, unk
     // URL assoluti (stringhe): requisito GSC; almeno una grazie al fallback logo.
     image: images,
     category: categoriaNome,
-    keywords: keywordParts.filter(Boolean).join(", "),
     brand: {
       "@type": "Brand",
       name: veicolo.marca,
@@ -452,22 +439,6 @@ export function buildVeicoloJsonLd(veicolo: VeicoloPubblico): Record<string, unk
       cargo.altezzaMm != null ? quantitativeMm(cargo.altezzaMm) : undefined,
     additionalProperty: additionalProperty.length > 0 ? additionalProperty : undefined,
     offers: offers ?? undefined,
-    provider: autoRentalRef(),
-    locationCreated: {
-      "@type": "Place",
-      name: "LILO S.r.l. — Trieste",
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: COMPANY.streetAddress,
-        addressLocality: COMPANY.city,
-        addressCountry: COMPANY.country,
-      },
-      geo: {
-        "@type": "GeoCoordinates",
-        latitude: COMPANY.geo.latitude,
-        longitude: COMPANY.geo.longitude,
-      },
-    },
     subjectOf: faqPage ? { "@id": `${canonical}#faq` } : undefined,
   };
 
@@ -593,14 +564,6 @@ export function buildWebSiteJsonLd(): Record<string, unknown> {
     url: SITE_URL,
     inLanguage: "it-IT",
     publisher: { "@id": `${SITE_URL}/#organization` },
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${SITE_URL}/flotta/{search_term_string}`,
-      },
-      "query-input": "required name=search_term_string",
-    },
   };
 }
 
@@ -829,7 +792,7 @@ export function buildFlottaCategoriaJsonLd(
             const images = getVeicoloImageUrlsForSchema(veicolo);
             const isAuto = veicolo.categoria?.slug === "auto";
             const item: Record<string, unknown> = {
-              "@type": isAuto ? ["Car", "Vehicle"] : "Vehicle",
+              "@type": isAuto ? "Car" : "Vehicle",
               name,
               description: buildVeicoloDescription(veicolo),
               image: images,
@@ -848,6 +811,7 @@ export function buildFlottaCategoriaJsonLd(
                 availability: "https://schema.org/InStock",
                 url: itemUrl,
                 businessFunction: "https://schema.org/LeaseOut",
+                seller: autoRentalRef(),
               };
             }
             return {

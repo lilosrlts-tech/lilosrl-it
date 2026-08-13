@@ -146,7 +146,8 @@ export function buildVeicoloMetadata(veicolo: VeicoloPubblico): Metadata {
     titleFallback,
   );
 
-  const ogTitle = fitSeoTitle(veicolo.og_title?.trim() || title, title);
+  // Ahrefs: <title> e og:title devono coincidere esattamente.
+  const ogTitle = title;
   const ogDescription = fitSeoDescription(
     stripTargaFromPublicCopy(veicolo.og_description ?? description),
     description,
@@ -204,7 +205,7 @@ export function buildVeicoloMetadata(veicolo: VeicoloPubblico): Metadata {
     },
     twitter: {
       card: "summary_large_image",
-      title: fitSeoTitle(veicolo.twitter_title?.trim() || ogTitle, ogTitle),
+      title: ogTitle,
       description: fitSeoDescription(
         veicolo.twitter_description?.trim() || ogDescription,
         ogDescription,
