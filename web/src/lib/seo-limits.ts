@@ -88,12 +88,101 @@ export function fitSeoDescription(raw: string, fallback?: string): string {
 }
 
 /** Title corto e stabile per schede veicolo (entro 60 caratteri nella maggior parte dei casi). */
-export function buildVeicoloTitleFallback(marca: string, modello: string): string {
+export function buildVeicoloTitleFallback(
+  marca: string,
+  modello: string,
+  options?: { versione?: string | null; slug?: string | null },
+): string {
   const m = cleanSeoText(marca);
   const mod = cleanSeoText(modello);
-  const full = `Noleggio ${m} ${mod} Trieste | LILO`;
-  if (full.length <= SEO_TITLE_MAX) return full;
-  const mid = `Noleggio ${m} ${mod} | LILO`;
+  const ver = options?.versione ? cleanSeoText(options.versione) : "";
+  const extra = slugTitleDisambiguator(options?.slug, [m, mod, ver]);
+
+  const withAll = ["Noleggio", m, mod, ver, extra, "Trieste | LILO"]
+    .filter(Boolean)
+    .join(" ");
+  if (withAll.length <= SEO_TITLE_MAX) return withAll;
+
+  const mid = ["Noleggio", m, mod, ver || extra, "Trieste | LILO"]
+    .filter(Boolean)
+    .join(" ");
   if (mid.length <= SEO_TITLE_MAX) return mid;
-  return truncateSeoText(mid, SEO_TITLE_MAX);
+
+  const short = ["Noleggio", m, mod, ver || extra, "| LILO"].filter(Boolean).join(" ");
+  if (short.length <= SEO_TITLE_MAX) return short;
+  return truncateSeoText(short, SEO_TITLE_MAX);
+}
+
+const SLUG_LABELS: Record<string, string> = {
+  ibrido: "Ibrido",
+  citta: "Città",
+  haccp: "HACCP",
+  rampa: "Rampa",
+  van: "Van",
+  xl: "XL",
+};
+
+/** Token distintivi dallo slug non già presenti in marca/modello/versione. */
+function slugTitleDisambiguator(
+  slug: string | null | undefined,
+  already: string[],
+): string {
+  if (!slug?.trim()) return "";
+  const known = new Set(
+    already
+      .join(" ")
+      .toLowerCase()
+      .split(/[\s/_-]+/)
+      .filter(Boolean)
+      .map((t) => t.replace(/[àáâ]/g, "a").replace(/èé/g, "e").replace(/ì/g, "i").replace(/ò/g, "o").replace(/ù/g, "u")),
+  );
+
+  const tokens = slug
+    .toLowerCase()
+    .split("-")
+    .filter((t) => t.length > 1 && !/^\d+$/.test(t) && !known.has(t));
+
+  for (const t of tokens) {
+    if (SLUG_LABELS[t]) return SLUG_LABELS[t];
+  }
+  return "";
+}
+
+/**
+ * Preferisce un title univoco se il seo_title DB omette versione / disambiguatore slug
+ * (causa tipica dei title tag duplicati SEMrush su mezzi simili).
+ */
+export function resolveVeicoloSeoTitle(
+  seoTitle: string | null | undefined,
+  marca: string,
+  modello: string,
+  options?: { versione?: string | null; slug?: string | null },
+): string {
+  const fallback = buildVeicoloTitleFallback(marca, modello, options);
+  const raw = seoTitle?.trim();
+  if (!raw) return fallback;
+
+  const lower = raw.toLowerCase();
+  const lowerCompact = lower.replace(/\s+/g, "");
+  const ver = options?.versione?.trim();
+  if (ver) {
+    const verLower = ver.toLowerCase();
+    const verCompact = verLower.replace(/\s+/g, "");
+    if (!lower.includes(verLower) && !lowerCompact.includes(verCompact)) {
+      return fallback;
+    }
+  }
+
+  const extra = slugTitleDisambiguator(options?.slug, [marca, modello, ver ?? ""]);
+  if (extra) {
+    const aliases =
+      extra.toLowerCase() === "città"
+        ? ["città", "citta", "citt"]
+        : [extra.toLowerCase()];
+    if (!aliases.some((a) => lower.includes(a))) {
+      return fallback;
+    }
+  }
+
+  return fitSeoTitle(raw, fallback);
 }

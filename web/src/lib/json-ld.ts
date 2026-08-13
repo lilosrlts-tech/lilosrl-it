@@ -28,15 +28,32 @@ import {
 import type { VeicoloPubblico, AiFaqItem } from "@/types/veicolo";
 import type { ImpostazioniSito } from "@/types/impostazioni";
 
+const AUTO_RENTAL_ID = `${SITE_URL}/#autonoleggio`;
+const SITE_LOGO_URL = `${SITE_URL}/logo-lilo.jpg`;
+
+/** Riferimento leggero: evita di ripetere AutoRental incompleto nei nodi nested (SEMrush). */
+function autoRentalRef() {
+  return { "@id": AUTO_RENTAL_ID };
+}
+
+/**
+ * LocalBusiness / AutoRental completo (campi Google + SEMrush:
+ * @type, name, address, telephone, url, image).
+ */
 function autoRentalProvider() {
   return {
-    "@type": "AutoRental" as const,
-    "@id": `${SITE_URL}/#autonoleggio`,
+    "@type": ["AutoRental", "LocalBusiness"] as const,
+    "@id": AUTO_RENTAL_ID,
     name: COMPANY.name,
     legalName: COMPANY.legalName,
     url: SITE_URL,
     telephone: COMPANY.phoneE164,
     email: COMPANY.email,
+    image: SITE_LOGO_URL,
+    logo: SITE_LOGO_URL,
+    priceRange: "€€",
+    currenciesAccepted: "EUR",
+    paymentAccepted: "Cash, Credit Card, Debit Card",
     address: {
       "@type": "PostalAddress" as const,
       streetAddress: COMPANY.streetAddress,
@@ -115,7 +132,7 @@ function buildDailyRentalOffer(params: {
       additionalProperty && additionalProperty.length > 0
         ? additionalProperty
         : undefined,
-    seller: autoRentalProvider(),
+    seller: autoRentalRef(),
     availableAtOrFrom: {
       "@type": "Place",
       name: "LILO Autonoleggio — Viale Campi Elisi 38/B",
@@ -435,7 +452,7 @@ export function buildVeicoloJsonLd(veicolo: VeicoloPubblico): Record<string, unk
       cargo.altezzaMm != null ? quantitativeMm(cargo.altezzaMm) : undefined,
     additionalProperty: additionalProperty.length > 0 ? additionalProperty : undefined,
     offers: offers ?? undefined,
-    provider: autoRentalProvider(),
+    provider: autoRentalRef(),
     locationCreated: {
       "@type": "Place",
       name: "LILO S.r.l. — Trieste",
@@ -454,7 +471,11 @@ export function buildVeicoloJsonLd(veicolo: VeicoloPubblico): Record<string, unk
     subjectOf: faqPage ? { "@id": `${canonical}#faq` } : undefined,
   };
 
-  const graph: Record<string, unknown>[] = [generated, buildVeicoloBreadcrumbList(veicolo)];
+  const graph: Record<string, unknown>[] = [
+    autoRentalProvider(),
+    generated,
+    buildVeicoloBreadcrumbList(veicolo),
+  ];
   if (faqPage) graph.push(faqPage);
 
   if (veicolo.json_ld && Object.keys(veicolo.json_ld).length > 0) {
@@ -589,7 +610,10 @@ export function buildHomeJsonLd(): Record<string, unknown> {
     "@graph": [
       buildOrganizationJsonLd(),
       buildWebSiteJsonLd(),
-      { ...autoRentalProvider(), parentOrganization: { "@id": `${SITE_URL}/#organization` } },
+      {
+        ...autoRentalProvider(),
+        parentOrganization: { "@id": `${SITE_URL}/#organization` },
+      },
       {
         "@type": "HowTo",
         "@id": `${SITE_URL}/#come-scegliere-furgone`,
@@ -759,7 +783,7 @@ export function buildFlottaJsonLd(veicoli: VeicoloPubblico[]): Record<string, un
           "Catalogo noleggio LILO S.r.l. a Trieste: auto, pulmini 9 posti e furgoni per ogni esigenza.",
         url: canonical,
         isPartOf: { "@id": `${SITE_URL}/#website` },
-        provider: autoRentalProvider(),
+        provider: autoRentalRef(),
         mainEntity: {
           "@type": "ItemList",
           numberOfItems: FLOTTA_CATEGORIA_SLUGS.length,
@@ -794,7 +818,7 @@ export function buildFlottaCategoriaJsonLd(
         description: copy.seoDescription,
         url: canonical,
         isPartOf: { "@id": `${SITE_URL}/flotta#flotta` },
-        provider: autoRentalProvider(),
+        provider: autoRentalRef(),
         mainEntity: {
           "@type": "ItemList",
           numberOfItems: veicoli.length,
@@ -857,7 +881,7 @@ export function buildContattiJsonLd(impostazioni: ImpostazioniSito): Record<stri
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": ["AutoRental", "LocalBusiness"],
+        ...autoRentalProvider(),
         "@id": `${canonical}#sede-noleggio`,
         name: COMPANY.legalName,
         alternateName: COMPANY.name,
@@ -866,32 +890,10 @@ export function buildContattiJsonLd(impostazioni: ImpostazioniSito): Record<stri
         url: canonical,
         telephone: telefonoE164(impostazioni.telefono_noleggio),
         email: impostazioni.email_contatto,
-        image: `${SITE_URL}/logo-lilo.jpg`,
-        logo: `${SITE_URL}/logo-lilo.jpg`,
-        priceRange: "€€",
-        currenciesAccepted: "EUR",
-        paymentAccepted: "Cash, Credit Card, Debit Card",
-        address: {
-          "@type": "PostalAddress",
-          streetAddress: COMPANY.streetAddress,
-          addressLocality: COMPANY.city,
-          postalCode: COMPANY.postalCode,
-          addressRegion: COMPANY.region,
-          addressCountry: COMPANY.country,
-        },
-        geo: {
-          "@type": "GeoCoordinates",
-          latitude: COMPANY.geo.latitude,
-          longitude: COMPANY.geo.longitude,
-        },
         hasMap: mapsUrl,
         sameAs,
         openingHoursSpecification,
         parentOrganization: { "@id": `${SITE_URL}/#organization` },
-        areaServed: [
-          { "@type": "City", name: "Trieste" },
-          { "@type": "AdministrativeArea", name: "Provincia di Trieste" },
-        ],
       },
       buildOrganizationJsonLd(),
     ],

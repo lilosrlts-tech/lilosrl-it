@@ -2,26 +2,54 @@ import type { Metadata } from "next";
 import { SITE_URL } from "@/lib/constants";
 import { resolveMetadataTitle } from "@/lib/metadata-title";
 import {
-  buildVeicoloTitleFallback,
+  resolveVeicoloSeoTitle,
   fitSeoDescription,
   fitSeoTitle,
 } from "@/lib/seo-limits";
 import { buildVeicoloSeoDescription, getVeicoloFotoAlt, stripTargaFromPublicCopy, toAbsoluteAssetUrl } from "@/lib/veicolo-seo";
 import {
   getCoverImage,
-  getDisplayName,
   getPrezzoGiornaliero,
 } from "@/lib/veicoli";
 import type { VeicoloPubblico } from "@/types/veicolo";
 
-/** Forza sempre il dominio canonico www.lilosrl.it (HTTPS, no duplicati). */
+/**
+ * Forza sempre il dominio canonico www.lilosrl.it (HTTPS, no duplicati).
+ * Home → slash finale; altre path → senza slash finale.
+ */
 export function canonicalUrl(path: string): string {
   const normalized = path.startsWith("/") ? path : `/${path}`;
-  // Home: Google preferisce spesso lo slash finale; allineiamo il tag canonical.
-  if (normalized === "/") {
+  if (normalized === "/" || normalized === "") {
     return `${SITE_URL}/`;
   }
-  return `${SITE_URL}${normalized}`;
+  const bare = normalized.replace(/\/+$/, "") || "/";
+  return `${SITE_URL}${bare}`;
+}
+
+/**
+ * Normalizza un canonical da DB (o assoluto) al formato pubblico univoco.
+ * Se punta a un path diverso da `fallbackPath`, si ignora e si usa il path atteso.
+ */
+export function resolvePageCanonical(
+  candidate: string | null | undefined,
+  fallbackPath: string,
+): string {
+  const fallback = canonicalUrl(fallbackPath);
+  if (!candidate?.trim()) return fallback;
+
+  try {
+    const raw = candidate.trim();
+    const absolute = /^https?:\/\//i.test(raw)
+      ? raw
+      : `${SITE_URL}${raw.startsWith("/") ? raw : `/${raw}`}`;
+    const u = new URL(absolute);
+    const path = u.pathname.replace(/\/+$/, "") || "/";
+    const expected = new URL(fallback).pathname.replace(/\/+$/, "") || "/";
+    if (path !== expected) return fallback;
+    return canonicalUrl(path);
+  } catch {
+    return fallback;
+  }
 }
 
 export function veicoloCanonicalUrl(slug: string): string {
@@ -86,8 +114,10 @@ export function parseRobots(metaRobots: string | null): Metadata["robots"] {
 }
 
 export function buildVeicoloMetadata(veicolo: VeicoloPubblico): Metadata {
-  const name = getDisplayName(veicolo);
-  const canonical = veicoloCanonicalUrl(veicolo.slug);
+  const canonical = resolvePageCanonical(
+    veicolo.canonical_url,
+    `/flotta/${veicolo.slug}`,
+  );
 
   const descriptionFromDb =
     veicolo.descrizione_breve?.trim() ||
@@ -104,9 +134,15 @@ export function buildVeicoloMetadata(veicolo: VeicoloPubblico): Metadata {
     descriptionFallback,
   );
 
-  const titleFallback = buildVeicoloTitleFallback(veicolo.marca, veicolo.modello);
+  const titleFallback = resolveVeicoloSeoTitle(null, veicolo.marca, veicolo.modello, {
+    versione: veicolo.versione,
+    slug: veicolo.slug,
+  });
   const title = fitSeoTitle(
-    veicolo.seo_title?.trim() || titleFallback,
+    resolveVeicoloSeoTitle(veicolo.seo_title, veicolo.marca, veicolo.modello, {
+      versione: veicolo.versione,
+      slug: veicolo.slug,
+    }),
     titleFallback,
   );
 

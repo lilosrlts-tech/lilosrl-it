@@ -17,7 +17,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
+  metadataBase: new URL("https://www.lilosrl.it"),
   title: {
     default: "LILO S.r.l. — Autonoleggio Trieste",
     template: "%s | LILO Autonoleggio Trieste",

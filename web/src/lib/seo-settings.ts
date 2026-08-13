@@ -2,7 +2,7 @@ import { unstable_cache } from "next/cache";
 import type { Metadata } from "next";
 import { createPublicClient, isSupabaseConfigured } from "@/lib/supabase";
 import { isDemoMode } from "@/lib/demo-veicolo";
-import { canonicalUrl, parseRobots } from "@/lib/seo";
+import { parseRobots, resolvePageCanonical } from "@/lib/seo";
 import { resolveMetadataTitle } from "@/lib/metadata-title";
 import { fitSeoDescription, fitSeoTitle } from "@/lib/seo-limits";
 import { SITE_URL } from "@/lib/constants";
@@ -174,7 +174,7 @@ export async function getSeoSettings(pageKey: SeoPageKey): Promise<SeoSettings> 
 
 export function buildPageMetadata(seo: SeoSettings, pageKey?: SeoPageKey): Metadata {
   const path = pageKey ? SEO_PAGE_PATHS[pageKey] : "/";
-  const canonical = seo.canonical_url ?? canonicalUrl(path);
+  const canonical = resolvePageCanonical(seo.canonical_url, path);
   const demo = pageKey ? DEMO_SEO[pageKey] : undefined;
   const title = fitSeoTitle(seo.seo_title, demo?.seo_title ?? seo.seo_title);
   const description = fitSeoDescription(
