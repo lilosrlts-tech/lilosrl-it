@@ -14,21 +14,29 @@ import {
 import type { VeicoloPubblico } from "@/types/veicolo";
 
 /**
- * Forza sempre il dominio canonico www.lilosrl.it (HTTPS, no duplicati).
- * Home → slash finale; altre path → senza slash finale.
+ * URL canonico definitivo per GSC: sempre https://www.lilosrl.it,
+ * senza query string, hash o trailing slash (home esclusa).
  */
-export function canonicalUrl(path: string): string {
-  const normalized = path.startsWith("/") ? path : `/${path}`;
-  if (normalized === "/" || normalized === "") {
-    return `${SITE_URL}/`;
+export function canonicalUrl(pathOrUrl: string): string {
+  let pathname = "/";
+  const raw = pathOrUrl.trim();
+  try {
+    const u = /^https?:\/\//i.test(raw) ? new URL(raw) : new URL(raw || "/", SITE_URL);
+    pathname = u.pathname;
+  } catch {
+    pathname = raw.split("?")[0].split("#")[0];
+    if (!pathname.startsWith("/")) pathname = `/${pathname}`;
   }
-  const bare = normalized.replace(/\/+$/, "") || "/";
-  return `${SITE_URL}${bare}`;
+
+  pathname = pathname.replace(/\/+$/, "") || "/";
+  if (pathname === "/") return `${SITE_URL}/`;
+  return `${SITE_URL}${pathname}`;
 }
 
 /**
  * Normalizza un canonical da DB (o assoluto) al formato pubblico univoco.
- * Se punta a un path diverso da `fallbackPath`, si ignora e si usa il path atteso.
+ * Query string e host non canonici vengono scartati; se il path non coincide
+ * con `fallbackPath`, si usa il path atteso della pagina.
  */
 export function resolvePageCanonical(
   candidate: string | null | undefined,
@@ -37,19 +45,10 @@ export function resolvePageCanonical(
   const fallback = canonicalUrl(fallbackPath);
   if (!candidate?.trim()) return fallback;
 
-  try {
-    const raw = candidate.trim();
-    const absolute = /^https?:\/\//i.test(raw)
-      ? raw
-      : `${SITE_URL}${raw.startsWith("/") ? raw : `/${raw}`}`;
-    const u = new URL(absolute);
-    const path = u.pathname.replace(/\/+$/, "") || "/";
-    const expected = new URL(fallback).pathname.replace(/\/+$/, "") || "/";
-    if (path !== expected) return fallback;
-    return canonicalUrl(path);
-  } catch {
-    return fallback;
-  }
+  const resolved = canonicalUrl(candidate);
+  const expectedPath = new URL(fallback).pathname.replace(/\/+$/, "") || "/";
+  const resolvedPath = new URL(resolved).pathname.replace(/\/+$/, "") || "/";
+  return resolvedPath === expectedPath ? resolved : fallback;
 }
 
 export function veicoloCanonicalUrl(slug: string): string {
@@ -114,10 +113,8 @@ export function parseRobots(metaRobots: string | null): Metadata["robots"] {
 }
 
 export function buildVeicoloMetadata(veicolo: VeicoloPubblico): Metadata {
-  const canonical = resolvePageCanonical(
-    veicolo.canonical_url,
-    `/flotta/${veicolo.slug}`,
-  );
+  // Canonical = URL pulito della scheda (slug), mai query string / canonical_url DB sporco.
+  const canonical = veicoloCanonicalUrl(veicolo.slug);
 
   const descriptionFromDb =
     veicolo.descrizione_breve?.trim() ||

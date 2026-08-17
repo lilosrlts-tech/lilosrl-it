@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { SitePageWrapper, loadImpostazioni } from "@/lib/site-page";
+
+export const metadata: Metadata = {
+  title: "Veicolo non trovato",
+  robots: { index: false, follow: false },
+};
 
 export default async function NotFound() {
   const impostazioni = await loadImpostazioni();

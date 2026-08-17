@@ -6,6 +6,7 @@ import { SitePageWrapper, loadImpostazioni } from "@/lib/site-page";
 import { COSA_TRASPORTI_FAQ } from "@/lib/cosa-trasporti";
 import { buildCosaTrasportiJsonLd } from "@/lib/json-ld";
 import { resolveMetadataTitle } from "@/lib/metadata-title";
+import { canonicalUrl } from "@/lib/seo";
 import { SITE_URL } from "@/lib/constants";
 import type { AiFaqItem } from "@/types/veicolo";
 
@@ -18,6 +19,7 @@ const META_DESCRIPTION =
 
 export async function generateMetadata(): Promise<Metadata> {
   const ogImage = `${SITE_URL}/images/veicoli/ford-transit-gg551rd-noleggio-furgoni-grandi-trieste.webp`;
+  const canonical = canonicalUrl("/cosa-trasporti");
   return {
     title: resolveMetadataTitle(META_TITLE),
     description: META_DESCRIPTION,
@@ -29,11 +31,11 @@ export async function generateMetadata(): Promise<Metadata> {
       "quale furgone noleggiare",
       "LILO Trieste",
     ],
-    alternates: { canonical: `${SITE_URL}/cosa-trasporti` },
+    alternates: { canonical },
     openGraph: {
       title: META_TITLE,
       description: META_DESCRIPTION,
-      url: `${SITE_URL}/cosa-trasporti`,
+      url: canonical,
       type: "website",
       locale: "it_IT",
       siteName: "LILO S.r.l. — Autonoleggio Trieste",

@@ -1,7 +1,12 @@
 import type { MetadataRoute } from "next";
-import { SITE_URL } from "@/lib/constants";
-import { FLOTTA_CATEGORIA_SLUGS } from "@/lib/flotta-categoria-config";
+import {
+  FLOTTA_CATEGORIA_SLUGS,
+  isFlottaCategoriaSlug,
+} from "@/lib/flotta-categoria-config";
+import { getExactPathRedirectMap } from "@/lib/legacy-redirects";
+import { canonicalUrl } from "@/lib/seo";
 import { getPublishedSlugs } from "@/lib/veicoli";
+import { VEICOLO_SLUG_REDIRECTS_301 } from "@/lib/veicolo-slug-renames";
 import { SEO_PAGE_PATHS, type SeoPageKey } from "@/types/seo";
 
 const STATIC_PRIORITIES: Partial<Record<SeoPageKey, number>> = {
@@ -16,41 +21,75 @@ const STATIC_PRIORITIES: Partial<Record<SeoPageKey, number>> = {
 
 export const revalidate = 3600;
 
+const REDIRECTED_VEHICLE_SLUGS = new Set(VEICOLO_SLUG_REDIRECTS_301.map((r) => r.from));
+
+function sitemapEntry(
+  path: string,
+  extras: Omit<MetadataRoute.Sitemap[number], "url">,
+): MetadataRoute.Sitemap[number] | null {
+  const url = canonicalUrl(path);
+  const pathname = new URL(url).pathname.replace(/\/+$/, "") || "/";
+  if (getExactPathRedirectMap().has(pathname) && pathname !== "/") {
+    return null;
+  }
+  return { url, ...extras };
+}
+
+function uniqueEntries(entries: Array<MetadataRoute.Sitemap[number] | null>): MetadataRoute.Sitemap {
+  const seen = new Set<string>();
+  const out: MetadataRoute.Sitemap = [];
+  for (const entry of entries) {
+    if (!entry?.url || seen.has(entry.url)) continue;
+    seen.add(entry.url);
+    out.push(entry);
+  }
+  return out;
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const slugs = await getPublishedSlugs();
   const now = new Date();
 
-  const staticEntries: MetadataRoute.Sitemap = (
-    Object.entries(SEO_PAGE_PATHS) as [SeoPageKey, string][]
-  ).map(([key, path]) => ({
-    url: path === "/" ? `${SITE_URL}/` : `${SITE_URL}${path}`,
-    lastModified: now,
-    changeFrequency: key === "home" || key === "flotta" ? "daily" : "weekly",
-    priority: STATIC_PRIORITIES[key] ?? 0.6,
-  }));
+  const staticEntries = (Object.entries(SEO_PAGE_PATHS) as [SeoPageKey, string][]).map(
+    ([key, path]) =>
+      sitemapEntry(path, {
+        lastModified: now,
+        changeFrequency: key === "home" || key === "flotta" ? "daily" : "weekly",
+        priority: STATIC_PRIORITIES[key] ?? 0.6,
+      }),
+  );
 
-  const categoryEntries: MetadataRoute.Sitemap = FLOTTA_CATEGORIA_SLUGS.map((slug) => ({
-    url: `${SITE_URL}/flotta/${slug}`,
-    lastModified: now,
-    changeFrequency: "weekly",
-    priority: 0.92,
-  }));
+  const categoryEntries = FLOTTA_CATEGORIA_SLUGS.map((slug) =>
+    sitemapEntry(`/flotta/${slug}`, {
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.92,
+    }),
+  );
 
-  const vehicleEntries: MetadataRoute.Sitemap = slugs.map((slug) => ({
-    url: `${SITE_URL}/flotta/${slug}`,
-    lastModified: now,
-    changeFrequency: "weekly",
-    priority: 0.9,
-  }));
+  const vehicleEntries = slugs
+    .filter((slug) => {
+      const clean = slug?.trim();
+      if (!clean) return false;
+      if (isFlottaCategoriaSlug(clean)) return false;
+      if (REDIRECTED_VEHICLE_SLUGS.has(clean)) return false;
+      return true;
+    })
+    .map((slug) =>
+      sitemapEntry(`/flotta/${slug}`, {
+        lastModified: now,
+        changeFrequency: "weekly",
+        priority: 0.9,
+      }),
+    );
 
-  const guidaEntries: MetadataRoute.Sitemap = [
-    {
-      url: `${SITE_URL}/cosa-trasporti`,
+  const guidaEntries = [
+    sitemapEntry("/cosa-trasporti", {
       lastModified: now,
       changeFrequency: "weekly",
       priority: 0.88,
-    },
+    }),
   ];
 
-  return [...staticEntries, ...categoryEntries, ...vehicleEntries, ...guidaEntries];
+  return uniqueEntries([...staticEntries, ...categoryEntries, ...vehicleEntries, ...guidaEntries]);
 }

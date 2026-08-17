@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FlottaCategoriaPage } from "@/components/flotta/FlottaCategoriaPage";
 import { VeicoloDettaglioContent } from "@/components/flotta/VeicoloDettaglioContent";
@@ -16,6 +15,7 @@ export const revalidate = 0;
 
 type PageProps = {
   params: Promise<{ slug: string }>;
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
 };
 
 export async function generateStaticParams() {
@@ -30,7 +30,9 @@ export async function generateStaticParams() {
   }
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: PageProps): Promise<Metadata> {
+  // Query string (utm, filtri temporanei) non entra mai nel canonical.
+  void searchParams;
   const { slug } = await params;
 
   if (isFlottaCategoriaSlug(slug)) {
@@ -38,7 +40,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const veicolo = await getVeicoloBySlug(slug);
-  if (!veicolo) return { title: "Pagina non trovata" };
+  if (!veicolo) {
+    return {
+      title: "Pagina non trovata",
+      robots: { index: false, follow: false },
+    };
+  }
   return buildVeicoloMetadata(veicolo);
 }
 
