@@ -13,7 +13,7 @@ import type { AiFaqItem } from "@/types/veicolo";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-const META_TITLE = "Cosa trasporti? Trova il furgone giusto a Trieste | LILO";
+const META_TITLE = "Cosa trasporti? Furgone giusto a Trieste | LILO";
 const META_DESCRIPTION =
   "Frigo, armadio, trasloco o moto? Il wizard LILO confronta volume, altezza vano e portata della flotta a Trieste e ti propone i furgoni più adatti.";
 

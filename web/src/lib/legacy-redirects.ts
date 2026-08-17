@@ -54,6 +54,37 @@ function withTrailingVariants(
  */
 export const LEGACY_REDIRECTS: LegacyRedirect[] = [
   // ── Home e alias comuni ──────────────────────────────────────────────────
+  { source: "/logo-lilo.jpg", destination: "/logo-lilo.webp", note: "Logo JPEG → WebP" },
+  {
+    source: "/images/flotta/ford-transit-noleggio-furgoni-trieste.png",
+    destination: "/images/flotta/ford-transit-noleggio-furgoni-trieste.webp",
+    note: "PNG 1MB → WebP",
+  },
+  {
+    source: "/images/flotta/ford-tourneo-noleggio-pulmini-trieste.png",
+    destination: "/images/flotta/ford-tourneo-noleggio-pulmini-trieste.webp",
+    note: "PNG → WebP",
+  },
+  {
+    source: "/images/flotta/fiat-doblo-noleggio-furgoni-piccoli-trieste.png",
+    destination: "/images/flotta/fiat-doblo-noleggio-furgoni-piccoli-trieste.webp",
+    note: "PNG → WebP",
+  },
+  {
+    source: "/images/flotta/furgone-grande-iveco-daily-l2h2-trieste-front.jpg",
+    destination: "/images/flotta/furgone-grande-iveco-daily-l2h2-trieste-front.webp",
+    note: "JPEG → WebP",
+  },
+  {
+    source: "/images/flotta/furgone-piccolo-toyota-proace-city-trieste-front.jpg",
+    destination: "/images/flotta/furgone-piccolo-toyota-proace-city-trieste-front.webp",
+    note: "JPEG → WebP",
+  },
+  {
+    source: "/images/veicoli/opel-karl-noleggio-auto-trieste.jpg",
+    destination: "/images/veicoli/opel-karl-noleggio-auto-trieste.webp",
+    note: "JPEG → WebP",
+  },
   ...withTrailingVariants("/home", "/", "Vecchia home /home"),
   {
     source: "/index.html",

@@ -57,12 +57,12 @@ export function veicoloCanonicalUrl(slug: string): string {
 
 export function buildFlottaMetadata(): Metadata {
   const canonical = canonicalUrl("/flotta");
-  const title = "Flotta Noleggio Furgoni e Auto a Trieste | Lilo Srl";
+  const title = "Flotta noleggio furgoni e auto Trieste | LILO";
   const description =
     "Scopri la flotta LILO S.r.l. a Trieste: auto, pulmini 9 posti e furgoni da piccoli a XL. Tariffe trasparenti, ritiro in sede. Prenota il veicolo ideale per te.";
 
   return {
-    title,
+    title: resolveMetadataTitle(title),
     description,
     keywords: [
       "noleggio furgoni trieste",
@@ -83,7 +83,7 @@ export function buildFlottaMetadata(): Metadata {
       description,
       images: [
         {
-          url: `${SITE_URL}/logo-lilo.jpg`,
+          url: `${SITE_URL}/logo-lilo.webp`,
           width: 1200,
           height: 630,
           alt: "LILO S.r.l. — Autonoleggio Trieste",
@@ -94,7 +94,7 @@ export function buildFlottaMetadata(): Metadata {
       card: "summary_large_image",
       title,
       description,
-      images: [`${SITE_URL}/logo-lilo.jpg`],
+      images: [`${SITE_URL}/logo-lilo.webp`],
     },
     other: {
       "geo.region": "IT-TS",

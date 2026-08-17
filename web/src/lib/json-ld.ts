@@ -29,7 +29,7 @@ import type { VeicoloPubblico, AiFaqItem } from "@/types/veicolo";
 import type { ImpostazioniSito } from "@/types/impostazioni";
 
 const AUTO_RENTAL_ID = `${SITE_URL}/#autonoleggio`;
-const SITE_LOGO_URL = `${SITE_URL}/logo-lilo.jpg`;
+const SITE_LOGO_URL = `${SITE_URL}/logo-lilo.webp`;
 
 /** Riferimento leggero: evita di ripetere AutoRental incompleto nei nodi nested (SEMrush). */
 function autoRentalRef() {
@@ -527,7 +527,7 @@ export function buildOrganizationJsonLd(): Record<string, unknown> {
     url: SITE_URL,
     logo: {
       "@type": "ImageObject",
-      url: `${SITE_URL}/logo-lilo.jpg`,
+      url: `${SITE_URL}/logo-lilo.webp`,
       caption: "LILO S.r.l. — Autonoleggio Trieste",
     },
     foundingDate: "2003",

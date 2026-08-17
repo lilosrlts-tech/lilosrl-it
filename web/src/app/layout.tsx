@@ -19,8 +19,8 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.lilosrl.it"),
   title: {
-    default: "LILO S.r.l. — Autonoleggio Trieste",
-    template: "%s | LILO Autonoleggio Trieste",
+    default: "Noleggio Auto e Furgoni Trieste | LILO",
+    template: "%s",
   },
   description:
     "Noleggio auto e furgoni a Trieste. Flotta moderna, tariffe trasparenti, ritiro in sede in Viale Campi Elisi.",

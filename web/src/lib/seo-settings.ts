@@ -24,7 +24,7 @@ const DEMO_SEO: Record<SeoPageKey, SeoSettings> = {
   },
   flotta: {
     page_key: "flotta",
-    seo_title: "Flotta Noleggio Furgoni e Auto a Trieste | Lilo Srl",
+    seo_title: "Flotta noleggio furgoni e auto Trieste | LILO",
     seo_description:
       "Scopri la flotta LILO S.r.l. a Trieste: auto, pulmini 9 posti e furgoni da piccoli a XL. Tariffe trasparenti, ritiro in sede.",
     seo_keywords: ["flotta noleggio trieste", "furgoni noleggio", "pulmini 9 posti trieste"],
@@ -48,7 +48,7 @@ const DEMO_SEO: Record<SeoPageKey, SeoSettings> = {
   },
   tariffe: {
     page_key: "tariffe",
-    seo_title: "Prezzi Noleggio Auto e Furgoni Trieste | LILO S.r.l.",
+    seo_title: "Prezzi noleggio auto e furgoni Trieste | LILO",
     seo_description:
       "Listino prezzi noleggio auto e furgoni a Trieste aggiornato dalla flotta LILO. Tariffe giornaliere IVA inclusa, trasparenti e ritiro in sede.",
     seo_keywords: ["prezzi noleggio furgoni trieste", "tariffe autonoleggio trieste"],
@@ -79,7 +79,7 @@ const DEMO_SEO: Record<SeoPageKey, SeoSettings> = {
   },
   "chi-siamo": {
     page_key: "chi-siamo",
-    seo_title: "Chi Siamo — LILO SRL | 20 Anni di Esperienza a Trieste",
+    seo_title: "Chi Siamo | 20 anni a Trieste | LILO",
     seo_description:
       "Dal 2003 LILO S.r.l. è a Trieste con noleggio furgoni e auto, autolavaggio e servizi per privati, aziende e clienti istituzionali.",
     seo_keywords: ["LILO S.r.l.", "noleggio trieste", "trasporti trieste"],
@@ -103,7 +103,7 @@ const DEMO_SEO: Record<SeoPageKey, SeoSettings> = {
   },
   privacy: {
     page_key: "privacy",
-    seo_title: "Privacy Policy | LILO S.r.l. Autonoleggio Trieste",
+    seo_title: "Privacy Policy | LILO Autonoleggio Trieste",
     seo_description:
       "Informativa privacy e trattamento dati personali di LILO S.r.l., autonoleggio e autolavaggio a Trieste. Diritti degli interessati e contatti del titolare.",
     seo_keywords: ["privacy LILO", "GDPR autonoleggio trieste"],
@@ -198,13 +198,13 @@ export function buildPageMetadata(seo: SeoSettings, pageKey?: SeoPageKey): Metad
       siteName: "LILO S.r.l. — Autonoleggio Trieste",
       title: ogTitle,
       description: ogDescription,
-      images: [{ url: `${SITE_URL}/logo-lilo.jpg`, alt: "LILO S.R.L." }],
+      images: [{ url: `${SITE_URL}/logo-lilo.webp`, alt: "LILO S.R.L." }],
     },
     twitter: {
       card: "summary_large_image",
       title: ogTitle,
       description: ogDescription,
-      images: [`${SITE_URL}/logo-lilo.jpg`],
+      images: [`${SITE_URL}/logo-lilo.webp`],
     },
     other: {
       "geo.region": "IT-TS",

@@ -57,7 +57,7 @@ export const FLOTTA_CATEGORIA_COPY: Record<TariffaCategoriaSlug, CategoriaCopy> 
     hubDescription: "Per gruppi, eventi e trasferimenti fino a 9 passeggeri.",
     pageIntro:
       "Pulmini 9 posti a noleggio a Trieste: soluzione ideale per viaggi di gruppo, gite, eventi e trasferimenti con tutta la comodità di un unico mezzo.",
-    seoTitle: "Noleggio Pulmini 9 Posti Trieste | LILO S.r.l.",
+    seoTitle: "Noleggio pulmini 9 posti Trieste | LILO",
     seoDescription:
       "Noleggio pulmini 9 posti a Trieste con LILO S.r.l.: mezzi spaziosi per gruppi ed eventi, tariffe IVA inclusa e ritiro in sede.",
   },
@@ -90,7 +90,7 @@ export const FLOTTA_CATEGORIA_COPY: Record<TariffaCategoriaSlug, CategoriaCopy> 
       "Tariffa città Trieste (50 km) e unica categoria della Promo Weekend / Offerta del Mese.",
     pageIntro:
       "Furgoni grandi dedicati all'uso cittadino a Trieste: tariffa con 50 km inclusi. È l’unica categoria a cui si applica l’Offerta del Mese / Promo Weekend (48 ore sabato–lunedì a 83€).",
-    seoTitle: "Noleggio Furgoni Grandi Uso Città Trieste | LILO",
+    seoTitle: "Noleggio furgoni grandi uso città Trieste | LILO",
     seoDescription:
       "Noleggio furgoni grandi uso città a Trieste: 50 km inclusi, cauzione flessibile e Promo Weekend 83€ IVA inclusa con LILO S.r.l.",
   },

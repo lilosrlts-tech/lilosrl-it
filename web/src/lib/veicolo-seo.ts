@@ -127,7 +127,7 @@ export function getVeicoloImageUrlsForSchema(veicolo: VeicoloPubblico): string[]
   push(veicolo.og_image_url);
   push(resolveVeicoloCoverUrl(veicolo));
   push(getLocalFleetImageFallback(veicolo.slug, veicolo.categoria?.slug));
-  push("/logo-lilo.jpg");
+  push("/logo-lilo.webp");
 
   return urls;
 }

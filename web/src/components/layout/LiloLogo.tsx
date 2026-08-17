@@ -14,7 +14,7 @@ export function LiloLogo({ variant = "default" }: LiloLogoProps) {
   return (
     <Link href="/" className="flex shrink-0 items-center" aria-label="LILO S.R.L. — Home">
       <Image
-        src="/logo-lilo.jpg"
+        src="/logo-lilo.webp"
         alt="LILO S.R.L. — Autonoleggio e servizi a Trieste"
         width={180}
         height={56}
@@ -23,6 +23,7 @@ export function LiloLogo({ variant = "default" }: LiloLogoProps) {
         loading="eager"
         fetchPriority="low"
         decoding="async"
+        quality={75}
       />
     </Link>
   );

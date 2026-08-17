@@ -101,7 +101,7 @@ export function CosaTrasportiWizard({
                           src={item.coverUrl}
                           alt={`Noleggio ${item.name} Trieste`}
                           fill
-                          unoptimized
+                          quality={75}
                           className={FLEET_VEHICLE_IMG.resultThumb}
                           sizes="(max-width: 640px) 100vw, 50vw"
                         />
