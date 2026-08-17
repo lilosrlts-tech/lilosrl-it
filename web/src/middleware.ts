@@ -40,6 +40,7 @@ const ALLOWED_TOP_LEVEL = new Set([
   "sitemap.xml",
   "robots.txt",
   "llms.txt",
+  "8f3c2a91d64e4b0f9c1a7e5d2b8f0c3a.txt",
   "manifest.webmanifest",
   "manifest.json",
   "icon",
@@ -201,6 +202,6 @@ export const config = {
      * Esclude asset statici. /.gestionale è gestito da vercel.json → 301 HTTPS gestionale
      * (niente rewrite verso Aruba che risponde 403 ai crawler).
      */
-    "/((?!_next/static|_next/image|favicon.ico|\\.gestionale(?:/.*)?$|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)",
+    "/((?!_next/static|_next/image|favicon.ico|\\.gestionale(?:/.*)?$|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|txt)$).*)",
   ],
 };
