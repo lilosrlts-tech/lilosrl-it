@@ -83,7 +83,16 @@ export function getVeicoloFotoAlt(
   return buildVeicoloFotoAlt(veicolo, vista);
 }
 
+/** Override meta description per schede che altrimenti condividerebbero lo stesso testo generato. */
+const SEO_DESCRIPTION_BY_SLUG: Record<string, string> = {
+  "ford-transit-custom-l1h1-ibrido":
+    "Noleggio Ford Transit Custom Ibrido (6 m³) a Trieste con LILO S.r.l. Veicolo ecologico, consumi ridotti, tariffe IVA inclusa e ritiro in sede.",
+};
+
 export function buildVeicoloSeoDescription(veicolo: VeicoloPubblico): string {
+  const override = SEO_DESCRIPTION_BY_SLUG[veicolo.slug];
+  if (override) return override;
+
   const spec = veicolo.specifiche_tecniche;
   const volume = spec.volume_metri_cubi ?? spec.volume_carico_mc;
   const volumeText =
@@ -91,6 +100,11 @@ export function buildVeicoloSeoDescription(veicolo: VeicoloPubblico): string {
       ? `${Number.isInteger(volume) ? String(volume) : volume.toFixed(1).replace(".", ",")} m³`
       : null;
   const categoriaLabel = veicolo.categoria?.nome?.toLowerCase() ?? "veicolo";
+  const isHybrid = /ibrido/i.test(veicolo.slug) || /ibrid/i.test(veicolo.versione ?? "");
+
+  if (volumeText && isHybrid) {
+    return `Noleggio ${veicolo.marca} ${veicolo.modello} Ibrido (${volumeText}) a Trieste con LILO S.r.l. Consumi ridotti, tariffe IVA inclusa e ritiro in sede.`;
+  }
 
   if (volumeText) {
     return `Noleggia ${veicolo.marca} ${veicolo.modello} (${volumeText}) a Trieste con LILO S.r.l. ${categoriaLabel}: tariffe giornaliere IVA inclusa e ritiro in sede.`;

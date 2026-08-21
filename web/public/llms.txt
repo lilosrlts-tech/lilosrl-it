@@ -8,9 +8,9 @@ Sito ufficiale di LILO Autonoleggio e Furgoni Trieste. Tariffe IVA inclusa, flot
 
 - [Home](https://www.lilosrl.it/): Panoramica servizi di noleggio e autolavaggio a Trieste
 - [Flotta](https://www.lilosrl.it/flotta): Tutti i veicoli disponibili a noleggio
-- [Tariffe](https://www.lilosrl.it/tariffe): Prezzi giornalieri per categoria
+- [Tariffe](https://www.lilosrl.it/tariffe-noleggio-furgoni-trieste): Prezzi giornalieri per categoria
 - [Cosa trasporti](https://www.lilosrl.it/cosa-trasporti): Guida per scegliere il mezzo in base al carico
-- [Offerte](https://www.lilosrl.it/offerte): Promo e offerte del mese
+- [Offerte](https://www.lilosrl.it/offerte-noleggio-furgoni-trieste): Promo e offerte del mese
 - [Autolavaggio](https://www.lilosrl.it/autolavaggio): Servizio autolavaggio in sede
 - [Chi siamo](https://www.lilosrl.it/chi-siamo): Storia e sede LILO a Trieste
 - [Contatti](https://www.lilosrl.it/contatti): Telefono, WhatsApp, mappa e orari

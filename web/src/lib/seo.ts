@@ -121,9 +121,14 @@ export function buildVeicoloMetadata(veicolo: VeicoloPubblico): Metadata {
     veicolo.descrizione_completa?.split("\n").map((l) => l.trim()).find(Boolean);
 
   const descriptionFallback = buildVeicoloSeoDescription(veicolo);
+  const slugOverride =
+    veicolo.slug === "ford-transit-custom-l1h1-ibrido"
+      ? descriptionFallback
+      : null;
   const description = fitSeoDescription(
     stripTargaFromPublicCopy(
-      veicolo.seo_description?.trim() ||
+      slugOverride ||
+        veicolo.seo_description?.trim() ||
         descriptionFromDb ||
         veicolo.ai_summary ||
         descriptionFallback,

@@ -1,5 +1,7 @@
 import { SedeCard } from "@/components/shared/SedeCard";
 import { PhoneLink } from "@/components/shared/PhoneLink";
+import { SeoLongContentSections } from "@/components/shared/SeoLongContentSections";
+import { AUTOLAVAGGIO_LONG_CONTENT } from "@/lib/seo-page-content";
 import { SEDE_AUTOLAVAGGIO } from "@/lib/sedi";
 import type { ImpostazioniSito } from "@/types/impostazioni";
 
@@ -41,6 +43,8 @@ export function AutolavaggioContent({ impostazioni }: AutolavaggioContentProps) 
           </a>
         </p>
       </section>
+
+      <SeoLongContentSections content={AUTOLAVAGGIO_LONG_CONTENT} idPrefix="autolavaggio" />
     </div>
   );
 }

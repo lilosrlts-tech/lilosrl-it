@@ -43,6 +43,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: resolveMetadataTitle(META_TITLE),
     description: META_DESCRIPTION,
     keywords: [
+      "offerte noleggio furgoni trieste",
       "noleggio furgone weekend trieste",
       "furgoni grandi uso città",
       "promo trasloco weekend",

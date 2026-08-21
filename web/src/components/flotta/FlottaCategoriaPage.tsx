@@ -2,11 +2,13 @@ import Link from "next/link";
 import { FlottaCategoriaGrid } from "@/components/flotta/FlottaCategoriaGrid";
 import { PhoneLink } from "@/components/shared/PhoneLink";
 import { WhatsAppCtaLink } from "@/components/shared/WhatsAppCtaLink";
+import { SeoLongContentSections } from "@/components/shared/SeoLongContentSections";
 import {
   FLOTTA_CATEGORIA_COPY,
   getFlottaCategoriaNavLabel,
   getFlottaCategoriaTariffaNote,
 } from "@/lib/flotta-categoria-config";
+import { FLOTTA_CATEGORIA_LONG_CONTENT } from "@/lib/seo-page-content";
 import { buildFlottaCategoriaJsonLd } from "@/lib/json-ld";
 import { isOffertaPromoCategoria } from "@/lib/offerta-promo";
 import { SitePageWrapper, loadImpostazioni } from "@/lib/site-page";
@@ -76,7 +78,7 @@ export async function FlottaCategoriaPage({ slug }: FlottaCategoriaPageProps) {
                 (48 ore, 75 km).
               </p>
               <Link
-                href="/offerte"
+                href="/offerte-noleggio-furgoni-trieste"
                 className="mt-4 inline-flex rounded-full bg-[#84CC16] px-5 py-2.5 text-sm font-extrabold uppercase tracking-wide text-slate-950 hover:brightness-110"
               >
                 Vedi l’offerta →
@@ -118,6 +120,11 @@ export async function FlottaCategoriaPage({ slug }: FlottaCategoriaPageProps) {
           </section>
 
           <FlottaCategoriaGrid veicoli={filtrati} />
+
+          <SeoLongContentSections
+            content={FLOTTA_CATEGORIA_LONG_CONTENT[slug]}
+            idPrefix={`flotta-${slug}`}
+          />
 
           <section className="mt-14 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
             <h2 className="text-lg font-semibold text-slate-900">

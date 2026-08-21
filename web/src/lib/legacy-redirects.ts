@@ -3,7 +3,8 @@
  * verso la nuova struttura Next.js.
  *
  * Decisioni SEO (2026-07-28):
- *   - /prezzi → /tariffe (pagina listino esistente)
+ *   - /prezzi e /tariffe → /tariffe-noleggio-furgoni-trieste
+ *   - /offerte e /offerta-del-mese → /offerte-noleggio-furgoni-trieste
  *   - /flotta-noleggio e /flotta-noleggio-2 → /flotta
  *   - /autolavaggio resta su lilosrl.it (nessun redirect fuori dominio)
  *   - schede /car/*: mappate 301 → /flotta/... + catch-all → /flotta
@@ -109,20 +110,34 @@ export const LEGACY_REDIRECTS: LegacyRedirect[] = [
     "Duplicato hub flotta WP → /flotta",
   ),
 
-  // ── Prezzi → tariffe (pagina /tariffe esistente) ──────────────────────────
+  // ── Prezzi / tariffe (URL keyword) ───────────────────────────────────────
   ...withTrailingVariants(
     "/prezzi",
+    "/tariffe-noleggio-furgoni-trieste",
+    "Vecchia pagina prezzi → listino keyword",
+  ),
+  ...withTrailingVariants(
     "/tariffe",
-    "Vecchia pagina prezzi → listino /tariffe",
+    "/tariffe-noleggio-furgoni-trieste",
+    "Listino corto → URL con keyword",
   ),
 
-  // ── Offerte / news ───────────────────────────────────────────────────────
+  // ── Offerte / news (URL keyword) ─────────────────────────────────────────
   ...withTrailingVariants(
     "/offerta-del-mese",
-    "/offerte",
-    "Offerta del mese WP → /offerte",
+    "/offerte-noleggio-furgoni-trieste",
+    "Offerta del mese WP → URL keyword",
   ),
-  ...withTrailingVariants("/news", "/offerte", "Archivio news WP → /offerte"),
+  ...withTrailingVariants(
+    "/news",
+    "/offerte-noleggio-furgoni-trieste",
+    "Archivio news WP → offerte keyword",
+  ),
+  ...withTrailingVariants(
+    "/offerte",
+    "/offerte-noleggio-furgoni-trieste",
+    "Offerte corto → URL con keyword",
+  ),
 
   // ── Legale / cookie ──────────────────────────────────────────────────────
   ...withTrailingVariants(

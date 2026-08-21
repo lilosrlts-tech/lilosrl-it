@@ -3,6 +3,8 @@ import Link from "next/link";
 import { SitePageWrapper, loadImpostazioni } from "@/lib/site-page";
 import { getPageMetadata } from "@/lib/seo-settings";
 import { COMPANY } from "@/lib/constants";
+import { SeoLongContentSections } from "@/components/shared/SeoLongContentSections";
+import { COOKIE_POLICY_LONG_CONTENT } from "@/lib/seo-page-content";
 
 export const dynamic = "force-dynamic";
 
@@ -49,6 +51,8 @@ export default async function CookiePolicyPage() {
             </p>
           </section>
         </div>
+
+        <SeoLongContentSections content={COOKIE_POLICY_LONG_CONTENT} idPrefix="cookie" />
 
         <p className="mt-10 text-sm text-slate-500">
           Per il trattamento dei dati personali consulta la{" "}

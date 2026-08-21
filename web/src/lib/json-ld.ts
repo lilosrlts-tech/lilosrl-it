@@ -680,7 +680,7 @@ export function buildFaqJsonLd(items: AiFaqItem[]): Record<string, unknown> {
 
 /** FAQ + Offer per la pagina Offerta del Mese (Promo Weekend — solo furgoni-grandi-citta). */
 export function buildOfferteJsonLd(faqItems: AiFaqItem[]): Record<string, unknown> {
-  const canonical = `${SITE_URL}/offerte`;
+  const canonical = `${SITE_URL}/offerte-noleggio-furgoni-trieste`;
   return {
     "@context": "https://schema.org",
     "@graph": [

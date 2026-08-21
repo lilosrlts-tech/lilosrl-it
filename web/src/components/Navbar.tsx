@@ -98,9 +98,9 @@ interface NavbarProps {
 
 function buildSimpleLinks(offertaAttiva: boolean) {
   const links = [
-    { href: "/tariffe", label: "Tariffe" },
+    { href: "/tariffe-noleggio-furgoni-trieste", label: "Tariffe" },
     { href: "/cosa-trasporti", label: "Cosa trasporti?" },
-    ...(offertaAttiva ? [{ href: "/offerte", label: "Offerta del Mese" }] : []),
+    ...(offertaAttiva ? [{ href: "/offerte-noleggio-furgoni-trieste", label: "Offerta del Mese" }] : []),
     { href: "/chi-siamo", label: "Chi Siamo" },
     { href: "/contatti", label: "Contatti" },
   ] as const;

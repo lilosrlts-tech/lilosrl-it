@@ -28,10 +28,12 @@ function isVercelPreview(host: string): boolean {
 const ALLOWED_TOP_LEVEL = new Set([
   "flotta",
   "tariffe",
+  "tariffe-noleggio-furgoni-trieste",
   "contatti",
   "chi-siamo",
   "cosa-trasporti",
   "offerte",
+  "offerte-noleggio-furgoni-trieste",
   "autolavaggio",
   "privacy",
   "cookie-policy",

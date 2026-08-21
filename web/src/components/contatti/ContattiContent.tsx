@@ -1,4 +1,6 @@
 import { SedeCard } from "@/components/shared/SedeCard";
+import { SeoLongContentSections } from "@/components/shared/SeoLongContentSections";
+import { CONTATTI_LONG_CONTENT } from "@/lib/seo-page-content";
 import { SEDE_AUTOLAVAGGIO, SEDE_NOLEGGIO } from "@/lib/sedi";
 import type { ImpostazioniSito } from "@/types/impostazioni";
 
@@ -28,6 +30,8 @@ export function ContattiContent({ impostazioni }: ContattiContentProps) {
           {impostazioni.email_contatto}
         </a>
       </section>
+
+      <SeoLongContentSections content={CONTATTI_LONG_CONTENT} idPrefix="contatti" />
     </div>
   );
 }

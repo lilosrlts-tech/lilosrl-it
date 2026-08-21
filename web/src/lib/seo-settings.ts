@@ -51,7 +51,11 @@ const DEMO_SEO: Record<SeoPageKey, SeoSettings> = {
     seo_title: "Prezzi noleggio auto e furgoni Trieste | LILO",
     seo_description:
       "Listino prezzi noleggio auto e furgoni a Trieste aggiornato dalla flotta LILO. Tariffe giornaliere IVA inclusa, trasparenti e ritiro in sede.",
-    seo_keywords: ["prezzi noleggio furgoni trieste", "tariffe autonoleggio trieste"],
+    seo_keywords: [
+      "listino prezzi noleggio furgoni trieste",
+      "prezzi noleggio furgoni trieste",
+      "tariffe autonoleggio trieste",
+    ],
     meta_robots: "index, follow",
     canonical_url: null,
     og_title: null,
@@ -64,6 +68,7 @@ const DEMO_SEO: Record<SeoPageKey, SeoSettings> = {
     seo_description:
       "Promo Weekend furgoni grandi uso città a Trieste: sabato–lunedì a 83€ IVA inclusa, 75 km. Paghi 1 giorno e mezzo, tieni il mezzo 48 ore.",
     seo_keywords: [
+      "offerte noleggio furgoni trieste",
       "noleggio furgone weekend trieste",
       "furgoni grandi uso città",
       "promo trasloco weekend",

@@ -33,11 +33,11 @@ export const FOOTER_LILO_LINKS = [
 ] as const;
 
 export const FOOTER_SERVIZI_LINKS = [
-  { href: "/tariffe", label: "Listino prezzi noleggio" },
+  { href: "/tariffe-noleggio-furgoni-trieste", label: "Listino prezzi noleggio" },
   { href: "/cosa-trasporti", label: "Cosa trasporti?" },
   { href: AUTOLAVAGGIO_URL, label: "Autolavaggio Professionale", external: true },
   { href: "/flotta", label: "Flotta e Prezzi" },
-  { href: "/offerte", label: "Offerta del Mese", requiresOfferta: true },
+  { href: "/offerte-noleggio-furgoni-trieste", label: "Offerta del Mese", requiresOfferta: true },
 ] as const;
 
 export const FOOTER_LEGAL_LINKS = [
