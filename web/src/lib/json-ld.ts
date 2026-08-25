@@ -31,6 +31,37 @@ import type { ImpostazioniSito } from "@/types/impostazioni";
 const AUTO_RENTAL_ID = `${SITE_URL}/#autonoleggio`;
 const SITE_LOGO_URL = `${SITE_URL}/logo-lilo.webp`;
 
+/**
+ * Rimuove null/undefined/stringhe vuote e array vuoti dall’albero JSON-LD
+ * (Ahrefs segnala proprietà nulle o formattazione errata).
+ */
+function pruneJsonLdValue(value: unknown): unknown {
+  if (value == null) return undefined;
+  if (typeof value === "string") {
+    const trimmed = value.trim();
+    return trimmed.length > 0 ? trimmed : undefined;
+  }
+  if (Array.isArray(value)) {
+    const cleaned = value
+      .map((item) => pruneJsonLdValue(item))
+      .filter((item) => item !== undefined);
+    return cleaned.length > 0 ? cleaned : undefined;
+  }
+  if (typeof value === "object") {
+    const out: Record<string, unknown> = {};
+    for (const [key, child] of Object.entries(value as Record<string, unknown>)) {
+      const pruned = pruneJsonLdValue(child);
+      if (pruned !== undefined) out[key] = pruned;
+    }
+    return Object.keys(out).length > 0 ? out : undefined;
+  }
+  return value;
+}
+
+export function pruneJsonLd<T extends Record<string, unknown>>(data: T): T {
+  return pruneJsonLdValue(data) as T;
+}
+
 /** Riferimento leggero: evita di ripetere AutoRental incompleto nei nodi nested (SEMrush). */
 function autoRentalRef() {
   return { "@id": AUTO_RENTAL_ID };
@@ -38,7 +69,8 @@ function autoRentalRef() {
 
 /**
  * AutoRental (sottotipo di LocalBusiness) — tipo singolo standard schema.org.
- * Campi richiesti Google/Ahrefs: name, address, telephone, url, image.
+ * Campi richiesti Google/Ahrefs: @type, name, image, address, telephone, url, priceRange.
+ * priceRange usa "$$" (ASCII): i simboli €€ finivano corrotti in "??" in produzione.
  */
 function autoRentalProvider() {
   return {
@@ -55,7 +87,7 @@ function autoRentalProvider() {
       url: SITE_LOGO_URL,
       caption: "LILO S.r.l. — Autonoleggio Trieste",
     },
-    priceRange: "€€",
+    priceRange: "$$",
     currenciesAccepted: "EUR",
     paymentAccepted: "Cash, Credit Card, Debit Card",
     address: {
@@ -64,7 +96,7 @@ function autoRentalProvider() {
       addressLocality: COMPANY.city,
       addressRegion: COMPANY.region,
       postalCode: COMPANY.postalCode,
-      addressCountry: COMPANY.country,
+      addressCountry: "IT",
     },
     geo: {
       "@type": "GeoCoordinates" as const,
@@ -462,10 +494,10 @@ export function buildVeicoloJsonLd(veicolo: VeicoloPubblico): Record<string, unk
     );
   }
 
-  return {
+  return pruneJsonLd({
     "@context": "https://schema.org",
     "@graph": graph,
-  };
+  });
 }
 
 function buildVeicoloBreadcrumbList(veicolo: VeicoloPubblico): Record<string, unknown> {
@@ -522,12 +554,14 @@ export function buildOrganizationJsonLd(): Record<string, unknown> {
   return {
     "@type": "Organization",
     "@id": `${SITE_URL}/#organization`,
-    name: COMPANY.legalName,
-    alternateName: COMPANY.name,
+    name: COMPANY.name,
+    legalName: COMPANY.legalName,
+    alternateName: COMPANY.marketingName,
     url: SITE_URL,
+    image: SITE_LOGO_URL,
     logo: {
       "@type": "ImageObject",
-      url: `${SITE_URL}/logo-lilo.webp`,
+      url: SITE_LOGO_URL,
       caption: "LILO S.r.l. — Autonoleggio Trieste",
     },
     foundingDate: "2003",
@@ -539,7 +573,7 @@ export function buildOrganizationJsonLd(): Record<string, unknown> {
       addressLocality: COMPANY.city,
       postalCode: COMPANY.postalCode,
       addressRegion: COMPANY.region,
-      addressCountry: COMPANY.country,
+      addressCountry: "IT",
     },
     geo: {
       "@type": "GeoCoordinates",
@@ -568,7 +602,7 @@ export function buildWebSiteJsonLd(): Record<string, unknown> {
 }
 
 export function buildHomeJsonLd(): Record<string, unknown> {
-  return {
+  return pruneJsonLd({
     "@context": "https://schema.org",
     "@graph": [
       buildOrganizationJsonLd(),
@@ -606,13 +640,13 @@ export function buildHomeJsonLd(): Record<string, unknown> {
         ],
       },
     ],
-  };
+  });
 }
 
 /** Pagina /cosa-trasporti — HowTo + FAQ per AI e rich results. */
 export function buildCosaTrasportiJsonLd(faqItems: AiFaqItem[]): Record<string, unknown> {
   const canonical = `${SITE_URL}/cosa-trasporti`;
-  return {
+  return pruneJsonLd({
     "@context": "https://schema.org",
     "@graph": [
       buildOrganizationJsonLd(),
@@ -664,7 +698,7 @@ export function buildCosaTrasportiJsonLd(faqItems: AiFaqItem[]): Record<string, 
       },
       buildFaqJsonLd(faqItems),
     ],
-  };
+  });
 }
 
 export function buildFaqJsonLd(items: AiFaqItem[]): Record<string, unknown> {
@@ -681,7 +715,7 @@ export function buildFaqJsonLd(items: AiFaqItem[]): Record<string, unknown> {
 /** FAQ + Offer per la pagina Offerta del Mese (Promo Weekend — solo furgoni-grandi-citta). */
 export function buildOfferteJsonLd(faqItems: AiFaqItem[]): Record<string, unknown> {
   const canonical = `${SITE_URL}/offerte-noleggio-furgoni-trieste`;
-  return {
+  return pruneJsonLd({
     "@context": "https://schema.org",
     "@graph": [
       buildOrganizationJsonLd(),
@@ -721,20 +755,20 @@ export function buildOfferteJsonLd(faqItems: AiFaqItem[]): Record<string, unknow
       },
       buildFaqJsonLd(faqItems),
     ],
-  };
+  });
 }
 
 export function buildChiSiamoJsonLd(faqItems: AiFaqItem[]): Record<string, unknown> {
-  return {
+  return pruneJsonLd({
     "@context": "https://schema.org",
     "@graph": [buildOrganizationJsonLd(), buildFaqJsonLd(faqItems)],
-  };
+  });
 }
 
 export function buildFlottaJsonLd(veicoli: VeicoloPubblico[]): Record<string, unknown> {
   const canonical = `${SITE_URL}/flotta`;
 
-  return {
+  return pruneJsonLd({
     "@context": "https://schema.org",
     "@graph": [
       autoRentalProvider(),
@@ -760,7 +794,7 @@ export function buildFlottaJsonLd(veicoli: VeicoloPubblico[]): Record<string, un
         },
       },
     ],
-  };
+  });
 }
 
 export function buildFlottaCategoriaJsonLd(
@@ -770,7 +804,7 @@ export function buildFlottaCategoriaJsonLd(
   const canonical = flottaCategoriaCanonical(slug);
   const copy = FLOTTA_CATEGORIA_COPY[slug];
 
-  return {
+  return pruneJsonLd({
     "@context": "https://schema.org",
     "@graph": [
       autoRentalProvider(),
@@ -797,10 +831,7 @@ export function buildFlottaCategoriaJsonLd(
               description: buildVeicoloDescription(veicolo),
               image: images,
               url: itemUrl,
-              brand: {
-                "@type": "Brand",
-                name: veicolo.marca,
-              },
+              brand: { "@type": "Brand", name: veicolo.marca },
               model: veicolo.modello,
             };
             if (prezzo) {
@@ -824,7 +855,7 @@ export function buildFlottaCategoriaJsonLd(
         },
       },
     ],
-  };
+  });
 }
 
 export function buildContattiJsonLd(impostazioni: ImpostazioniSito): Record<string, unknown> {
@@ -839,27 +870,38 @@ export function buildContattiJsonLd(impostazioni: ImpostazioniSito): Record<stri
     impostazioni.social_instagram,
     impostazioni.social_linkedin,
     mapsUrl,
-  ].filter((url): url is string => Boolean(url));
+  ].filter((url): url is string => Boolean(url && url.trim()));
 
-  return {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        ...autoRentalProvider(),
-        "@id": `${canonical}#sede-noleggio`,
-        name: COMPANY.legalName,
-        alternateName: COMPANY.name,
-        description:
-          "Noleggio auto, furgoni e pulmini 9 posti a Trieste. Ritiro in sede in Viale Campi Elisi.",
-        url: canonical,
-        telephone: telefonoE164(impostazioni.telefono_noleggio),
-        email: impostazioni.email_contatto,
-        hasMap: mapsUrl,
-        sameAs,
-        openingHoursSpecification,
-        parentOrganization: { "@id": `${SITE_URL}/#organization` },
-      },
-      buildOrganizationJsonLd(),
-    ],
+  const telephoneRaw = telefonoE164(impostazioni.telefono_noleggio || "");
+  const telephone =
+    telephoneRaw.replace(/\D/g, "").length >= 10
+      ? telephoneRaw
+      : COMPANY.phoneE164;
+  const email = impostazioni.email_contatto?.trim() || COMPANY.email;
+
+  const sedeNoleggio: Record<string, unknown> = {
+    ...autoRentalProvider(),
+    "@id": `${canonical}#sede-noleggio`,
+    name: COMPANY.name,
+    alternateName: COMPANY.marketingName,
+    description:
+      "Noleggio auto, furgoni e pulmini 9 posti a Trieste. Ritiro in sede in Viale Campi Elisi.",
+    // URL business = homepage (Google LocalBusiness); la pagina contatti resta mainEntityOfPage.
+    url: SITE_URL,
+    mainEntityOfPage: canonical,
+    telephone,
+    email,
+    hasMap: mapsUrl,
+    sameAs,
+    parentOrganization: { "@id": `${SITE_URL}/#organization` },
   };
+
+  if (openingHoursSpecification.length > 0) {
+    sedeNoleggio.openingHoursSpecification = openingHoursSpecification;
+  }
+
+  return pruneJsonLd({
+    "@context": "https://schema.org",
+    "@graph": [sedeNoleggio, buildOrganizationJsonLd()],
+  });
 }
