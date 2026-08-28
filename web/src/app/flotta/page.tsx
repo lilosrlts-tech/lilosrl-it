@@ -8,8 +8,7 @@ import { PhoneLink } from "@/components/shared/PhoneLink";
 import { WhatsAppCtaLink } from "@/components/shared/WhatsAppCtaLink";
 import { getPublishedVeicoli } from "@/lib/veicoli";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const revalidate = 3600;
 
 export async function generateMetadata(): Promise<Metadata> {
   return getPageMetadata("flotta");

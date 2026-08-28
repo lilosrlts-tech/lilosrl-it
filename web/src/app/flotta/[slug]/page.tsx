@@ -10,8 +10,7 @@ import {
 import { buildVeicoloMetadata } from "@/lib/seo";
 import { getPublishedSlugs, getVeicoloBySlug } from "@/lib/veicoli";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const revalidate = 3600;
 
 type PageProps = {
   params: Promise<{ slug: string }>;

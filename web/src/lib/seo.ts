@@ -186,7 +186,7 @@ export function buildVeicoloMetadata(veicolo: VeicoloPubblico): Metadata {
     alternates: {
       canonical,
     },
-    robots: parseRobots(veicolo.meta_robots),
+    robots: parseRobots(veicolo.meta_robots ?? "index, follow"),
     openGraph: {
       type: "website",
       locale: "it_IT",

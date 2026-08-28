@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { GoogleTags } from "@/components/analytics/GoogleTags";
 import { GooglePhoneConversion } from "@/components/analytics/GooglePhoneConversion";
 import { GoogleContactTracking } from "@/components/analytics/GoogleContactTracking";
@@ -54,6 +55,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </Suspense>
         {children}
         <CookieConsent />
+        <Analytics />
       </body>
     </html>
   );
