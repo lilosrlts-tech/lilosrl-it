@@ -226,11 +226,11 @@ export function Navbar({ phone, phoneDisplay, offertaAttiva = true }: NavbarProp
   const phoneButton = (
     <PhoneLink
       phone={phone}
-      className="inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:opacity-90"
+      className="inline-flex h-10 items-center justify-center gap-2 rounded-full px-5 text-sm font-semibold leading-none text-white shadow-sm transition hover:opacity-90"
       style={{ backgroundColor: GOLD }}
     >
       <PhoneIcon className="h-4 w-4 shrink-0" />
-      <span>{phoneDisplay}</span>
+      <span className="leading-none whitespace-nowrap">{phoneDisplay}</span>
     </PhoneLink>
   );
 
@@ -316,6 +316,7 @@ export function Navbar({ phone, phoneDisplay, offertaAttiva = true }: NavbarProp
                 onClick={closeMobileMenu}
               >
                 Autolavaggio
+                <span className="sr-only"> (si apre in una nuova scheda)</span>
               </a>
             </li>
 
@@ -366,6 +367,7 @@ export function Navbar({ phone, phoneDisplay, offertaAttiva = true }: NavbarProp
           className={navLinkClass(false)}
         >
           Autolavaggio
+          <span className="sr-only"> (si apre in una nuova scheda)</span>
         </a>
 
         {simpleLinks.map((item) => {
