@@ -101,15 +101,21 @@ interface NavbarProps {
   offertaAttiva?: boolean;
 }
 
-/** Voci top-level (max 5–6 con Flotta + telefono). Senza Inizio / Chi Siamo / Cosa trasporti. */
-function buildPrimaryLinks(offertaAttiva: boolean) {
+/** Voci top-level dopo Flotta ▾: Tariffe → Offerte → Autolavaggio → Chi Siamo → Contatti. */
+type PrimaryNavItem =
+  | { kind: "link"; href: string; label: string }
+  | { kind: "external"; href: string; label: string };
+
+function buildPrimaryNavItems(offertaAttiva: boolean): PrimaryNavItem[] {
   return [
-    { href: "/tariffe-noleggio-furgoni-trieste", label: "Tariffe" },
+    { kind: "link", href: "/tariffe-noleggio-furgoni-trieste", label: "Tariffe" },
     ...(offertaAttiva
-      ? [{ href: "/offerte-noleggio-furgoni-trieste", label: "Offerte" }]
+      ? [{ kind: "link" as const, href: "/offerte-noleggio-furgoni-trieste", label: "Offerte" }]
       : []),
-    { href: "/contatti", label: "Contatti" },
-  ] as const;
+    { kind: "external", href: AUTOLAVAGGIO_URL, label: "Autolavaggio" },
+    { kind: "link", href: "/chi-siamo", label: "Chi Siamo" },
+    { kind: "link", href: "/contatti", label: "Contatti" },
+  ];
 }
 
 function FlottaDropdown({ pathname, onNavigate }: { pathname: string; onNavigate?: () => void }) {
@@ -251,7 +257,7 @@ export function Navbar({ phone, phoneDisplay, offertaAttiva = true }: NavbarProp
     </PhoneLink>
   );
 
-  const primaryLinks = buildPrimaryLinks(offertaAttiva);
+  const primaryNavItems = buildPrimaryNavItems(offertaAttiva);
 
   const mobileDrawer =
     portalReady &&
@@ -309,6 +315,7 @@ export function Navbar({ phone, phoneDisplay, offertaAttiva = true }: NavbarProp
                       </Link>
                     </li>
                   ))}
+                  <li className="my-1 border-t border-slate-100" role="separator" />
                   <li>
                     <Link
                       href="/cosa-trasporti"
@@ -322,47 +329,37 @@ export function Navbar({ phone, phoneDisplay, offertaAttiva = true }: NavbarProp
               )}
             </li>
 
-            {primaryLinks
-              .filter((item) => item.href !== "/contatti")
-              .map((item) => {
-                const active = isNavActive(pathname, item.href);
+            {primaryNavItems.map((item) => {
+              if (item.kind === "external") {
                 return (
                   <li key={item.href}>
-                    <Link
+                    <a
                       href={item.href}
-                      className={`block rounded-lg px-4 py-3 leading-snug ${navLinkClass(active)}`}
-                      style={navLinkStyle(active)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block rounded-lg px-4 py-3 font-medium leading-snug text-slate-700 hover:bg-slate-50"
                       onClick={closeMobileMenu}
                     >
                       {item.label}
-                    </Link>
+                      <span className="sr-only"> (si apre in una nuova scheda)</span>
+                    </a>
                   </li>
                 );
-              })}
-
-            <li>
-              <a
-                href={AUTOLAVAGGIO_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block rounded-lg px-4 py-3 font-medium leading-snug text-slate-700 hover:bg-slate-50"
-                onClick={closeMobileMenu}
-              >
-                Autolavaggio
-                <span className="sr-only"> (si apre in una nuova scheda)</span>
-              </a>
-            </li>
-
-            <li>
-              <Link
-                href="/contatti"
-                className={`block rounded-lg px-4 py-3 leading-snug ${navLinkClass(isNavActive(pathname, "/contatti"))}`}
-                style={navLinkStyle(isNavActive(pathname, "/contatti"))}
-                onClick={closeMobileMenu}
-              >
-                Contatti
-              </Link>
-            </li>
+              }
+              const active = isNavActive(pathname, item.href);
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className={`block rounded-lg px-4 py-3 leading-snug ${navLinkClass(active)}`}
+                    style={navLinkStyle(active)}
+                    onClick={closeMobileMenu}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
 
           <div className="mt-6 border-t border-slate-100 pt-6">{phoneButton}</div>
@@ -379,41 +376,34 @@ export function Navbar({ phone, phoneDisplay, offertaAttiva = true }: NavbarProp
       >
         <FlottaDropdown pathname={pathname} />
 
-        {primaryLinks
-          .filter((item) => item.href !== "/contatti")
-          .map((item) => {
-            const active = isNavActive(pathname, item.href);
+        {primaryNavItems.map((item) => {
+          if (item.kind === "external") {
             return (
-              <Link
+              <a
                 key={item.href}
                 href={item.href}
-                className={navLinkClass(active)}
-                style={navLinkStyle(active)}
-                aria-current={active ? "page" : undefined}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={navLinkClass(false)}
               >
                 {item.label}
-              </Link>
+                <span className="sr-only"> (si apre in una nuova scheda)</span>
+              </a>
             );
-          })}
-
-        <a
-          href={AUTOLAVAGGIO_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={navLinkClass(false)}
-        >
-          Autolavaggio
-          <span className="sr-only"> (si apre in una nuova scheda)</span>
-        </a>
-
-        <Link
-          href="/contatti"
-          className={navLinkClass(isNavActive(pathname, "/contatti"))}
-          style={navLinkStyle(isNavActive(pathname, "/contatti"))}
-          aria-current={isNavActive(pathname, "/contatti") ? "page" : undefined}
-        >
-          Contatti
-        </Link>
+          }
+          const active = isNavActive(pathname, item.href);
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={navLinkClass(active)}
+              style={navLinkStyle(active)}
+              aria-current={active ? "page" : undefined}
+            >
+              {item.label}
+            </Link>
+          );
+        })}
 
         {phoneButton}
       </nav>
