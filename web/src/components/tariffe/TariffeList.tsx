@@ -3,6 +3,7 @@ import type { SezioneListino } from "@/lib/listino-prezzi";
 import { formatEuro } from "@/lib/listino-prezzi";
 import { flottaCategoriaHref } from "@/lib/nav-config";
 import { PREZZO_IVA_DICITURA } from "@/lib/tariffe-categoria";
+import { resolvePublicVeicoloSlug } from "@/lib/veicolo-slug-renames";
 
 interface TariffeListProps {
   sezioni: SezioneListino[];
@@ -53,7 +54,7 @@ export function TariffeList({ sezioni }: TariffeListProps) {
               >
                 <div>
                   <Link
-                    href={`/flotta/${voce.slug}`}
+                    href={`/flotta/${resolvePublicVeicoloSlug(voce.slug)}`}
                     className="font-medium text-slate-900 hover:text-brand-600"
                   >
                     {voce.nome}

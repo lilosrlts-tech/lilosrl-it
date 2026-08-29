@@ -13,6 +13,7 @@ import {
   getVeicoloCoverFallbackUrl,
   getVeicoloImageVariant,
 } from "@/lib/veicolo-utils";
+import { resolvePublicVeicoloSlug } from "@/lib/veicolo-slug-renames";
 import type { VeicoloPubblico } from "@/types/veicolo";
 
 interface VeicoloCardProps {
@@ -28,7 +29,7 @@ export function VeicoloCard({ veicolo }: VeicoloCardProps) {
   const coverFallbackUrl = getVeicoloCoverFallbackUrl(veicolo);
   const coverAlt = getVeicoloCoverAlt(veicolo);
   const imageVariant = getVeicoloImageVariant(veicolo);
-  const href = `/flotta/${veicolo.slug}`;
+  const href = `/flotta/${resolvePublicVeicoloSlug(veicolo.slug)}`;
 
   return (
     <Link

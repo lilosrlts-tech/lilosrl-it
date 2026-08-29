@@ -11,6 +11,7 @@ import {
 import { CosaTrasportiIcon } from "@/components/wizard/CosaTrasportiIcons";
 import { FLEET_VEHICLE_IMG } from "@/lib/fleet-photo-utils";
 import { PREZZO_IVA_DICITURA } from "@/lib/tariffe-categoria";
+import { resolvePublicVeicoloSlug } from "@/lib/veicolo-slug-renames";
 
 export type CosaTrasportiRecommendations = Record<
   CosaTrasportiId,
@@ -157,7 +158,7 @@ export function CosaTrasportiWizard({
                           </div>
                         )}
                         <Link
-                          href={`/flotta/${item.slug}`}
+                          href={`/flotta/${resolvePublicVeicoloSlug(item.slug)}`}
                           className="ml-auto inline-flex rounded-xl bg-brand-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-700"
                         >
                           Vedi scheda

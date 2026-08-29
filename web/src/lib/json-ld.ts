@@ -240,15 +240,6 @@ function sanitizeCustomJsonLd(
   return custom;
 }
 
-function quantitativeMm(value: number) {
-  return {
-    "@type": "QuantitativeValue" as const,
-    value,
-    unitCode: "MMT",
-    unitText: "mm",
-  };
-}
-
 function quantitativeMc(value: number) {
   return {
     "@type": "QuantitativeValue" as const,
@@ -462,13 +453,8 @@ export function buildVeicoloJsonLd(veicolo: VeicoloPubblico): Record<string, unk
     vehicleTransmission: veicolo.cambio ?? undefined,
     numberOfDoors: veicolo.porte ?? undefined,
     seatingCapacity: veicolo.posti ?? undefined,
+    // Solo proprietà schema.org/Vehicle valide (Ahrefs). Dimensioni vano → additionalProperty.
     cargoVolume: cargo.volumeMc != null ? quantitativeMc(cargo.volumeMc) : undefined,
-    vehicleInteriorLength:
-      cargo.lunghezzaMm != null ? quantitativeMm(cargo.lunghezzaMm) : undefined,
-    vehicleInteriorWidth:
-      cargo.larghezzaMm != null ? quantitativeMm(cargo.larghezzaMm) : undefined,
-    vehicleInteriorHeight:
-      cargo.altezzaMm != null ? quantitativeMm(cargo.altezzaMm) : undefined,
     additionalProperty: additionalProperty.length > 0 ? additionalProperty : undefined,
     offers: offers ?? undefined,
     subjectOf: faqPage ? { "@id": `${canonical}#faq` } : undefined,

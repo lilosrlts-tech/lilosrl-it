@@ -36,3 +36,15 @@ export const VEICOLO_SLUG_RENAMES: ReadonlyArray<{ from: string; to: string }> =
  */
 export const VEICOLO_SLUG_REDIRECTS_301: ReadonlyArray<{ from: string; to: string }> =
   VEICOLO_SLUG_RENAMES.filter((r) => r.from !== "ford-transit-l2h2");
+
+const REDIRECT_FROM = new Map(VEICOLO_SLUG_REDIRECTS_301.map((r) => [r.from, r.to]));
+
+/** True se lo slug esiste solo come sorgente di 301 (non va in liste/sitemap/link). */
+export function isRedirectedVeicoloSlug(slug: string): boolean {
+  return REDIRECT_FROM.has(slug);
+}
+
+/** Slug pubblico canonico per href e JSON-LD (risolve alias tipo fiat-doblo → fiat-doblo-cargo). */
+export function resolvePublicVeicoloSlug(slug: string): string {
+  return REDIRECT_FROM.get(slug) ?? slug;
+}

@@ -12,6 +12,7 @@ import {
 } from "@/lib/promozioni-durata";
 import { mapSpecificheFromRaw } from "@/lib/specifiche-tecniche-utils";
 import { resolveUnitaDisponibili } from "@/lib/unita-disponibili";
+import { isRedirectedVeicoloSlug } from "@/lib/veicolo-slug-renames";
 import { getPrezzoGiornaliero } from "@/lib/veicolo-utils";
 import type { AiFaqItem, CategoriaPubblica, SpecificheTecniche, VeicoloPubblico } from "@/types/veicolo";
 
@@ -265,9 +266,13 @@ export async function getPublishedSlugs(): Promise<string[]> {
       logSupabaseError("getPublishedSlugs", error.message);
       return DEMO_SLUGS;
     }
-    const dbSlugs = (data ?? []).map((row) => row.slug as string);
+    const dbSlugs = (data ?? [])
+      .map((row) => row.slug as string)
+      .filter((slug) => !isRedirectedVeicoloSlug(slug));
     if (isDemoMode()) {
-      const localSlugs = DEMO_VEICOLI.map((v) => v.slug).filter((slug) => !dbSlugs.includes(slug));
+      const localSlugs = DEMO_VEICOLI.map((v) => v.slug).filter(
+        (slug) => !dbSlugs.includes(slug) && !isRedirectedVeicoloSlug(slug),
+      );
       return [...dbSlugs, ...localSlugs];
     }
     return dbSlugs;
@@ -294,9 +299,13 @@ export async function getPublishedVeicoli(): Promise<VeicoloPubblico[]> {
       return DEMO_VEICOLI;
     }
 
-    const veicoli = (data ?? []).map((row) => mapVeicolo(row as Record<string, unknown>));
+    const veicoli = (data ?? [])
+      .map((row) => mapVeicolo(row as Record<string, unknown>))
+      .filter((v) => !isRedirectedVeicoloSlug(v.slug));
     if (veicoli.length === 0) return DEMO_VEICOLI;
-    const supplemented = supplementWithDemoVeicoli(veicoli);
+    const supplemented = supplementWithDemoVeicoli(veicoli).filter(
+      (v) => !isRedirectedVeicoloSlug(v.slug),
+    );
     return Promise.all(supplemented.map(withPrezzoPromo));
   } catch (err) {
     logSupabaseError("getPublishedVeicoli", err instanceof Error ? err.message : String(err));

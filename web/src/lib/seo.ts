@@ -7,6 +7,7 @@ import {
   fitSeoTitle,
 } from "@/lib/seo-limits";
 import { buildVeicoloSeoDescription, getVeicoloFotoAlt, stripTargaFromPublicCopy, toAbsoluteAssetUrl } from "@/lib/veicolo-seo";
+import { resolvePublicVeicoloSlug } from "@/lib/veicolo-slug-renames";
 import {
   getCoverImage,
   getPrezzoGiornaliero,
@@ -52,7 +53,7 @@ export function resolvePageCanonical(
 }
 
 export function veicoloCanonicalUrl(slug: string): string {
-  return canonicalUrl(`/flotta/${slug}`);
+  return canonicalUrl(`/flotta/${resolvePublicVeicoloSlug(slug)}`);
 }
 
 export function buildFlottaMetadata(): Metadata {
