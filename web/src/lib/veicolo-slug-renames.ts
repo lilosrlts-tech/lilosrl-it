@@ -25,6 +25,8 @@ export const VEICOLO_SLUG_RENAMES: ReadonlyArray<{ from: string; to: string }> =
   { from: "peugeot-boxer-l3h3-ix345ij", to: "peugeot-boxer-l3h3" },
   // Admin aveva rigenerato lo slug includendo la versione motore
   { from: "volkswagen-polo-1-0-59-kw", to: "volkswagen-polo" },
+  // Alias non canonico: la scheda pubblica è fiat-doblo-cargo (coerente con WP /car/fiat-doblo)
+  { from: "fiat-doblo", to: "fiat-doblo-cargo" },
 ];
 
 /**
