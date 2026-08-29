@@ -4,7 +4,7 @@ export const GOLD_TEXT = "#8B6B0E";
 
 export const AUTOLAVAGGIO_URL = "https://www.autolavaggiolilo.it";
 
-/** Categorie mostrate nel menu Flotta Noleggio (etichette esatte richieste). */
+/** Categorie mostrate nel menu Flotta (dropdown header). */
 export const FLOTTA_CATEGORIE_NAV = [
   { label: "Auto", slug: "auto" },
   { label: "Pulmini 9 Posti", slug: "pulmini-9-posti" },
@@ -37,7 +37,7 @@ export const FOOTER_SERVIZI_LINKS = [
   { href: "/cosa-trasporti", label: "Cosa trasporti?" },
   { href: AUTOLAVAGGIO_URL, label: "Autolavaggio Professionale", external: true },
   { href: "/flotta", label: "Flotta e Prezzi" },
-  { href: "/offerte-noleggio-furgoni-trieste", label: "Offerta del Mese", requiresOfferta: true },
+  { href: "/offerte-noleggio-furgoni-trieste", label: "Offerte", requiresOfferta: true },
 ] as const;
 
 export const FOOTER_LEGAL_LINKS = [

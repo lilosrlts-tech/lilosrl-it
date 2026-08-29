@@ -18,8 +18,13 @@ function isNavActive(pathname: string, href: string): boolean {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
+/** Flotta dropdown attivo anche su /cosa-trasporti (voce nel menu a tendina). */
 function isFlottaActive(pathname: string): boolean {
-  return pathname === "/flotta" || pathname.startsWith("/flotta/");
+  return (
+    pathname === "/flotta" ||
+    pathname.startsWith("/flotta/") ||
+    pathname === "/cosa-trasporti"
+  );
 }
 
 function PhoneIcon({ className }: { className?: string }) {
@@ -85,10 +90,10 @@ function navLinkStyle(isActive: boolean): CSSProperties | undefined {
 }
 
 const dropdownLinkClass =
-  "block px-6 py-3 text-sm text-slate-700 transition-colors duration-200 hover:bg-amber-50/80 hover:text-slate-900";
+  "block px-6 py-3 text-sm leading-snug text-slate-700 transition-colors duration-200 hover:bg-amber-50/80 hover:text-slate-900";
 
 const dropdownLinkPrimaryClass =
-  "block px-6 py-3 text-sm font-medium text-slate-800 transition-colors duration-200 hover:bg-amber-50/80 hover:text-slate-900";
+  "block px-6 py-3 text-sm font-medium leading-snug text-slate-800 transition-colors duration-200 hover:bg-amber-50/80 hover:text-slate-900";
 
 interface NavbarProps {
   phone: string;
@@ -96,15 +101,15 @@ interface NavbarProps {
   offertaAttiva?: boolean;
 }
 
-function buildSimpleLinks(offertaAttiva: boolean) {
-  const links = [
+/** Voci top-level (max 5–6 con Flotta + telefono). Senza Inizio / Chi Siamo / Cosa trasporti. */
+function buildPrimaryLinks(offertaAttiva: boolean) {
+  return [
     { href: "/tariffe-noleggio-furgoni-trieste", label: "Tariffe" },
-    { href: "/cosa-trasporti", label: "Cosa trasporti?" },
-    ...(offertaAttiva ? [{ href: "/offerte-noleggio-furgoni-trieste", label: "Offerta del Mese" }] : []),
-    { href: "/chi-siamo", label: "Chi Siamo" },
+    ...(offertaAttiva
+      ? [{ href: "/offerte-noleggio-furgoni-trieste", label: "Offerte" }]
+      : []),
     { href: "/contatti", label: "Contatti" },
   ] as const;
-  return links;
 }
 
 function FlottaDropdown({ pathname, onNavigate }: { pathname: string; onNavigate?: () => void }) {
@@ -114,12 +119,13 @@ function FlottaDropdown({ pathname, onNavigate }: { pathname: string; onNavigate
     <div className="group relative">
       <Link
         href="/flotta"
-        className={`inline-flex items-center gap-1 ${navLinkClass(active)}`}
+        className={`inline-flex items-center gap-1 whitespace-nowrap ${navLinkClass(active)}`}
         style={navLinkStyle(active)}
-        aria-current={active ? "page" : undefined}
+        aria-current={pathname.startsWith("/flotta") ? "page" : undefined}
+        aria-haspopup="menu"
         onClick={onNavigate}
       >
-        Flotta Noleggio
+        Flotta
         <ChevronIcon className="h-4 w-4 text-slate-400 transition group-hover:text-slate-600" />
       </Link>
 
@@ -127,7 +133,7 @@ function FlottaDropdown({ pathname, onNavigate }: { pathname: string; onNavigate
         <ul
           className="overflow-hidden rounded-xl border border-slate-200 bg-white py-2 shadow-lg"
           role="menu"
-          aria-label="Categorie flotta"
+          aria-label="Flotta e guida carico"
         >
           <li role="none">
             <Link
@@ -152,6 +158,17 @@ function FlottaDropdown({ pathname, onNavigate }: { pathname: string; onNavigate
               </Link>
             </li>
           ))}
+          <li className="mx-4 my-1 border-t border-slate-100" role="separator" />
+          <li role="none">
+            <Link
+              href="/cosa-trasporti"
+              className={dropdownLinkPrimaryClass}
+              role="menuitem"
+              onClick={onNavigate}
+            >
+              Cosa trasporti?
+            </Link>
+          </li>
         </ul>
       </div>
     </div>
@@ -226,7 +243,7 @@ export function Navbar({ phone, phoneDisplay, offertaAttiva = true }: NavbarProp
   const phoneButton = (
     <PhoneLink
       phone={phone}
-      className="inline-flex h-10 items-center justify-center gap-2 rounded-full px-5 text-sm font-semibold leading-none text-white shadow-sm transition hover:opacity-90"
+      className="ml-1 inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-full px-5 text-sm font-semibold leading-none text-white shadow-sm transition hover:opacity-90"
       style={{ backgroundColor: GOLD }}
     >
       <PhoneIcon className="h-4 w-4 shrink-0" />
@@ -234,7 +251,7 @@ export function Navbar({ phone, phoneDisplay, offertaAttiva = true }: NavbarProp
     </PhoneLink>
   );
 
-  const simpleLinks = buildSimpleLinks(offertaAttiva);
+  const primaryLinks = buildPrimaryLinks(offertaAttiva);
 
   const mobileDrawer =
     portalReady &&
@@ -258,25 +275,14 @@ export function Navbar({ phone, phoneDisplay, offertaAttiva = true }: NavbarProp
         >
           <ul className="space-y-1">
             <li>
-              <Link
-                href="/"
-                className={`block rounded-lg px-4 py-3 ${navLinkClass(isNavActive(pathname, "/"))}`}
-                style={navLinkStyle(isNavActive(pathname, "/"))}
-                onClick={closeMobileMenu}
-              >
-                Inizio
-              </Link>
-            </li>
-
-            <li>
               <button
                 type="button"
-                className={`flex w-full items-center justify-between rounded-lg px-4 py-3 text-left ${navLinkClass(isFlottaActive(pathname))}`}
+                className={`flex w-full items-center justify-between rounded-lg px-4 py-3 text-left leading-snug ${navLinkClass(isFlottaActive(pathname))}`}
                 style={navLinkStyle(isFlottaActive(pathname))}
                 aria-expanded={flottaMobileOpen}
                 onClick={() => setFlottaMobileOpen((open) => !open)}
               >
-                Flotta Noleggio
+                Flotta
                 <ChevronIcon
                   className={`h-4 w-4 transition ${flottaMobileOpen ? "rotate-180" : ""}`}
                 />
@@ -303,16 +309,43 @@ export function Navbar({ phone, phoneDisplay, offertaAttiva = true }: NavbarProp
                       </Link>
                     </li>
                   ))}
+                  <li>
+                    <Link
+                      href="/cosa-trasporti"
+                      className={`rounded-lg ${dropdownLinkPrimaryClass}`}
+                      onClick={closeMobileMenu}
+                    >
+                      Cosa trasporti?
+                    </Link>
+                  </li>
                 </ul>
               )}
             </li>
+
+            {primaryLinks
+              .filter((item) => item.href !== "/contatti")
+              .map((item) => {
+                const active = isNavActive(pathname, item.href);
+                return (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      className={`block rounded-lg px-4 py-3 leading-snug ${navLinkClass(active)}`}
+                      style={navLinkStyle(active)}
+                      onClick={closeMobileMenu}
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                );
+              })}
 
             <li>
               <a
                 href={AUTOLAVAGGIO_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block rounded-lg px-4 py-3 font-medium text-slate-700 hover:bg-slate-50"
+                className="block rounded-lg px-4 py-3 font-medium leading-snug text-slate-700 hover:bg-slate-50"
                 onClick={closeMobileMenu}
               >
                 Autolavaggio
@@ -320,21 +353,16 @@ export function Navbar({ phone, phoneDisplay, offertaAttiva = true }: NavbarProp
               </a>
             </li>
 
-            {simpleLinks.map((item) => {
-              const active = isNavActive(pathname, item.href);
-              return (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className={`block rounded-lg px-4 py-3 ${navLinkClass(active)}`}
-                    style={navLinkStyle(active)}
-                    onClick={closeMobileMenu}
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              );
-            })}
+            <li>
+              <Link
+                href="/contatti"
+                className={`block rounded-lg px-4 py-3 leading-snug ${navLinkClass(isNavActive(pathname, "/contatti"))}`}
+                style={navLinkStyle(isNavActive(pathname, "/contatti"))}
+                onClick={closeMobileMenu}
+              >
+                Contatti
+              </Link>
+            </li>
           </ul>
 
           <div className="mt-6 border-t border-slate-100 pt-6">{phoneButton}</div>
@@ -346,19 +374,27 @@ export function Navbar({ phone, phoneDisplay, offertaAttiva = true }: NavbarProp
   return (
     <>
       <nav
-        className="hidden items-center gap-5 text-[0.95rem] lg:gap-7 lg:flex"
+        className="hidden items-center gap-5 whitespace-nowrap text-[0.95rem] leading-none lg:flex lg:gap-6"
         aria-label="Menu principale"
       >
-        <Link
-          href="/"
-          className={navLinkClass(isNavActive(pathname, "/"))}
-          style={navLinkStyle(isNavActive(pathname, "/"))}
-          aria-current={pathname === "/" ? "page" : undefined}
-        >
-          Inizio
-        </Link>
-
         <FlottaDropdown pathname={pathname} />
+
+        {primaryLinks
+          .filter((item) => item.href !== "/contatti")
+          .map((item) => {
+            const active = isNavActive(pathname, item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={navLinkClass(active)}
+                style={navLinkStyle(active)}
+                aria-current={active ? "page" : undefined}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
 
         <a
           href={AUTOLAVAGGIO_URL}
@@ -370,20 +406,14 @@ export function Navbar({ phone, phoneDisplay, offertaAttiva = true }: NavbarProp
           <span className="sr-only"> (si apre in una nuova scheda)</span>
         </a>
 
-        {simpleLinks.map((item) => {
-          const active = isNavActive(pathname, item.href);
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={navLinkClass(active)}
-              style={navLinkStyle(active)}
-              aria-current={active ? "page" : undefined}
-            >
-              {item.label}
-            </Link>
-          );
-        })}
+        <Link
+          href="/contatti"
+          className={navLinkClass(isNavActive(pathname, "/contatti"))}
+          style={navLinkStyle(isNavActive(pathname, "/contatti"))}
+          aria-current={isNavActive(pathname, "/contatti") ? "page" : undefined}
+        >
+          Contatti
+        </Link>
 
         {phoneButton}
       </nav>
