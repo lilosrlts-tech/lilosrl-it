@@ -26,6 +26,7 @@ export const SEO_PAGE_PATHS: Record<SeoPageKey, string> = {
   home: "/",
   flotta: "/flotta",
   autolavaggio: "/autolavaggio",
+  /** Canonica listino: /tariffe corto fa solo 301 qui (mai pagina 200). */
   tariffe: "/tariffe-noleggio-furgoni-trieste",
   offerte: "/offerte-noleggio-furgoni-trieste",
   "chi-siamo": "/chi-siamo",

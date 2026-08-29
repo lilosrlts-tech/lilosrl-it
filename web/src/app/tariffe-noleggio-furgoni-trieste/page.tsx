@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { TariffeList } from "@/components/tariffe/TariffeList";
+import { SITE_URL } from "@/lib/constants";
 import { buildListinoPrezzi } from "@/lib/listino-prezzi";
 import { SitePageWrapper, loadImpostazioni } from "@/lib/site-page";
 import { getPageMetadata } from "@/lib/seo-settings";
@@ -9,8 +10,19 @@ import { getActiveCategorie, getPublishedVeicoli } from "@/lib/veicoli";
 
 export const dynamic = "force-dynamic";
 
+/** URL canonica definitiva del listino (mai /tariffe corto). */
+const TARIFFE_CANONICAL = `${SITE_URL}/tariffe-noleggio-furgoni-trieste`;
+
 export async function generateMetadata(): Promise<Metadata> {
-  return getPageMetadata("tariffe");
+  const base = await getPageMetadata("tariffe");
+  return {
+    ...base,
+    alternates: { canonical: TARIFFE_CANONICAL },
+    openGraph: {
+      ...base.openGraph,
+      url: TARIFFE_CANONICAL,
+    },
+  };
 }
 
 export default async function TariffePage() {
