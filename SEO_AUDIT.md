@@ -17,7 +17,11 @@
 | P1 Hub `/guide` + 5 articoli | ✅ |
 | P1 `/cosa-trasporti` scenari + linking | ✅ |
 | P1 Internal linking Home↔flotta↔guide | ✅ |
-| P1 Foto flotta / dual LocalBusiness | ⏳ |
+| P1 Foto flotta / dual LocalBusiness | ⏳ foto / ✅ schema dual entity Blocco 3 |
+| P2 Schema tariffe + autolavaggio | ✅ |
+| P2 Security headers | ✅ |
+| P2 Vercel Analytics gated consent | ✅ |
+| P2 Pilastri auto + pulmini | ✅ |
 
 ---
 

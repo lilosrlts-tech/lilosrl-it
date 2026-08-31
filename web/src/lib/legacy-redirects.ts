@@ -202,8 +202,8 @@ export const LEGACY_REDIRECTS: LegacyRedirect[] = [
   ...withTrailingVariants("/auto", "/flotta/auto", "Landing auto → categoria auto"),
   ...withTrailingVariants(
     "/noleggio-auto",
-    "/flotta/auto",
-    "Landing noleggio auto → categoria auto",
+    "/noleggio-auto-trieste",
+    "Landing noleggio auto → pilastro keyword",
   ),
   ...withTrailingVariants(
     "/furgoni",

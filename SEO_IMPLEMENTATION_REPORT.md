@@ -1,105 +1,68 @@
 # SEO Implementation Report — LILO S.r.l.
 
 **Ultimo aggiornamento:** 31 agosto 2026  
-**Fase corrente:** Blocco 2 completato (P1 contenuti)  
-**Build:** `npm run build` OK (Next.js 15.5.19) — 51 route statiche/dinamiche
+**Fase corrente:** Blocco 3 completato (P2 schema / headers / consent / pilastri)  
+**Build:** `npm run build` OK — 53 route
 
 ---
 
-## 1. Stato iniziale (sintesi)
+## Blocchi precedenti
 
-- NAP multi-source, soft-404, favicon assente → **risolti in Blocco 1** (`c6b6766`)
-- Nessun hub `/guide`, nessun pilastro `/noleggio-furgoni-trieste`
-- `/cosa-trasporti` = solo wizard + FAQ
-
----
-
-## 2–3. Modifiche Blocco 1 (già su main)
-
-Vedi commit `c6b6766`: NAP `nap.ts`, migration `023`, favicon/manifest, 404 reali, rimozione «Foto in arrivo».
+| Blocco | Commit | Contenuto |
+|--------|--------|-----------|
+| 1 | `c6b6766` | NAP, favicon, 404 reali, migration 023 |
+| 2 | `fd2e30d` | Guide, pilastro furgoni, cosa-trasporti, linking |
 
 **Azione ancora richiesta:** applicare `023_sync_nap_orari.sql` su Supabase produzione.
 
 ---
 
-## 3b. Modifiche Blocco 2
+## Blocco 3 — modifiche
 
-### Guide (`/guide`)
-- Sistema editoriale TypeScript: `web/src/lib/guide/`
-- Hub `/guide` + articoli `/guide/[slug]` (SSG)
-- **5 articoli** answer-first con FAQ, CTA, internal links, JSON-LD Article/FAQ/Breadcrumb:
-  1. `quale-furgone-scegliere-per-trasloco`
-  2. `quanto-costa-noleggiare-furgone-trieste` (prezzi da `TARIFFE_CATEGORIA`)
-  3. `che-patente-serve-per-furgone` (senza inventare requisiti)
-  4. `quanti-metri-cubi-servono-per-trasloco`
-  5. `furgone-per-frigorifero`
+### 1. Schema.org / dual entity
+- `buildAutolavaggioJsonLd`: **LocalBusiness** dedicato (sede Schiaparelli), distinto da AutoRental noleggio. Nessun tipo inventato «AutoWash» (non esiste in schema.org).
+- Contatti: graph con **AutoRental + LocalBusiness autolavaggio + Organization**
+- Home: stub LocalBusiness `#autolavaggio` nel graph
+- `buildTariffeJsonLd`: **WebPage + OfferCatalog + UnitPriceSpecification** da listino reale veicoli
 
-### Pilastro `/noleggio-furgoni-trieste`
-- Landing distinta da `/flotta`: In breve, tabella categorie + prezzi “da”, funnel verso wizard/flotta/tariffe/guide
-- JSON-LD WebPage + Service + FAQ + Breadcrumb
-- Redirect aggiornato: `/noleggio-furgoni` → pilastro (non più solo medi)
+### 2. Security headers (`next.config.ts`)
+- `X-Frame-Options: SAMEORIGIN`
+- `X-Content-Type-Options: nosniff`
+- `Referrer-Policy: strict-origin-when-cross-origin`
+- `Strict-Transport-Security: max-age=63072000; includeSubDomains; preload`
+- `Permissions-Policy: camera=(), microphone=(), geolocation=()`
 
-### Cosa trasporti
-- Nuovo hub scenari `CosaTrasportiScenariHub` (frigo, lavatrice, armadio, divano, letto, moto, scatoloni, trasloco, materiali)
-- Link a categorie + guide + pilastro
+### 3. Performance / cookie consent
+- Nuovo `ConsentAwareVercelMetrics`: Analytics + Speed Insights solo con `analytics` (banner LILO o Cookiebot `consent.statistics`)
+- Layout non monta più Analytics/SpeedInsights senza consenso
 
-### Internal linking
-- Footer: pilastro furgoni, voce Guide
-- Home flotta preview → pilastro + guide
-- Hub flotta + categorie → cosa-trasporti / guide / pilastro
-- Sitemap + `llms.txt` aggiornati
+### 4. Pilastri secondari
+- `/noleggio-auto-trieste`
+- `/noleggio-pulmini-9-posti-trieste`
+- Pattern come furgoni: In breve, CTA, FAQ, link a `/flotta/...` senza duplicare griglie
+- Footer + sitemap + `llms.txt` + redirect `/noleggio-auto` → pilastro
 
 ---
 
-## 4. File principali Blocco 2
+## File principali Blocco 3
 
-**Creati:** `web/src/lib/guide/*`, `web/src/app/guide/**`, `web/src/app/noleggio-furgoni-trieste/page.tsx`, `web/src/components/guide/GuideArticleContent.tsx`, `web/src/components/wizard/CosaTrasportiScenariHub.tsx`
+**Creati:**  
+`ConsentAwareVercelMetrics.tsx`, `noleggio-auto-trieste/page.tsx`, `noleggio-pulmini-9-posti-trieste/page.tsx`
 
-**Modificati:** `cosa-trasporti/page.tsx`, `nav-config.ts`, `SiteFooter.tsx`, `FlottaCategoriaPage.tsx`, `flotta/page.tsx`, `FleetPreviewSection.tsx`, `sitemap.ts`, `legacy-redirects.ts`, `llms.txt`, report audit
-
----
-
-## 5. Tabelle Supabase
-
-Nessuna nuova tabella in Blocco 2 (guide in codice). Migration 023 ancora da applicare (Blocco 1).
+**Modificati:**  
+`json-ld.ts`, `autolavaggio/page.tsx`, `tariffe-…/page.tsx`, `layout.tsx`, `next.config.ts`, `nav-config.ts`, `sitemap.ts`, `legacy-redirects.ts`, `llms.txt`, report
 
 ---
 
-## 6. Nuove route
+## Cosa resta
 
-| Route | Tipo |
-|-------|------|
-| `/guide` | Hub |
-| `/guide/[slug]` × 5 | Articoli |
-| `/noleggio-furgoni-trieste` | Pilastro |
-
-## 7. Redirect
-
-| From | To |
-|------|-----|
-| `/noleggio-furgoni` | `/noleggio-furgoni-trieste` |
-
-## 8–11. Metadata / Schema / Sitemap / Robots
-
-- Meta + OG su guide e pilastro
-- Sitemap include pilastro, hub guide, 5 articoli
-- Robots invariato (allow `/`)
-
-## 12–14. Performance / Tracking / Sicurezza
-
-Invariati in questo blocco (P2).
+1. Migration NAP 023 su Supabase  
+2. Foto flotta incomplete  
+3. P2 residuo: lazy map / bundle client audit approfondito  
+4. P3: noindex CMS, eventi GA4 estesi, IndexNow on publish  
 
 ---
 
-## 15. Cosa resta da fare
+## Priorità future
 
-1. Applicare migration NAP 023 su Supabase
-2. Eventuali pilastri auto/pulmini (solo se contenuto distinto)
-3. Altri articoli guide (non 50 in automatico)
-4. Schema dual LocalBusiness autolavaggio
-5. P2: headers, analytics consent, confronto categorie dati DB
-6. Foto flotta incomplete
-
-## 16. Priorità future
-
-P1 residuo → P2 tecnico → P3 polish (come `SEO_AUDIT.md`).
+Chiudere ops migration → foto → P3 polish.

@@ -1,6 +1,11 @@
 import { COMPANY, SITE_URL } from "@/lib/constants";
 import { telefonoE164 } from "@/lib/impostazioni";
 import { googleMapsLink } from "@/lib/maps";
+import {
+  NAP_AUTOLAVAGGIO_ADDRESS_FULL,
+  NAP_AUTOLAVAGGIO_STREET,
+  NAP_ORARI_AUTOLAVAGGIO,
+} from "@/lib/nap";
 import { orariToOpeningHoursSpecification } from "@/lib/opening-hours-schema";
 import {
   FLOTTA_CATEGORIA_COPY,
@@ -597,6 +602,14 @@ export function buildHomeJsonLd(): Record<string, unknown> {
         ...autoRentalProvider(),
         parentOrganization: { "@id": `${SITE_URL}/#organization` },
       },
+      // Entity autolavaggio distinta (sede Schiaparelli) — Knowledge Graph duale
+      {
+        "@type": "LocalBusiness",
+        "@id": `${SITE_URL}/#autolavaggio`,
+        name: "LILO Autolavaggio Trieste",
+        url: `${SITE_URL}/autolavaggio`,
+        parentOrganization: { "@id": `${SITE_URL}/#organization` },
+      },
       {
         "@type": "HowTo",
         "@id": `${SITE_URL}/#come-scegliere-furgone`,
@@ -888,6 +901,191 @@ export function buildContattiJsonLd(impostazioni: ImpostazioniSito): Record<stri
 
   return pruneJsonLd({
     "@context": "https://schema.org",
-    "@graph": [sedeNoleggio, buildOrganizationJsonLd()],
+    "@graph": [sedeNoleggio, buildAutolavaggioLocalBusiness(impostazioni), buildOrganizationJsonLd()],
+  });
+}
+
+const AUTOLAVAGGIO_PAGE_URL = `${SITE_URL}/autolavaggio`;
+const AUTOLAVAGGIO_BUSINESS_ID = `${SITE_URL}/#autolavaggio`;
+
+/**
+ * LocalBusiness dedicato all’autolavaggio (sede Schiaparelli).
+ * Distinto da AutoRental noleggio — nessun tipo inventato non supportato da schema.org.
+ * (Non esiste un tipo ufficiale «AutoWash»; usiamo LocalBusiness + nome/URL dedicati.)
+ */
+function buildAutolavaggioLocalBusiness(
+  impostazioni: ImpostazioniSito,
+): Record<string, unknown> {
+  const mapsUrl = googleMapsLink(
+    impostazioni.indirizzo_autolavaggio || NAP_AUTOLAVAGGIO_ADDRESS_FULL,
+    "LILO Autolavaggio Trieste",
+  );
+  const openingHoursSpecification = orariToOpeningHoursSpecification(
+    impostazioni.orari_autolavaggio || NAP_ORARI_AUTOLAVAGGIO,
+  );
+  const telephoneRaw = telefonoE164(
+    impostazioni.telefono_autolavaggio || impostazioni.telefono_noleggio || "",
+  );
+  const telephone =
+    telephoneRaw.replace(/\D/g, "").length >= 10
+      ? telephoneRaw
+      : COMPANY.phoneE164;
+
+  const sameAs = [
+    impostazioni.social_facebook_autolavaggio,
+    impostazioni.social_facebook,
+  ].filter((url): url is string => Boolean(url && url.trim()));
+
+  const node: Record<string, unknown> = {
+    "@type": "LocalBusiness",
+    "@id": AUTOLAVAGGIO_BUSINESS_ID,
+    name: "LILO Autolavaggio Trieste",
+    alternateName: "Lilo Autolavaggio",
+    description:
+      "Autolavaggio a Trieste: lavaggio interno ed esterno, sanificazione e cura tappezzeria. Sede distinta dal noleggio veicoli.",
+    url: AUTOLAVAGGIO_PAGE_URL,
+    image: SITE_LOGO_URL,
+    telephone,
+    email: impostazioni.email_contatto?.trim() || COMPANY.email,
+    priceRange: "$$",
+    currenciesAccepted: "EUR",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: NAP_AUTOLAVAGGIO_STREET,
+      addressLocality: COMPANY.city,
+      postalCode: COMPANY.postalCode,
+      addressRegion: COMPANY.region,
+      addressCountry: COMPANY.country,
+    },
+    hasMap: mapsUrl,
+    areaServed: { "@type": "City", name: "Trieste" },
+    parentOrganization: { "@id": `${SITE_URL}/#organization` },
+    sameAs,
+  };
+
+  if (openingHoursSpecification.length > 0) {
+    node.openingHoursSpecification = openingHoursSpecification;
+  }
+
+  return node;
+}
+
+/** JSON-LD pagina /autolavaggio — entity LocalBusiness distinta dal noleggio. */
+export function buildAutolavaggioJsonLd(
+  impostazioni: ImpostazioniSito,
+): Record<string, unknown> {
+  const wash = buildAutolavaggioLocalBusiness(impostazioni);
+  return pruneJsonLd({
+    "@context": "https://schema.org",
+    "@graph": [
+      buildOrganizationJsonLd(),
+      {
+        ...wash,
+        mainEntityOfPage: AUTOLAVAGGIO_PAGE_URL,
+      },
+      {
+        "@type": "WebPage",
+        "@id": `${AUTOLAVAGGIO_PAGE_URL}#webpage`,
+        url: AUTOLAVAGGIO_PAGE_URL,
+        name: "Autolavaggio a Trieste | LILO",
+        description:
+          "Autolavaggio LILO a Trieste in Via Giovanni Schiaparelli 21/a. Lavaggio completo, sanificazione e cura interni.",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        about: { "@id": AUTOLAVAGGIO_BUSINESS_ID },
+        breadcrumb: {
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Inizio", item: SITE_URL },
+            {
+              "@type": "ListItem",
+              position: 2,
+              name: "Autolavaggio",
+              item: AUTOLAVAGGIO_PAGE_URL,
+            },
+          ],
+        },
+      },
+    ],
+  });
+}
+
+/** JSON-LD listino /tariffe-noleggio-furgoni-trieste — OfferCatalog da prezzi reali. */
+export function buildTariffeJsonLd(
+  sezioni: Array<{
+    categoria: { nome: string; slug: string };
+    prezzoMinimo: number | null;
+    valuta: string;
+    voci: Array<{ nome: string; slug: string; importo: number; valuta: string }>;
+  }>,
+): Record<string, unknown> {
+  const url = `${SITE_URL}/tariffe-noleggio-furgoni-trieste`;
+
+  const catalogItems = sezioni.flatMap((sezione, sIdx) =>
+    sezione.voci.map((voce, vIdx) => {
+      const position = sIdx * 100 + vIdx + 1;
+      return {
+        "@type": "ListItem",
+        position,
+        item: {
+          "@type": "Offer",
+          "@id": `${url}#offerta-${voce.slug}`,
+          name: `Tariffa giornaliera — ${voce.nome}`,
+          price: String(voce.importo),
+          priceCurrency: voce.valuta || "EUR",
+          availability: "https://schema.org/InStock",
+          url: `${SITE_URL}/flotta/${voce.slug}`,
+          businessFunction: "https://schema.org/LeaseOut",
+          category: sezione.categoria.nome,
+          priceSpecification: {
+            "@type": "UnitPriceSpecification",
+            price: String(voce.importo),
+            priceCurrency: voce.valuta || "EUR",
+            unitCode: "DAY",
+            referenceQuantity: {
+              "@type": "QuantitativeValue",
+              value: 1,
+              unitCode: "DAY",
+            },
+          },
+          seller: autoRentalRef(),
+        },
+      };
+    }),
+  );
+
+  return pruneJsonLd({
+    "@context": "https://schema.org",
+    "@graph": [
+      buildOrganizationJsonLd(),
+      {
+        ...autoRentalProvider(),
+        parentOrganization: { "@id": `${SITE_URL}/#organization` },
+      },
+      {
+        "@type": "WebPage",
+        "@id": `${url}#webpage`,
+        url,
+        name: "Prezzi e Tariffe noleggio | LILO Trieste",
+        description:
+          "Listino tariffe giornaliere noleggio auto e furgoni a Trieste. Prezzi IVA inclusa, aggiornati dalla flotta.",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        breadcrumb: {
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Inizio", item: SITE_URL },
+            { "@type": "ListItem", position: 2, name: "Tariffe", item: url },
+          ],
+        },
+        mainEntity: { "@id": `${url}#catalogo` },
+      },
+      {
+        "@type": "OfferCatalog",
+        "@id": `${url}#catalogo`,
+        name: "Listino noleggio LILO Trieste",
+        url,
+        numberOfItems: catalogItems.length,
+        itemListElement: catalogItems,
+      },
+    ],
   });
 }

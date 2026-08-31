@@ -21,9 +21,9 @@ export function flottaCategoriaHref(slug: string): string {
 
 /** Link SEO footer — noleggio locale Trieste */
 export const FOOTER_NOLEGGIO_LINKS = [
-  { label: "Noleggio Auto Trieste", href: "/flotta/auto" },
+  { label: "Noleggio Auto Trieste", href: "/noleggio-auto-trieste" },
   { label: "Noleggio Furgoni Trieste", href: "/noleggio-furgoni-trieste" },
-  { label: "Noleggio Pulmini 9 Posti", href: "/flotta/pulmini-9-posti" },
+  { label: "Noleggio Pulmini 9 Posti", href: "/noleggio-pulmini-9-posti-trieste" },
 ] as const;
 
 export const FOOTER_LILO_LINKS = [

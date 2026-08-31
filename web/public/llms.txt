@@ -8,6 +8,8 @@ Sito ufficiale di LILO Autonoleggio e Furgoni Trieste. Tariffe IVA inclusa, flot
 
 - [Home](https://www.lilosrl.it/): Panoramica servizi di noleggio e autolavaggio a Trieste
 - [Noleggio furgoni Trieste](https://www.lilosrl.it/noleggio-furgoni-trieste): Landing pilastro furgoni (categorie, tariffe da, CTA)
+- [Noleggio auto Trieste](https://www.lilosrl.it/noleggio-auto-trieste): Landing pilastro auto
+- [Noleggio pulmini 9 posti Trieste](https://www.lilosrl.it/noleggio-pulmini-9-posti-trieste): Landing pilastro pulmini
 - [Flotta](https://www.lilosrl.it/flotta): Catalogo veicoli a noleggio
 - [Tariffe](https://www.lilosrl.it/tariffe-noleggio-furgoni-trieste): Prezzi giornalieri per categoria
 - [Cosa trasporti](https://www.lilosrl.it/cosa-trasporti): Wizard e scenari per scegliere il mezzo

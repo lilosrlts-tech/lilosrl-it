@@ -128,6 +128,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "weekly",
       priority: 0.93,
     }),
+    sitemapEntry("/noleggio-auto-trieste", {
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.92,
+    }),
+    sitemapEntry("/noleggio-pulmini-9-posti-trieste", {
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.92,
+    }),
     sitemapEntry("/guide", {
       lastModified: now,
       changeFrequency: "weekly",
