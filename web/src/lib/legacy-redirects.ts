@@ -212,8 +212,8 @@ export const LEGACY_REDIRECTS: LegacyRedirect[] = [
   ),
   ...withTrailingVariants(
     "/noleggio-furgoni",
-    "/flotta/furgoni-medi",
-    "Landing noleggio furgoni → furgoni medi",
+    "/noleggio-furgoni-trieste",
+    "Landing noleggio furgoni → pilastro keyword",
   ),
   ...withTrailingVariants("/noleggio", "/flotta", "Sezione noleggio generica → flotta"),
   ...withTrailingVariants("/parco-auto", "/flotta", "Alias parco auto → flotta"),

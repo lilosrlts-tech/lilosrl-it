@@ -77,7 +77,16 @@ export async function FleetPreviewSection() {
       <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
         <div>
           <h2 className="text-2xl font-bold text-slate-900">La nostra flotta</h2>
-          <p className="mt-1 text-slate-600">Auto e furgoni disponibili a noleggio a Trieste</p>
+          <p className="mt-1 text-slate-600">
+            Auto e furgoni a Trieste —{" "}
+            <Link href="/noleggio-furgoni-trieste" className="font-medium text-brand-700 hover:underline">
+              guida noleggio furgoni
+            </Link>
+            {" · "}
+            <Link href="/guide" className="font-medium text-brand-700 hover:underline">
+              guide
+            </Link>
+          </p>
         </div>
         <Link
           href="/flotta"

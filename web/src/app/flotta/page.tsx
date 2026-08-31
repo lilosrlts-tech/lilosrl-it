@@ -91,6 +91,18 @@ export default async function FlottaIndexPage() {
               >
                 Cosa trasporti?
               </Link>
+              <Link
+                href="/noleggio-furgoni-trieste"
+                className="rounded-xl border border-slate-200 px-5 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+              >
+                Noleggio furgoni Trieste
+              </Link>
+              <Link
+                href="/guide"
+                className="rounded-xl border border-slate-200 px-5 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+              >
+                Guide
+              </Link>
               <PhoneLink
                 phone={impostazioni.telefono_noleggio}
                 className="rounded-xl border border-slate-200 px-5 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50"

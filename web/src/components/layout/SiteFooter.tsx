@@ -7,7 +7,6 @@ import {
   FOOTER_NOLEGGIO_LINKS,
   FOOTER_SERVIZI_LINKS,
   GOLD,
-  flottaCategoriaHref,
 } from "@/lib/nav-config";
 import { PhoneLink } from "@/components/shared/PhoneLink";
 import { COMPANY, SITE_URL } from "@/lib/constants";
@@ -135,8 +134,8 @@ export function SiteFooter({ impostazioni }: SiteFooterProps) {
           <FooterColumn title="Noleggio Trieste">
             <ul className="space-y-2.5">
               {FOOTER_NOLEGGIO_LINKS.map((item) => (
-                <li key={item.slug}>
-                  <FooterLink href={flottaCategoriaHref(item.slug)}>{item.label}</FooterLink>
+                <li key={item.href}>
+                  <FooterLink href={item.href}>{item.label}</FooterLink>
                 </li>
               ))}
               <li>

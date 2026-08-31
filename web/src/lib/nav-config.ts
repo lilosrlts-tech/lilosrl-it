@@ -21,9 +21,9 @@ export function flottaCategoriaHref(slug: string): string {
 
 /** Link SEO footer — noleggio locale Trieste */
 export const FOOTER_NOLEGGIO_LINKS = [
-  { label: "Noleggio Auto Trieste", slug: "auto" },
-  { label: "Noleggio Furgoni Trieste", slug: "furgoni-medi" },
-  { label: "Noleggio Pulmini 9 Posti", slug: "pulmini-9-posti" },
+  { label: "Noleggio Auto Trieste", href: "/flotta/auto" },
+  { label: "Noleggio Furgoni Trieste", href: "/noleggio-furgoni-trieste" },
+  { label: "Noleggio Pulmini 9 Posti", href: "/flotta/pulmini-9-posti" },
 ] as const;
 
 export const FOOTER_LILO_LINKS = [
@@ -35,6 +35,7 @@ export const FOOTER_LILO_LINKS = [
 export const FOOTER_SERVIZI_LINKS = [
   { href: "/tariffe-noleggio-furgoni-trieste", label: "Listino prezzi noleggio" },
   { href: "/cosa-trasporti", label: "Cosa trasporti?" },
+  { href: "/guide", label: "Guide" },
   { href: AUTOLAVAGGIO_URL, label: "Autolavaggio Professionale", external: true },
   { href: "/flotta", label: "Flotta e Prezzi" },
   { href: "/offerte-noleggio-furgoni-trieste", label: "Offerte", requiresOfferta: true },

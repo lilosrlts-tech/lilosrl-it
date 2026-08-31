@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CosaTrasportiSection } from "@/components/wizard/CosaTrasportiSection";
+import { CosaTrasportiScenariHub } from "@/components/wizard/CosaTrasportiScenariHub";
 import { VeicoloFaq } from "@/components/flotta/VeicoloFaq";
 import { SitePageWrapper, loadImpostazioni } from "@/lib/site-page";
 import { COSA_TRASPORTI_FAQ } from "@/lib/cosa-trasporti";
@@ -82,6 +83,8 @@ export default async function CosaTrasportiPage() {
 
           <CosaTrasportiSection showPageLink={false} headingLevel="h1" />
 
+          <CosaTrasportiScenariHub />
+
           <div className="mx-auto max-w-6xl px-4 pb-14">
             <VeicoloFaq items={faq} />
 
@@ -97,6 +100,18 @@ export default async function CosaTrasportiPage() {
                   className="rounded-xl bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-700"
                 >
                   Vedi tutta la flotta
+                </Link>
+                <Link
+                  href="/noleggio-furgoni-trieste"
+                  className="rounded-xl border border-slate-200 px-5 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+                >
+                  Noleggio furgoni Trieste
+                </Link>
+                <Link
+                  href="/guide"
+                  className="rounded-xl border border-slate-200 px-5 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+                >
+                  Guide
                 </Link>
                 <Link
                   href="/contatti"

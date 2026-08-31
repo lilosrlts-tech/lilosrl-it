@@ -13,7 +13,11 @@
 | P0 Migration DB `023_sync_nap_orari.sql` | ⏳ Da applicare su Supabase |
 | P1 Favicon + manifest | ✅ |
 | P1 Soft-404 → 404 reali | ✅ |
-| P1 Pilastri / guide / cosa-trasporti | ⏳ Prossimo blocco |
+| P1 Pilastro `/noleggio-furgoni-trieste` | ✅ |
+| P1 Hub `/guide` + 5 articoli | ✅ |
+| P1 `/cosa-trasporti` scenari + linking | ✅ |
+| P1 Internal linking Home↔flotta↔guide | ✅ |
+| P1 Foto flotta / dual LocalBusiness | ⏳ |
 
 ---
 

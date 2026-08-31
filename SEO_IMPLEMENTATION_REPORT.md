@@ -1,112 +1,105 @@
 # SEO Implementation Report — LILO S.r.l.
 
 **Ultimo aggiornamento:** 31 agosto 2026  
-**Fase corrente:** Blocco 1 — P0 NAP + P1 favicon/404  
-**Build:** `npm run build` OK (Next.js 15.5.19)
+**Fase corrente:** Blocco 2 completato (P1 contenuti)  
+**Build:** `npm run build` OK (Next.js 15.5.19) — 51 route statiche/dinamiche
 
 ---
 
 ## 1. Stato iniziale (sintesi)
 
-- NAP/orari duplicati in `COMPANY`, `sedi.ts`, `DEMO_IMPOSTAZIONI`, seed SQL 002 e hardcoded UI
-- Soft-404: path sconosciuti → 301 `/flotta`
-- `/favicon.ico` e manifest assenti (404 live)
-- Pilastri `/noleggio-*-trieste` e `/guide` non ancora creati (pianificati Opzione A)
-
-Vedi anche [`SEO_AUDIT.md`](./SEO_AUDIT.md).
+- NAP multi-source, soft-404, favicon assente → **risolti in Blocco 1** (`c6b6766`)
+- Nessun hub `/guide`, nessun pilastro `/noleggio-furgoni-trieste`
+- `/cosa-trasporti` = solo wizard + FAQ
 
 ---
 
-## 2. Problemi trovati (blocco trattato)
+## 2–3. Modifiche Blocco 1 (già su main)
 
-| ID | Problema | Stato |
-|----|----------|--------|
-| D1/D2/L1 | NAP multi-source + orari discordanti | **Mitigato in codice** + migration 023 |
-| S8 | Favicon/manifest 404 | **Risolto** (`/icon`, `/apple-icon`, `/manifest.webmanifest`) |
-| S7 | Soft-404 → flotta | **Risolto** (404 reale via `not-found`) |
+Vedi commit `c6b6766`: NAP `nap.ts`, migration `023`, favicon/manifest, 404 reali, rimozione «Foto in arrivo».
+
+**Azione ancora richiesta:** applicare `023_sync_nap_orari.sql` su Supabase produzione.
 
 ---
 
-## 3. Modifiche effettuate (Blocco 1)
+## 3b. Modifiche Blocco 2
 
-### NAP centralizzato
-- Nuovo `web/src/lib/nap.ts`: telefono, indirizzi, orari, servizi, formatter
-- `COMPANY` e `DEMO_IMPOSTAZIONI` importano da `nap.ts`
-- `sedi.ts`: costanti da NAP + `resolveSedeNoleggio` / `resolveSedeAutolavaggio` da DB
-- UI aggiornata: Contatti, Chi siamo, Autolavaggio, ContactMapSection, SiteChrome, PreventivoForm
+### Guide (`/guide`)
+- Sistema editoriale TypeScript: `web/src/lib/guide/`
+- Hub `/guide` + articoli `/guide/[slug]` (SSG)
+- **5 articoli** answer-first con FAQ, CTA, internal links, JSON-LD Article/FAQ/Breadcrumb:
+  1. `quale-furgone-scegliere-per-trasloco`
+  2. `quanto-costa-noleggiare-furgone-trieste` (prezzi da `TARIFFE_CATEGORIA`)
+  3. `che-patente-serve-per-furgone` (senza inventare requisiti)
+  4. `quanti-metri-cubi-servono-per-trasloco`
+  5. `furgone-per-frigorifero`
 
-### Migration Supabase
-- `supabase/migrations/023_sync_nap_orari.sql` — UPDATE singleton `impostazioni_sito` con orari/NAP GMB-aligned
+### Pilastro `/noleggio-furgoni-trieste`
+- Landing distinta da `/flotta`: In breve, tabella categorie + prezzi “da”, funnel verso wizard/flotta/tariffe/guide
+- JSON-LD WebPage + Service + FAQ + Breadcrumb
+- Redirect aggiornato: `/noleggio-furgoni` → pilastro (non più solo medi)
 
-### Favicon / manifest
-- `web/src/app/icon.tsx`, `apple-icon.tsx`, `manifest.ts`
+### Cosa trasporti
+- Nuovo hub scenari `CosaTrasportiScenariHub` (frigo, lavatrice, armadio, divano, letto, moto, scatoloni, trasloco, materiali)
+- Link a categorie + guide + pilastro
 
-### 404 reali
-- `middleware.ts`: rimosso catch-all 301 → `/flotta`
-- Whitelist anticipata per futuri path `guide`, `noleggio-*-trieste` (quando esisteranno le pagine)
-
----
-
-## 4. File modificati / creati
-
-**Creati**
-- `web/src/lib/nap.ts`
-- `web/src/app/icon.tsx`
-- `web/src/app/apple-icon.tsx`
-- `web/src/app/manifest.ts`
-- `supabase/migrations/023_sync_nap_orari.sql`
-- `SEO_IMPLEMENTATION_REPORT.md` (questo file)
-
-**Modificati**
-- `web/src/lib/constants.ts`
-- `web/src/lib/impostazioni.ts`
-- `web/src/lib/sedi.ts`
-- `web/src/middleware.ts`
-- `web/src/components/layout/SiteChrome.tsx`
-- `web/src/components/contatti/ContattiContent.tsx`
-- `web/src/components/chi-siamo/ChiSiamoContent.tsx`
-- `web/src/components/autolavaggio/AutolavaggioContent.tsx`
-- `web/src/components/home/ContactMapSection.tsx`
-- `web/src/components/flotta/PreventivoForm.tsx`
-- `SEO_AUDIT.md` (stato avanzamento)
+### Internal linking
+- Footer: pilastro furgoni, voce Guide
+- Home flotta preview → pilastro + guide
+- Hub flotta + categorie → cosa-trasporti / guide / pilastro
+- Sitemap + `llms.txt` aggiornati
 
 ---
 
-## 5. Tabelle Supabase modificate
+## 4. File principali Blocco 2
 
-| Tabella | Azione | Note |
-|---------|--------|------|
-| `impostazioni_sito` | UPDATE via migration 023 | Orari, telefoni, indirizzi, servizi default |
+**Creati:** `web/src/lib/guide/*`, `web/src/app/guide/**`, `web/src/app/noleggio-furgoni-trieste/page.tsx`, `web/src/components/guide/GuideArticleContent.tsx`, `web/src/components/wizard/CosaTrasportiScenariHub.tsx`
 
-**Azione richiesta:** eseguire la migration sul progetto Supabase di produzione (SQL Editor o CLI) prima/dopo il deploy.
+**Modificati:** `cosa-trasporti/page.tsx`, `nav-config.ts`, `SiteFooter.tsx`, `FlottaCategoriaPage.tsx`, `flotta/page.tsx`, `FleetPreviewSection.tsx`, `sitemap.ts`, `legacy-redirects.ts`, `llms.txt`, report audit
 
 ---
 
-## 6–14. Non ancora in questo blocco
+## 5. Tabelle Supabase
 
-| Area | Stato |
-|------|--------|
-| Nuove route | Nessuna (whitelist middleware solo) |
-| Redirect nuovi | Nessuno (rimossa solo soft-404) |
-| Metadata / Schema / Sitemap / Robots | Invariati |
-| Performance / Tracking | Invariati |
-| Sicurezza headers | Ancora da fare (P2) |
+Nessuna nuova tabella in Blocco 2 (guide in codice). Migration 023 ancora da applicare (Blocco 1).
 
 ---
 
-## 15. Cosa resta da fare (P0/P1)
+## 6. Nuove route
 
-1. **Applicare migration 023** su Supabase produzione
-2. Commit + push (su richiesta)
-3. P1 contenuto: pilastro `/noleggio-furgoni-trieste` (Opzione A)
-4. P1: rafforzare `/cosa-trasporti`
-5. P1: scaffold `/guide` + primi articoli revisionati
-6. P1: foto flotta incomplete
-7. P1: dual LocalBusiness autolavaggio (schema)
-8. P2+: come da SEO_AUDIT
+| Route | Tipo |
+|-------|------|
+| `/guide` | Hub |
+| `/guide/[slug]` × 5 | Articoli |
+| `/noleggio-furgoni-trieste` | Pilastro |
+
+## 7. Redirect
+
+| From | To |
+|------|-----|
+| `/noleggio-furgoni` | `/noleggio-furgoni-trieste` |
+
+## 8–11. Metadata / Schema / Sitemap / Robots
+
+- Meta + OG su guide e pilastro
+- Sitemap include pilastro, hub guide, 5 articoli
+- Robots invariato (allow `/`)
+
+## 12–14. Performance / Tracking / Sicurezza
+
+Invariati in questo blocco (P2).
 
 ---
+
+## 15. Cosa resta da fare
+
+1. Applicare migration NAP 023 su Supabase
+2. Eventuali pilastri auto/pulmini (solo se contenuto distinto)
+3. Altri articoli guide (non 50 in automatico)
+4. Schema dual LocalBusiness autolavaggio
+5. P2: headers, analytics consent, confronto categorie dati DB
+6. Foto flotta incomplete
 
 ## 16. Priorità future
 
-Come da audit: P0 chiusura NAP in DB → P1 pilastri/guide → P2 schema/perf/headers.
+P1 residuo → P2 tecnico → P3 polish (come `SEO_AUDIT.md`).

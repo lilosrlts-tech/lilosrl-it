@@ -7,13 +7,23 @@ Sito ufficiale di LILO Autonoleggio e Furgoni Trieste. Tariffe IVA inclusa, flot
 ## Pagine principali
 
 - [Home](https://www.lilosrl.it/): Panoramica servizi di noleggio e autolavaggio a Trieste
-- [Flotta](https://www.lilosrl.it/flotta): Tutti i veicoli disponibili a noleggio
+- [Noleggio furgoni Trieste](https://www.lilosrl.it/noleggio-furgoni-trieste): Landing pilastro furgoni (categorie, tariffe da, CTA)
+- [Flotta](https://www.lilosrl.it/flotta): Catalogo veicoli a noleggio
 - [Tariffe](https://www.lilosrl.it/tariffe-noleggio-furgoni-trieste): Prezzi giornalieri per categoria
-- [Cosa trasporti](https://www.lilosrl.it/cosa-trasporti): Guida per scegliere il mezzo in base al carico
+- [Cosa trasporti](https://www.lilosrl.it/cosa-trasporti): Wizard e scenari per scegliere il mezzo
+- [Guide](https://www.lilosrl.it/guide): Guide pratiche (trasloco, costi, patente, m³, frigo)
 - [Offerte](https://www.lilosrl.it/offerte-noleggio-furgoni-trieste): Promo e offerte del mese
 - [Autolavaggio](https://www.lilosrl.it/autolavaggio): Servizio autolavaggio in sede
 - [Chi siamo](https://www.lilosrl.it/chi-siamo): Storia e sede LILO a Trieste
 - [Contatti](https://www.lilosrl.it/contatti): Telefono, WhatsApp, mappa e orari
+
+## Guide
+
+- [Quale furgone per un trasloco](https://www.lilosrl.it/guide/quale-furgone-scegliere-per-trasloco)
+- [Quanto costa noleggiare un furgone](https://www.lilosrl.it/guide/quanto-costa-noleggiare-furgone-trieste)
+- [Che patente serve](https://www.lilosrl.it/guide/che-patente-serve-per-furgone)
+- [Metri cubi per trasloco](https://www.lilosrl.it/guide/quanti-metri-cubi-servono-per-trasloco)
+- [Furgone per frigorifero](https://www.lilosrl.it/guide/furgone-per-frigorifero)
 
 ## Categorie flotta
 

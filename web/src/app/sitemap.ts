@@ -7,6 +7,7 @@ import {
 import { getExactPathRedirectMap } from "@/lib/legacy-redirects";
 import { canonicalUrl } from "@/lib/seo";
 import { getPublishedSlugs } from "@/lib/veicoli";
+import { getGuideSlugs } from "@/lib/guide";
 import { VEICOLO_SLUG_REDIRECTS_301 } from "@/lib/veicolo-slug-renames";
 import { SEO_PAGE_PATHS, type SeoPageKey } from "@/types/seo";
 
@@ -122,6 +123,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "weekly",
       priority: 0.88,
     }),
+    sitemapEntry("/noleggio-furgoni-trieste", {
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.93,
+    }),
+    sitemapEntry("/guide", {
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.86,
+    }),
+    ...getGuideSlugs().map((slug) =>
+      sitemapEntry(`/guide/${slug}`, {
+        lastModified: now,
+        changeFrequency: "monthly" as const,
+        priority: 0.8,
+      }),
+    ),
   ];
 
   return uniqueEntries([...staticEntries, ...categoryEntries, ...vehicleEntries, ...guidaEntries]);
