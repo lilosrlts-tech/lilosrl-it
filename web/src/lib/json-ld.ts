@@ -4,7 +4,12 @@ import { googleMapsLink } from "@/lib/maps";
 import {
   NAP_AUTOLAVAGGIO_ADDRESS_FULL,
   NAP_AUTOLAVAGGIO_STREET,
+  NAP_NOLEGGIO_CITY,
+  NAP_NOLEGGIO_COUNTRY,
+  NAP_NOLEGGIO_POSTAL,
+  NAP_NOLEGGIO_REGION,
   NAP_ORARI_AUTOLAVAGGIO,
+  NAP_PHONE_E164,
 } from "@/lib/nap";
 import { orariToOpeningHoursSpecification } from "@/lib/opening-hours-schema";
 import {
@@ -602,12 +607,25 @@ export function buildHomeJsonLd(): Record<string, unknown> {
         ...autoRentalProvider(),
         parentOrganization: { "@id": `${SITE_URL}/#organization` },
       },
-      // Entity autolavaggio distinta (sede Schiaparelli) — Knowledge Graph duale
+      // Entity autolavaggio distinta (sede Schiaparelli) — Knowledge Graph duale.
+      // Campi Google LocalBusiness (anche facoltativi) da nap.ts, senza dipendere dal CMS.
       {
         "@type": "LocalBusiness",
         "@id": `${SITE_URL}/#autolavaggio`,
         name: "LILO Autolavaggio Trieste",
         url: `${SITE_URL}/autolavaggio`,
+        telephone: NAP_PHONE_E164,
+        image: SITE_LOGO_URL,
+        // ASCII "$$": i simboli €€ risultavano corrotti ("??") in produzione.
+        priceRange: "$$",
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: NAP_AUTOLAVAGGIO_STREET,
+          addressLocality: NAP_NOLEGGIO_CITY,
+          postalCode: NAP_NOLEGGIO_POSTAL,
+          addressRegion: NAP_NOLEGGIO_REGION,
+          addressCountry: NAP_NOLEGGIO_COUNTRY,
+        },
         parentOrganization: { "@id": `${SITE_URL}/#organization` },
       },
       {
@@ -952,10 +970,10 @@ function buildAutolavaggioLocalBusiness(
     address: {
       "@type": "PostalAddress",
       streetAddress: NAP_AUTOLAVAGGIO_STREET,
-      addressLocality: COMPANY.city,
-      postalCode: COMPANY.postalCode,
-      addressRegion: COMPANY.region,
-      addressCountry: COMPANY.country,
+      addressLocality: NAP_NOLEGGIO_CITY,
+      postalCode: NAP_NOLEGGIO_POSTAL,
+      addressRegion: NAP_NOLEGGIO_REGION,
+      addressCountry: NAP_NOLEGGIO_COUNTRY,
     },
     hasMap: mapsUrl,
     areaServed: { "@type": "City", name: "Trieste" },
