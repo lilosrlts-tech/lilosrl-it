@@ -50,10 +50,11 @@ export function MobileFlottaCategoriaGrid() {
                     src={image}
                     alt={`Noleggio ${cat.label} Trieste`}
                     fill
-                    sizes="45vw"
+                    sizes="(max-width: 768px) 45vw, 200px"
                     quality={75}
                     loading="lazy"
                     fetchPriority="low"
+                    // object-contain: niente crop/stretch dentro il frame 16/10
                     className={FLEET_VEHICLE_IMG.categoryThumb}
                   />
                 </div>

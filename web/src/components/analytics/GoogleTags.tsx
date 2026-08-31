@@ -1,5 +1,4 @@
 import Script from "next/script";
-import { GoogleTagManager } from "@next/third-parties/google";
 import {
   getGoogleGtagIds,
   getPrimaryGoogleTagId,
@@ -11,6 +10,9 @@ import {
 /**
  * Tag Google con Consent Mode v2:
  * default = denied su analytics/ads finché il banner non aggiorna il consenso.
+ *
+ * Caricamento tag esterni: `lazyOnload` (non blocca il first paint / LCP).
+ * Solo lo stub consent resta `beforeInteractive`.
  */
 export function GoogleTags() {
   if (GTM_ID) {
@@ -32,7 +34,19 @@ gtag('consent', 'default', {
 });
           `.trim()}
         </Script>
-        <GoogleTagManager gtmId={GTM_ID} />
+        <Script id="google-gtm-init" strategy="lazyOnload">
+          {`
+(function(w,l){
+  w[l]=w[l]||[];
+  w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
+})(window,'dataLayer');
+          `.trim()}
+        </Script>
+        <Script
+          id="google-gtm"
+          src={`https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`}
+          strategy="lazyOnload"
+        />
       </>
     );
   }
@@ -69,9 +83,9 @@ gtag('consent', 'default', {
       </Script>
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${primaryId}`}
-        strategy="afterInteractive"
+        strategy="lazyOnload"
       />
-      <Script id="google-gtag-init" strategy="afterInteractive">
+      <Script id="google-gtag-init" strategy="lazyOnload">
         {`
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}

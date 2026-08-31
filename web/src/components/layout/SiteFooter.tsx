@@ -8,6 +8,7 @@ import {
   FOOTER_SERVIZI_LINKS,
   GOLD,
 } from "@/lib/nav-config";
+import { ObfuscatedEmailLink } from "@/components/shared/ObfuscatedEmailLink";
 import { PhoneLink } from "@/components/shared/PhoneLink";
 import { COMPANY, SITE_URL } from "@/lib/constants";
 import type { ImpostazioniSito } from "@/types/impostazioni";
@@ -113,9 +114,10 @@ export function SiteFooter({ impostazioni }: SiteFooterProps) {
                 {impostazioni.telefono_noleggio}
               </PhoneLink>
               {" · "}
-              <a href={`mailto:${impostazioni.email_contatto}`} className="hover:text-white">
-                {impostazioni.email_contatto}
-              </a>
+              <ObfuscatedEmailLink
+                email={impostazioni.email_contatto}
+                className="hover:text-white"
+              />
             </p>
           </div>
         </div>

@@ -66,6 +66,8 @@ export function FleetPreviewGrid({
                   alt={card.alt}
                   variant={card.variant}
                   placeholderLabel={card.title}
+                  // 16/10 + object-contain: frame stabile CLS senza stirare il veicolo
+                  aspect="16/10"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   priority={false}
                 />
