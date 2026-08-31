@@ -82,7 +82,7 @@ export default async function FlottaIndexPage() {
             <p className="mt-2 text-sm leading-relaxed text-slate-600">
               Indica cosa trasporti (frigo, armadio, trasloco, moto…) e ti proponiamo i mezzi più
               adatti in base a volume, altezza vano e portata. Oppure scrivici su WhatsApp o chiama
-              la sede in {impostazioni.indirizzo_noleggio}, Trieste.
+              la sede in {impostazioni.indirizzo_noleggio}.
             </p>
             <div className="mt-4 flex flex-wrap gap-3">
               <WhatsAppCtaLink

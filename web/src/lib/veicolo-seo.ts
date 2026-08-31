@@ -44,6 +44,26 @@ export function sanitizePublicBrandCopy(text: string): string {
     .trim();
 }
 
+/** Testi placeholder foto da non mostrare mai in UI / alt / didascalia. */
+const PLACEHOLDER_PHOTO_COPY =
+  /^\s*(foto\s+in\s+arrivo|immagine\s+in\s+arrivo|coming\s+soon|foto\s+a\s+breve|immagine\s+non\s+disponibile)\s*\.?$/i;
+
+export function isPlaceholderPhotoCopy(text: string | null | undefined): boolean {
+  if (!text?.trim()) return false;
+  return PLACEHOLDER_PHOTO_COPY.test(text.trim());
+}
+
+/** Rimuove frasi placeholder residue (es. CMS vecchio) da stringhe pubbliche. */
+export function stripPlaceholderPhotoCopy(text: string): string {
+  return text
+    .replace(/\bfoto\s+in\s+arrivo\b\.?/gi, "")
+    .replace(/\bimmagine\s+in\s+arrivo\b\.?/gi, "")
+    .replace(/\bcoming\s+soon\b\.?/gi, "")
+    .replace(/\s{2,}/g, " ")
+    .replace(/\s+([.,;:])/g, "$1")
+    .trim();
+}
+
 /** Highlight vuoti o solo branding da non mostrare. */
 export function isUsefulPublicHighlight(text: string): boolean {
   const t = sanitizePublicBrandCopy(stripTargaFromPublicCopy(text));
@@ -76,8 +96,10 @@ export function getVeicoloFotoAlt(
   veicolo: VeicoloPubblico,
   foto?: FotoPubblica | null,
 ): string {
-  if (foto?.alt_text?.trim()) {
-    return sanitizePublicBrandCopy(foto.alt_text.trim());
+  const rawAlt = foto?.alt_text?.trim();
+  if (rawAlt && !isPlaceholderPhotoCopy(rawAlt)) {
+    const cleaned = sanitizePublicBrandCopy(stripPlaceholderPhotoCopy(rawAlt));
+    if (cleaned) return cleaned;
   }
   const vista = foto ? inferVeicoloFotoVista(foto) : "fiancata";
   return buildVeicoloFotoAlt(veicolo, vista);

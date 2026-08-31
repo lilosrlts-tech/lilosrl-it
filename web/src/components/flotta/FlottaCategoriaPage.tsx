@@ -132,7 +132,7 @@ export async function FlottaCategoriaPage({ slug }: FlottaCategoriaPageProps) {
             </h2>
             <p className="mt-2 text-sm leading-relaxed text-slate-600">
               Il nostro team ti consiglia il mezzo più adatto. Ritiro in sede a{" "}
-              {impostazioni.indirizzo_noleggio}, Trieste.
+              {impostazioni.indirizzo_noleggio}.
             </p>
             <div className="mt-4 flex flex-wrap gap-3">
               <WhatsAppCtaLink
