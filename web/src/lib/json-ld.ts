@@ -18,7 +18,7 @@ import {
   getPrezzoGiornaliero,
 } from "@/lib/veicoli";
 import { isFurgoneCategory } from "@/lib/specifiche-tecniche-utils";
-import { useCasesForVeicolo } from "@/lib/cosa-trasporti";
+import { matchUseCasesForVeicolo } from "@/lib/cosa-trasporti";
 import {
   getVeicoloImageUrlsForSchema,
   stripTargaFromPublicCopy,
@@ -371,7 +371,7 @@ function buildVehicleAdditionalProperties(veicolo: VeicoloPubblico): Record<stri
     props.push(propertyValue("Configurazione sedili", spec.configurazione_sedili));
   }
 
-  const useCases = useCasesForVeicolo(veicolo);
+  const useCases = matchUseCasesForVeicolo(veicolo);
   if (useCases.length > 0) {
     props.push(propertyValue("Ideale per", useCases.map((u) => u.label).join(", ")));
   }

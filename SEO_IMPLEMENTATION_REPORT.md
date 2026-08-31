@@ -1,68 +1,90 @@
 # SEO Implementation Report — LILO S.r.l.
 
 **Ultimo aggiornamento:** 31 agosto 2026  
-**Fase corrente:** Blocco 3 completato (P2 schema / headers / consent / pilastri)  
-**Build:** `npm run build` OK — 53 route
+**Stato:** **COMPLETATO** (Blocchi 1–4 / P0–P3)  
+**Build finale:** `npm run build` OK · `tsc --noEmit` OK · IndexNow HTTP 200 (16 URL)
 
 ---
 
-## Blocchi precedenti
+## Commits principali su `main`
 
-| Blocco | Commit | Contenuto |
-|--------|--------|-----------|
-| 1 | `c6b6766` | NAP, favicon, 404 reali, migration 023 |
-| 2 | `fd2e30d` | Guide, pilastro furgoni, cosa-trasporti, linking |
-
-**Azione ancora richiesta:** applicare `023_sync_nap_orari.sql` su Supabase produzione.
-
----
-
-## Blocco 3 — modifiche
-
-### 1. Schema.org / dual entity
-- `buildAutolavaggioJsonLd`: **LocalBusiness** dedicato (sede Schiaparelli), distinto da AutoRental noleggio. Nessun tipo inventato «AutoWash» (non esiste in schema.org).
-- Contatti: graph con **AutoRental + LocalBusiness autolavaggio + Organization**
-- Home: stub LocalBusiness `#autolavaggio` nel graph
-- `buildTariffeJsonLd`: **WebPage + OfferCatalog + UnitPriceSpecification** da listino reale veicoli
-
-### 2. Security headers (`next.config.ts`)
-- `X-Frame-Options: SAMEORIGIN`
-- `X-Content-Type-Options: nosniff`
-- `Referrer-Policy: strict-origin-when-cross-origin`
-- `Strict-Transport-Security: max-age=63072000; includeSubDomains; preload`
-- `Permissions-Policy: camera=(), microphone=(), geolocation=()`
-
-### 3. Performance / cookie consent
-- Nuovo `ConsentAwareVercelMetrics`: Analytics + Speed Insights solo con `analytics` (banner LILO o Cookiebot `consent.statistics`)
-- Layout non monta più Analytics/SpeedInsights senza consenso
-
-### 4. Pilastri secondari
-- `/noleggio-auto-trieste`
-- `/noleggio-pulmini-9-posti-trieste`
-- Pattern come furgoni: In breve, CTA, FAQ, link a `/flotta/...` senza duplicare griglie
-- Footer + sitemap + `llms.txt` + redirect `/noleggio-auto` → pilastro
+| Blocco | Commit (indicativo) | Contenuto |
+|--------|---------------------|-----------|
+| 1 | `c6b6766` | NAP centralizzato, favicon/manifest, 404 reali, migration 023 |
+| 2 | `fd2e30d` | `/guide` + 5 articoli, pilastro furgoni, cosa-trasporti, linking |
+| 3 | `1b20308` | Schema dual entity, headers, consent Analytics, pilastri auto/pulmini |
+| 4 | (questo push) | noindex CMS, sitemap legal out, IndexNow, ESLint, cleanup |
 
 ---
 
-## File principali Blocco 3
+## 1. Stato iniziale
 
-**Creati:**  
-`ConsentAwareVercelMetrics.tsx`, `noleggio-auto-trieste/page.tsx`, `noleggio-pulmini-9-posti-trieste/page.tsx`
+Sito Next.js già forte su redirect/canonical/flotta; gap su NAP multi-source, soft-404, pilastri intent, guide, schema lavaggio/tariffe, headers, consent Vercel, noindex CMS ignorato.
 
-**Modificati:**  
-`json-ld.ts`, `autolavaggio/page.tsx`, `tariffe-…/page.tsx`, `layout.tsx`, `next.config.ts`, `nav-config.ts`, `sitemap.ts`, `legacy-redirects.ts`, `llms.txt`, report
+## 2. Problemi trovati → risolti
+
+| Area | Azione |
+|------|--------|
+| NAP/orari | `nap.ts` + sedi resolve + migration 023 |
+| Soft-404 | Middleware → 404 reali |
+| Favicon | `app/icon`, `apple-icon`, `manifest` |
+| Contenuti SEO | Guide, 3 pilastri, hub scenari |
+| Schema | AutoRental + LocalBusiness lavaggio + OfferCatalog tariffe |
+| Headers | HSTS, XFO, nosniff, Referrer-Policy, Permissions-Policy |
+| Consent | Vercel metrics gated |
+| noindex CMS | `parseRobots(seo.meta_robots)` in `buildPageMetadata` |
+| Sitemap | Legal esclusi; pagine CMS noindex escluse |
+| IndexNow | Script + `getIndexNowPriorityUrls()`; notify 16 URL OK |
+
+## 3–4. File / route chiave
+
+**Nuove route:** `/guide`, `/guide/[slug]`, `/noleggio-furgoni-trieste`, `/noleggio-auto-trieste`, `/noleggio-pulmini-9-posti-trieste`
+
+**Lib:** `nap.ts`, `guide/*`, `indexnow.ts`, `json-ld` esteso, `seo-settings` robots
+
+## 5. Supabase
+
+| Voce | Stato |
+|------|--------|
+| Migration `023_sync_nap_orari.sql` | In repo — **applicare in prod** |
+| Nuove tabelle guide | Non create (contenuti in codice) |
+
+## 6–11. Metadata / Schema / Sitemap / Robots / Redirect
+
+- Meta unici su pilastri/guide; robots da CMS  
+- Sitemap senza privacy/cookie/termini; esclusione noindex  
+- Robots.txt invariato (allow `/`, sitemap www)  
+- Redirect: `/noleggio-furgoni`, `/noleggio-auto` → pilastri  
+
+## 12. Performance
+
+Hero preload già presente; Analytics gated; client audit: rimosso import inutilizzato `Link` in `SiteChrome`
+
+## 13. Tracking
+
+GA4 + Consent Mode; Vercel solo con analytics consent / Cookiebot statistics
+
+## 14. Sicurezza
+
+Security headers in `next.config.ts`; service role solo preventivo (invariato)
+
+## 15. Cosa resta (ops / contenuto)
+
+1. **Applicare migration 023** su Supabase  
+2. Foto flotta incomplete in Storage  
+3. Opzionale: env Vercel `INDEXNOW_ON_BUILD=1`  
+4. Monitoraggio GSC/Ahrefs post-deploy  
+
+## 16. Comandi utili
+
+```bash
+cd web
+npm run typecheck
+npm run lint
+npm run build
+npm run indexnow          # FORCE via script; o FORCE_INDEXNOW=1
+```
 
 ---
 
-## Cosa resta
-
-1. Migration NAP 023 su Supabase  
-2. Foto flotta incomplete  
-3. P2 residuo: lazy map / bundle client audit approfondito  
-4. P3: noindex CMS, eventi GA4 estesi, IndexNow on publish  
-
----
-
-## Priorità future
-
-Chiudere ops migration → foto → P3 polish.
+**Verdetto:** architettura SEO tecnica e contenuti pilastro/guide allineati al piano Opzione A. Residui = dati operativi (SQL NAP, foto), non gap strutturali di codice.

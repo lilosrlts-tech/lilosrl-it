@@ -2,7 +2,7 @@ import { unstable_cache } from "next/cache";
 import type { Metadata } from "next";
 import { createPublicClient, isSupabaseConfigured } from "@/lib/supabase";
 import { isDemoMode } from "@/lib/demo-veicolo";
-import { resolvePageCanonical } from "@/lib/seo";
+import { resolvePageCanonical, parseRobots } from "@/lib/seo";
 import { resolveMetadataTitle } from "@/lib/metadata-title";
 import { fitSeoDescription, fitSeoTitle } from "@/lib/seo-limits";
 import { SITE_URL } from "@/lib/constants";
@@ -195,8 +195,8 @@ export function buildPageMetadata(seo: SeoSettings, pageKey?: SeoPageKey): Metad
     description,
     keywords: seo.seo_keywords,
     alternates: { canonical },
-    // Pagine pubbliche del sito: sempre indicizzabili (ignora noindex errati da CMS).
-    robots: { index: true, follow: true },
+    // Rispetta meta_robots da CMS (noindex/nofollow); default index,follow.
+    robots: parseRobots(seo.meta_robots),
     openGraph: {
       type: "website",
       locale: "it_IT",
@@ -217,6 +217,11 @@ export function buildPageMetadata(seo: SeoSettings, pageKey?: SeoPageKey): Metad
       "geo.placename": "Trieste",
     },
   };
+}
+
+/** True se la pagina CMS non deve entrare in sitemap / crawl prioritario. */
+export function isSeoPageNoindex(seo: SeoSettings): boolean {
+  return (seo.meta_robots ?? "").toLowerCase().includes("noindex");
 }
 
 export async function getPageMetadata(pageKey: SeoPageKey): Promise<Metadata> {

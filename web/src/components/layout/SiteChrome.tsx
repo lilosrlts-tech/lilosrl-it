@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 import { LiloLogo } from "@/components/layout/LiloLogo";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { Navbar } from "@/components/Navbar";

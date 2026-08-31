@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "indexnow": "node scripts/notify-indexnow.mjs",
+    "postbuild": "node scripts/notify-indexnow.mjs"
   },
   "dependencies": {
     "@next/third-parties": "^15.5.19",
@@ -25,6 +28,8 @@
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "autoprefixer": "^10.4.20",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "^15.5.19",
     "pg": "^8.22.0",
     "postcss": "^8.5.3",
     "tailwindcss": "^3.4.17",

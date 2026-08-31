@@ -9,6 +9,7 @@ import { canonicalUrl } from "@/lib/seo";
 import { getPublishedSlugs } from "@/lib/veicoli";
 import { getGuideSlugs } from "@/lib/guide";
 import { VEICOLO_SLUG_REDIRECTS_301 } from "@/lib/veicolo-slug-renames";
+import { getSeoSettings, isSeoPageNoindex } from "@/lib/seo-settings";
 import { SEO_PAGE_PATHS, type SeoPageKey } from "@/types/seo";
 
 const STATIC_PRIORITIES: Partial<Record<SeoPageKey, number>> = {
@@ -21,8 +22,11 @@ const STATIC_PRIORITIES: Partial<Record<SeoPageKey, number>> = {
   offerte: 0.75,
 };
 
-/** Pagine legali: indicizzabili ma priorità bassa (non sono landing commerciali). */
-const LOW_PRIORITY_PATHS = new Set([
+/**
+ * Pagine legali: restano sul sito e possono essere indicizzate via meta,
+ * ma non entrano in sitemap (poco valore di crawl vs pagine commerciali).
+ */
+const SITEMAP_EXCLUDED_PATHS = new Set([
   "/privacy",
   "/cookie-policy",
   "/termini-condizioni",
@@ -47,6 +51,10 @@ function sitemapEntry(
 
   const pathname = new URL(url).pathname.replace(/\/+$/, "") || "/";
 
+  if (SITEMAP_EXCLUDED_PATHS.has(pathname)) {
+    return null;
+  }
+
   // Escludi path che esistono solo come sorgente di redirect legacy.
   if (pathname !== "/" && REDIRECT_PATHS.has(pathname)) {
     return null;
@@ -68,7 +76,6 @@ function uniqueEntries(entries: Array<MetadataRoute.Sitemap[number] | null>): Me
   const out: MetadataRoute.Sitemap = [];
   for (const entry of entries) {
     if (!entry?.url || seen.has(entry.url)) continue;
-    // Doppio check host dopo dedupe
     if (!entry.url.startsWith("https://www.lilosrl.it")) continue;
     seen.add(entry.url);
     out.push(entry);
@@ -77,19 +84,31 @@ function uniqueEntries(entries: Array<MetadataRoute.Sitemap[number] | null>): Me
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const slugs = await getPublishedSlugs();
+  const [slugs, seoRows] = await Promise.all([
+    getPublishedSlugs(),
+    Promise.all(
+      (Object.keys(SEO_PAGE_PATHS) as SeoPageKey[]).map(async (key) => ({
+        key,
+        path: SEO_PAGE_PATHS[key],
+        seo: await getSeoSettings(key),
+      })),
+    ),
+  ]);
   const now = new Date();
 
-  const staticEntries = (Object.entries(SEO_PAGE_PATHS) as [SeoPageKey, string][]).map(
-    ([key, path]) =>
+  const staticEntries = seoRows
+    .filter(({ path, seo }) => {
+      if (SITEMAP_EXCLUDED_PATHS.has(path)) return false;
+      if (isSeoPageNoindex(seo)) return false;
+      return true;
+    })
+    .map(({ key, path }) =>
       sitemapEntry(path, {
         lastModified: now,
         changeFrequency: key === "home" || key === "flotta" ? "daily" : "weekly",
-        priority: LOW_PRIORITY_PATHS.has(path)
-          ? 0.3
-          : (STATIC_PRIORITIES[key] ?? 0.6),
+        priority: STATIC_PRIORITIES[key] ?? 0.6,
       }),
-  );
+    );
 
   const categoryEntries = FLOTTA_CATEGORIA_SLUGS.map((slug) =>
     sitemapEntry(`/flotta/${slug}`, {
@@ -105,7 +124,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       if (!clean) return false;
       if (isFlottaCategoriaSlug(clean)) return false;
       if (REDIRECTED_VEHICLE_SLUGS.has(clean)) return false;
-      // Path /flotta/{slug} non deve essere una sorgente di redirect.
       if (REDIRECT_PATHS.has(`/flotta/${clean}`)) return false;
       return true;
     })

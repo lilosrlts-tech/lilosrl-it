@@ -307,7 +307,7 @@ export function matchCosaTrasporti(
 }
 
 /** Use case in cui il veicolo risulta un buon match (per JSON-LD / scheda). */
-export function useCasesForVeicolo(veicolo: VeicoloPubblico): CosaTrasportiUseCase[] {
+export function matchUseCasesForVeicolo(veicolo: VeicoloPubblico): CosaTrasportiUseCase[] {
   return COSA_TRASPORTI_USE_CASES.filter((useCase) => scoreVeicolo(veicolo, useCase) >= 45);
 }
 
