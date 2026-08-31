@@ -19,6 +19,7 @@ import {
   getTariffaPerVeicolo,
   PREZZO_IVA_DICITURA,
 } from "@/lib/tariffe-categoria";
+import { NAP_PHONE_DISPLAY } from "@/lib/nap";
 import type { AccessorioPubblico, VeicoloPubblico } from "@/types/veicolo";
 
 type Channel = "email" | "whatsapp";
@@ -33,7 +34,7 @@ function todayIsoLocal(): string {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 }
 
-export function PreventivoForm({ veicolo, telefono = "040 2471720" }: PreventivoFormProps) {
+export function PreventivoForm({ veicolo, telefono = NAP_PHONE_DISPLAY }: PreventivoFormProps) {
   const [channel, setChannel] = useState<Channel>("whatsapp");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);

@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { PhoneLink } from "@/components/shared/PhoneLink";
 import { COMPANY } from "@/lib/constants";
+import { resolveSedeAutolavaggio, resolveSedeNoleggio } from "@/lib/sedi";
 import type { ImpostazioniSito } from "@/types/impostazioni";
-
-const PHONE = "040 2471720";
 
 interface ContactMapSectionProps {
   impostazioni: ImpostazioniSito;
@@ -53,7 +52,10 @@ function SedeBadge({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function ContactMapSection({ impostazioni: _impostazioni }: ContactMapSectionProps) {
+export function ContactMapSection({ impostazioni }: ContactMapSectionProps) {
+  const noleggio = resolveSedeNoleggio(impostazioni);
+  const autolavaggio = resolveSedeAutolavaggio(impostazioni);
+
   return (
     <section
       id="contatti"
@@ -81,13 +83,9 @@ export function ContactMapSection({ impostazioni: _impostazioni }: ContactMapSec
               </SedeBadge>
               <h3 className="text-lg font-bold text-brand-700 sm:text-xl">Sede noleggio</h3>
             </div>
-            <p className="mt-3 text-slate-900">Viale Campi Elisi 38/b, Trieste</p>
+            <p className="mt-3 text-slate-900">{noleggio.indirizzo}</p>
             <p className="mt-2 text-sm leading-relaxed text-slate-600">
-              Lun–Ven 8:30–12:30 / 15:00–17:30
-              <span className="mx-1.5 text-slate-300" aria-hidden="true">
-                |
-              </span>
-              Sab 8:30–12:30
+              {noleggio.orariRighe.join(" · ")}
             </p>
             <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-slate-500">
               Servizi
@@ -96,11 +94,11 @@ export function ContactMapSection({ impostazioni: _impostazioni }: ContactMapSec
 
             <div className="mt-auto flex flex-wrap gap-3 pt-6">
               <PhoneLink
-                phone={PHONE}
-                aria-label={`Chiama sede noleggio al ${PHONE}`}
+                phone={noleggio.telefono}
+                aria-label={`Chiama sede noleggio al ${noleggio.telefono}`}
                 className="inline-flex rounded-lg bg-brand-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-700"
               >
-                Chiama {PHONE}
+                Chiama {noleggio.telefono}
               </PhoneLink>
               <Link
                 href="/flotta"
@@ -118,9 +116,9 @@ export function ContactMapSection({ impostazioni: _impostazioni }: ContactMapSec
               </SedeBadge>
               <h3 className="text-lg font-bold text-brand-700 sm:text-xl">Sede autolavaggio</h3>
             </div>
-            <p className="mt-3 text-slate-900">Via G. Schiaparelli 21/a, Trieste</p>
+            <p className="mt-3 text-slate-900">{autolavaggio.indirizzo}</p>
             <p className="mt-2 text-sm leading-relaxed text-slate-600">
-              Lun–Sab 9:00–13:00 / 14:00–18:30
+              {autolavaggio.orariRighe.join(" · ")}
             </p>
             <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-slate-500">
               Servizi
@@ -131,11 +129,11 @@ export function ContactMapSection({ impostazioni: _impostazioni }: ContactMapSec
 
             <div className="mt-auto flex flex-wrap gap-3 pt-6">
               <PhoneLink
-                phone={PHONE}
-                aria-label={`Chiama sede autolavaggio al ${PHONE}`}
+                phone={autolavaggio.telefono}
+                aria-label={`Chiama sede autolavaggio al ${autolavaggio.telefono}`}
                 className="inline-flex rounded-lg bg-brand-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-700"
               >
-                Chiama {PHONE}
+                Chiama {autolavaggio.telefono}
               </PhoneLink>
               <Link
                 href="/autolavaggio"

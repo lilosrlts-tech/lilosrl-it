@@ -52,11 +52,8 @@ export function VeicoloImagePlaceholder({
       <div className="rounded-2xl bg-white/80 p-5 shadow-sm ring-1 ring-slate-200/80">
         <VehicleIcon variant={variant} />
       </div>
-      <p className="mt-3 text-center text-xs font-medium uppercase tracking-wider text-slate-400">
-        Foto in arrivo
-      </p>
       {label && (
-        <p className="mt-1 max-w-[90%] truncate text-center text-sm font-medium text-slate-500">
+        <p className="mt-3 max-w-[90%] truncate text-center text-sm font-medium text-slate-500">
           {label}
         </p>
       )}

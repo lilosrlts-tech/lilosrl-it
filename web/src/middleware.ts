@@ -38,6 +38,10 @@ const ALLOWED_TOP_LEVEL = new Set([
   "privacy",
   "cookie-policy",
   "termini-condizioni",
+  "guide",
+  "noleggio-furgoni-trieste",
+  "noleggio-auto-trieste",
+  "noleggio-pulmini-9-posti-trieste",
   "api",
   "sitemap.xml",
   "robots.txt",
@@ -100,7 +104,8 @@ function stripTrailingSlash(pathname: string): string {
 }
 
 /**
- * Path legacy / sconosciuti / trailing slash → 301 (one-hop dove possibile).
+ * Path legacy noti / trailing slash → 301 (one-hop dove possibile).
+ * URL sconosciute non vengono soft-redirectate a /flotta: restano 404.
  */
 function maybeRedirectUnknownPath(request: NextRequest): NextResponse | null {
   const { pathname } = request.nextUrl;
@@ -130,12 +135,12 @@ function maybeRedirectUnknownPath(request: NextRequest): NextResponse | null {
     return redirect301(request, normalized);
   }
 
-  // Path noti dell’app → passa
+  // Path noti dell’app → passa (Next gestisce 404 reali)
   if (ALLOWED_TOP_LEVEL.has(first)) return null;
   if (first.startsWith("_next") || first.startsWith(".")) return null;
 
-  // Catch-all: qualsiasi altro URL root legacy → hub flotta (azzera 404)
-  return redirect301(request, "/flotta");
+  // Nessun soft-404 verso /flotta: URL sconosciute → not-found (404)
+  return null;
 }
 
 /**

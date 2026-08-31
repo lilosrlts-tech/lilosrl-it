@@ -1,3 +1,14 @@
+import {
+  NAP_EMAIL,
+  NAP_NOLEGGIO_CITY,
+  NAP_NOLEGGIO_COUNTRY,
+  NAP_NOLEGGIO_POSTAL,
+  NAP_NOLEGGIO_REGION,
+  NAP_NOLEGGIO_STREET,
+  NAP_PHONE_DISPLAY,
+  NAP_PHONE_E164,
+} from "@/lib/nap";
+
 export const SITE_URL = "https://www.lilosrl.it";
 export const CANONICAL_HOST = "www.lilosrl.it";
 export const CANONICAL_ORIGIN = SITE_URL;
@@ -36,17 +47,18 @@ export const COMPANY = {
    */
   marketingName: "LILO Autonoleggio e Furgoni Trieste",
   vatNumber: "01249580323",
-  phone: "0402471720",
-  phoneE164: "+390402471720",
-  email: "info@lilosrl.it",
+  /** Display NAP (spazi) — fonte `nap.ts`. */
+  phone: NAP_PHONE_DISPLAY,
+  phoneE164: NAP_PHONE_E164,
+  email: NAP_EMAIL,
   /** Sede legale (privacy, titolare trattamento). */
   legalAddress: "Via Giuseppe De Coletti, 7, 34143 Trieste (TS)",
-  /** Sede operativa noleggio (ritiro / riconsegna). */
-  streetAddress: "Viale Campi Elisi 38/B",
-  city: "Trieste",
-  region: "Friuli-Venezia Giulia",
-  postalCode: "34143",
-  country: "IT",
+  /** Sede operativa noleggio (ritiro / riconsegna) — allineata a NAP. */
+  streetAddress: NAP_NOLEGGIO_STREET,
+  city: NAP_NOLEGGIO_CITY,
+  region: NAP_NOLEGGIO_REGION,
+  postalCode: NAP_NOLEGGIO_POSTAL,
+  country: NAP_NOLEGGIO_COUNTRY,
   geo: {
     latitude: 45.6495,
     longitude: 13.7768,

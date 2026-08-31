@@ -24,7 +24,7 @@ import {
   VISION_TEXT,
   WHY_CHOOSE,
 } from "@/lib/chi-siamo-data";
-import { SEDE_AUTOLAVAGGIO, SEDE_NOLEGGIO } from "@/lib/sedi";
+import { resolveSedeAutolavaggio, resolveSedeNoleggio } from "@/lib/sedi";
 import type { ImpostazioniSito } from "@/types/impostazioni";
 
 interface ChiSiamoContentProps {
@@ -55,6 +55,8 @@ export function ChiSiamoContent({ impostazioni }: ChiSiamoContentProps) {
   const heroTitle = impostazioni.chi_siamo_hero_titolo ?? CHI_SIAMO_HERO.title;
   const heroSubtitle = impostazioni.chi_siamo_hero_sottotitolo ?? CHI_SIAMO_HERO.subtitle;
   const serviziNoleggio = parseListaServizi(impostazioni.servizi_noleggio_lista, NOLEGGIO_BENEFITS);
+  const sedeNoleggio = resolveSedeNoleggio(impostazioni);
+  const sedeAutolavaggio = resolveSedeAutolavaggio(impostazioni);
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:py-14">
@@ -264,8 +266,8 @@ export function ChiSiamoContent({ impostazioni }: ChiSiamoContentProps) {
         </div>
 
         <div className="mt-8 space-y-8">
-          <SedeCard sede={SEDE_NOLEGGIO} />
-          <SedeCard sede={SEDE_AUTOLAVAGGIO} />
+          <SedeCard sede={sedeNoleggio} />
+          <SedeCard sede={sedeAutolavaggio} />
         </div>
       </section>
 
