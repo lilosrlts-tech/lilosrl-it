@@ -27,7 +27,7 @@ export function PromoWeekendGallery() {
       <p className="flex shrink-0 items-start gap-2 rounded-lg border border-lime-400/25 bg-slate-900/90 px-2.5 py-1.5 text-xs leading-snug text-lime-400 sm:text-sm">
         <Truck className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" strokeWidth={2} />
         <span>
-          Modelli Furgone Grande disponibili: Iveco Daily, Ford Transit, Citroën Jumper
+          Modelli Furgone Grande in catalogo: Iveco Daily, Ford Transit, Citroën Jumper
         </span>
       </p>
       {GALLERY.map((item, index) => (

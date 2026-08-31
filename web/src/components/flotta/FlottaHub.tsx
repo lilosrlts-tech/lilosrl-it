@@ -40,7 +40,7 @@ export function FlottaHub({ veicoli }: FlottaHubProps) {
                 priority={index < 2}
               />
               <span className="absolute left-3 top-3 z-10 rounded-full bg-white/95 px-2.5 py-1 text-xs font-semibold text-slate-700 shadow-sm">
-                {count === 1 ? "1 veicolo" : `${count} veicoli`}
+                {count === 1 ? "1 modello" : `${count} modelli`}
               </span>
             </Link>
 
@@ -67,7 +67,7 @@ export function FlottaHub({ veicoli }: FlottaHubProps) {
                   href={href}
                   className="mt-4 inline-flex w-full items-center justify-center rounded-xl bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-700"
                 >
-                  Vedi veicoli
+                  Vedi modelli
                 </Link>
               </div>
             </div>

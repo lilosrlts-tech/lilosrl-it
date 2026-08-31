@@ -252,7 +252,7 @@ export const WHY_CHOOSE: WhyChooseItem[] = [
   {
     title: "Flotta Moderna e Numerosa",
     description:
-      "Flotta moderna e controllata, revisionata e pronta all’uso: auto, pulmini e furgoni per ogni esigenza a Trieste.",
+      "LILO S.r.l. dispone di una flotta reale di oltre 50 mezzi tra auto, furgoni di varie dimensioni e pulmini 9 posti. Flotta controllata, revisionata e pronta all’uso a Trieste.",
   },
   {
     title: "Servizi Integrati",
@@ -315,8 +315,8 @@ export const CHI_SIAMO_FAQ: AiFaqItem[] = [
     a: "Varia per categoria: €200 per furgoni piccoli, medi e grandi; €300 per auto e furgoni XL; €500 per pulmini 9 posti. L’importo viene restituito a fine noleggio salvo danni o addebiti previsti dal contratto.",
   },
   {
-    q: "Quali mezzi avete disponibili per il noleggio?",
-    a: "In flotta troviamo auto, pulmini 9 posti e furgoni da piccoli a XL. Le schede online mostrano i mezzi pubblicati; per disponibilità aggiornata contattaci o richiedi un preventivo.",
+    q: "Quali mezzi avete in flotta per il noleggio?",
+    a: "LILO S.r.l. dispone di una flotta reale di oltre 50 mezzi tra auto, furgoni di varie dimensioni e pulmini 9 posti. Il sito mostra i modelli in catalogo; le date di noleggio si confermano con preventivo o in sede.",
   },
   {
     q: "Avete esperienza nella logistica?",

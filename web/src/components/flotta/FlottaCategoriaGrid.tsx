@@ -13,8 +13,8 @@ export function FlottaCategoriaGrid({ veicoli }: FlottaCategoriaGridProps) {
   if (veicoli.length === 0) {
     return (
       <p className="mt-10 rounded-xl border border-dashed border-slate-300 p-8 text-center text-slate-500">
-        Nessun veicolo disponibile in questa categoria al momento. Contattaci per informazioni
-        su disponibilità e alternative.
+        Nessun modello in catalogo in questa categoria al momento. Contattaci per informazioni
+        su alternative e date di noleggio.
       </p>
     );
   }
@@ -23,8 +23,8 @@ export function FlottaCategoriaGrid({ veicoli }: FlottaCategoriaGridProps) {
     <>
       <p className="mt-6 text-sm text-slate-500" aria-live="polite">
         {veicoli.length === 1
-          ? "1 veicolo disponibile"
-          : `${veicoli.length} veicoli disponibili`}
+          ? "1 modello in catalogo"
+          : `${veicoli.length} modelli in catalogo`}
       </p>
 
       <div className="mt-6 flex flex-wrap justify-center gap-6">

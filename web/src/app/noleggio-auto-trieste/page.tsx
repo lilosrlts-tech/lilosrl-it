@@ -197,7 +197,7 @@ export default async function NoleggioAutoTriestePage() {
                 <Link href="/flotta/auto" className="font-medium text-brand-700 hover:underline">
                   /flotta/auto
                 </Link>{" "}
-                e confronta i modelli disponibili.
+                e confronta i modelli in catalogo.
               </li>
               <li>Controlla cauzione e km inclusi nella scheda o nel listino.</li>
               <li>Richiedi preventivo con le date di ritiro e riconsegna.</li>

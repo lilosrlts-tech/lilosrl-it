@@ -4,6 +4,7 @@ import { FlottaHub } from "@/components/flotta/FlottaHub";
 import { SitePageWrapper, loadImpostazioni } from "@/lib/site-page";
 import { buildFlottaJsonLd } from "@/lib/json-ld";
 import { getPageMetadata } from "@/lib/seo-settings";
+import { FLEET_IDENTITY_SENTENCE, FLEET_SIZE_CLAIM_SHORT } from "@/lib/fleet-identity";
 import { PhoneLink } from "@/components/shared/PhoneLink";
 import { WhatsAppCtaLink } from "@/components/shared/WhatsAppCtaLink";
 import { getPublishedVeicoli } from "@/lib/veicoli";
@@ -49,14 +50,19 @@ export default async function FlottaIndexPage() {
               La nostra flotta
             </h1>
             <p className="mt-3 text-lg leading-relaxed text-slate-600">
-              Scegli la categoria più adatta: auto, pulmini 9 posti e furgoni da piccoli a XL.
-              Ritiro in sede a Trieste, tariffe trasparenti per ogni tipologia di mezzo.
+              {FLEET_IDENTITY_SENTENCE} Scegli la categoria più adatta nel catalogo online: auto,
+              pulmini 9 posti e furgoni da piccoli a XL. Ritiro in sede a Trieste, tariffe
+              trasparenti per ogni tipologia di mezzo.
+            </p>
+            <p className="mt-2 text-sm font-semibold text-slate-700">
+              {FLEET_SIZE_CLAIM_SHORT} · i modelli in pagina sono il catalogo pubblicato; le date
+              si confermano con preventivo o in sede.
             </p>
           </header>
 
           {veicoli.length === 0 ? (
             <p className="mt-10 rounded-xl border border-dashed border-slate-300 p-8 text-center text-slate-500">
-              Nessun veicolo disponibile al momento. Contattaci al{" "}
+              Nessun modello in catalogo al momento. Contattaci al{" "}
               <PhoneLink
                 phone={impostazioni.telefono_noleggio}
                 className="font-semibold text-brand-600"

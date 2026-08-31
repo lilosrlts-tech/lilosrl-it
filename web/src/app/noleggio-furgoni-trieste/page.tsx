@@ -200,7 +200,7 @@ export default async function NoleggioFurgoniTriestePage() {
 
           <section className="mt-14" aria-labelledby="categorie-heading">
             <h2 id="categorie-heading" className="text-2xl font-bold text-slate-900">
-              Categorie disponibili
+              Categorie in catalogo
             </h2>
             <p className="mt-2 max-w-2xl text-slate-600">
               Ogni categoria ha una pagina flotta con modelli, foto e dati di scheda. Qui trovi solo

@@ -1,6 +1,9 @@
 /**
- * Conteggio unità per modello (scheda pubblica senza targhe).
+ * Conteggio unità fisiche per modello (scheda pubblica senza targhe).
  * Allineato a sync-unita-disponibili.mjs / flotta operativa LILO.
+ *
+ * NON è disponibilità booking in tempo reale: indica quante unità dello stesso
+ * modello sono in flotta. Conferma date = preventivo / sede.
  */
 export const UNITA_DISPONIBILI_BY_SLUG: Record<string, number> = {
   // XL

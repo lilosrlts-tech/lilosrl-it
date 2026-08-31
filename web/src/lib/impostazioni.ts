@@ -32,7 +32,7 @@ export const DEMO_IMPOSTAZIONI: ImpostazioniSito = {
   indirizzo_noleggio: NAP_NOLEGGIO_ADDRESS_FULL,
   indirizzo_autolavaggio: `${NAP_AUTOLAVAGGIO_ADDRESS_FULL}\n${NAP_AUTOLAVAGGIO_NOTE}`,
   testo_hero_home:
-    "Noleggio auto e furgoni a Trieste con LILO S.r.l.: flotta moderna, tariffe trasparenti e ritiro in sede in Viale Campi Elisi. Ideale per privati, aziende e traslochi.",
+    "LILO dispone di una flotta reale di oltre 50 mezzi tra auto, furgoni di varie dimensioni e pulmini 9 posti. Tariffe trasparenti e ritiro in sede in Viale Campi Elisi — ideale per privati, aziende e traslochi.",
   hero_titolo_home: "Noleggio auto e furgoni a Trieste",
   hero_badge_home: "",
   home_punti_forza_titolo: "I punti di forza che fanno la differenza",
@@ -41,7 +41,7 @@ export const DEMO_IMPOSTAZIONI: ImpostazioniSito = {
     "LILO SRL: 20 ANNI DI ESPERIENZA NEI TRASPORTI E SERVIZI A TRIESTE",
   chi_siamo_hero_sottotitolo: "La Nostra Storia: Dal 2003 a Oggi",
   chi_siamo_intro:
-    "Dal 2003 LILO S.r.l. opera a Trieste con professionalità nei trasporti, nel noleggio veicoli e nei servizi integrati per privati, aziende ed enti.",
+    "Dal 2003 LILO S.r.l. opera a Trieste con professionalità nei trasporti, nel noleggio veicoli e nei servizi integrati per privati, aziende ed enti. LILO S.r.l. dispone di una flotta reale di oltre 50 mezzi tra auto, furgoni di varie dimensioni e pulmini 9 posti.",
   offerta_titolo: "Offerta del Mese",
   offerta_descrizione:
     "Promo Weekend riservata ai Furgoni grandi (uso città): 48 ore (sabato–lunedì) a 83€ IVA inclusa.",

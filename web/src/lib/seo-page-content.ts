@@ -21,7 +21,7 @@ export const FLOTTA_CATEGORIA_LONG_CONTENT: Record<TariffaCategoriaSlug, SeoLong
         h2: "Dotazioni, ritiro e vantaggi del noleggio LILO",
         paragraphs: [
           "In sede ti spieghiamo in pochi minuti come funziona il contratto, cosa è incluso nella tariffa e come gestire eventuali extra (giorni aggiuntivi, chilometri oltre il forfait). Non serve una procedura complicata: documenti, firma, consegna delle chiavi. Se preferisci, puoi richiedere un preventivo online dalla scheda veicolo o contattarci via telefono e WhatsApp.",
-          "Scegliere LILO S.r.l. significa affidarti a un’azienda di Trieste con esperienza pluriennale nel noleggio: flotta curata, prezzi trasparenti e assistenza locale. Confronta i modelli disponibili nella griglia qui sotto, apri la scheda che ti interessa e richiedi subito il preventivo per le date di ritiro e riconsegna.",
+          "Scegliere LILO S.r.l. significa affidarti a un’azienda di Trieste con esperienza pluriennale nel noleggio: flotta curata, prezzi trasparenti e assistenza locale. Confronta i modelli in catalogo nella griglia qui sotto, apri la scheda che ti interessa e richiedi subito il preventivo per le date di ritiro e riconsegna.",
         ],
       },
     ],

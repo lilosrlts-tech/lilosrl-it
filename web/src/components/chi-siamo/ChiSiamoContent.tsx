@@ -24,6 +24,7 @@ import {
   VISION_TEXT,
   WHY_CHOOSE,
 } from "@/lib/chi-siamo-data";
+import { FLEET_IDENTITY_SENTENCE_LEGAL } from "@/lib/fleet-identity";
 import { resolveSedeAutolavaggio, resolveSedeNoleggio } from "@/lib/sedi";
 import type { ImpostazioniSito } from "@/types/impostazioni";
 
@@ -73,6 +74,11 @@ export function ChiSiamoContent({ impostazioni }: ChiSiamoContentProps) {
             {impostazioni.chi_siamo_intro.replace(/\bDal 2003 LILO opera\b/i, "Dal 2003 LILO S.r.l. opera").replace(/\bDal 2003 LILO\b(?!\s*S\.?\s*[Rr])/i, "Dal 2003 LILO S.r.l.")}
           </p>
         )}
+        {!impostazioni.chi_siamo_intro?.toLowerCase().includes("oltre 50 mezzi") ? (
+          <p className="mt-3 max-w-3xl text-base font-medium leading-relaxed text-slate-700">
+            {FLEET_IDENTITY_SENTENCE_LEGAL}
+          </p>
+        ) : null}
       </header>
 
       <section className="mt-12" aria-labelledby="timeline-heading" id="storia">

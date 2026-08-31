@@ -1,6 +1,7 @@
 import { COMPANY, SITE_URL } from "@/lib/constants";
 import { telefonoE164 } from "@/lib/impostazioni";
 import { googleMapsLink } from "@/lib/maps";
+import { FLEET_IDENTITY_SENTENCE_LEGAL } from "@/lib/fleet-identity";
 import {
   NAP_AUTOLAVAGGIO_ADDRESS_FULL,
   NAP_AUTOLAVAGGIO_STREET,
@@ -91,6 +92,9 @@ function autoRentalProvider() {
     url: SITE_URL,
     telephone: COMPANY.phoneE164,
     email: COMPANY.email,
+    // Claim flotta reale in description — NON usare numberOfItems=50 sul catalogo
+    // (le ItemList elencano modelli/categorie pubblicate, non le unità fisiche).
+    description: FLEET_IDENTITY_SENTENCE_LEGAL,
     image: SITE_LOGO_URL,
     logo: {
       "@type": "ImageObject" as const,
@@ -562,7 +566,7 @@ export function buildOrganizationJsonLd(): Record<string, unknown> {
     },
     foundingDate: "2003",
     description:
-      "Noleggio auto e furgoni, autolavaggio professionale e servizi di trasporto a Trieste dal 2003.",
+      "Noleggio auto e furgoni, autolavaggio professionale e servizi di trasporto a Trieste dal 2003. LILO S.r.l. dispone di una flotta reale di oltre 50 mezzi tra auto, furgoni di varie dimensioni e pulmini 9 posti.",
     address: {
       "@type": "PostalAddress",
       streetAddress: COMPANY.streetAddress,
@@ -794,11 +798,12 @@ export function buildFlottaJsonLd(veicoli: VeicoloPubblico[]): Record<string, un
         "@id": `${canonical}#flotta`,
         name: "Flotta Noleggio Furgoni e Auto a Trieste | Lilo Srl",
         description:
-          "Catalogo noleggio LILO S.r.l. a Trieste: auto, pulmini 9 posti e furgoni per ogni esigenza.",
+          "Catalogo noleggio LILO S.r.l. a Trieste: auto, pulmini 9 posti e furgoni per ogni esigenza. LILO dispone di una flotta reale di oltre 50 mezzi; in questa pagina elenchiamo le categorie del catalogo pubblicato.",
         url: canonical,
         isPartOf: { "@id": `${SITE_URL}/#website` },
         provider: autoRentalRef(),
         mainEntity: {
+          // numberOfItems = categorie in pagina (non le 50+ unità fisiche).
           "@type": "ItemList",
           numberOfItems: FLOTTA_CATEGORIA_SLUGS.length,
           itemListElement: FLOTTA_CATEGORIA_SLUGS.map((slug, index) => ({
@@ -834,6 +839,7 @@ export function buildFlottaCategoriaJsonLd(
         isPartOf: { "@id": `${SITE_URL}/flotta#flotta` },
         provider: autoRentalRef(),
         mainEntity: {
+          // numberOfItems = modelli in catalogo in questa categoria (non stock live).
           "@type": "ItemList",
           numberOfItems: veicoli.length,
           itemListElement: veicoli.map((veicolo, index) => {

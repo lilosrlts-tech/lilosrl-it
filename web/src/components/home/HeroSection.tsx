@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { ImpostazioniSito } from "@/types/impostazioni";
 import { SITE_URL } from "@/lib/constants";
+import { FLEET_IDENTITY_SENTENCE } from "@/lib/fleet-identity";
 
 /** Desktop / fallback (1600×560). */
 export const HERO_DESKTOP = "/images/hero-home.webp";
@@ -25,6 +26,9 @@ interface HeroSectionProps {
  * <picture> sceglie 800/desktop sui viewport più grandi.
  */
 export function HeroSection({ impostazioni }: HeroSectionProps) {
+  const heroBody = impostazioni.testo_hero_home?.trim() || "";
+  const showFleetIdentity = !/oltre\s*50\s*mezzi/i.test(heroBody);
+
   return (
     <section
       className="relative isolate w-full overflow-hidden bg-slate-800 text-white"
@@ -69,8 +73,13 @@ export function HeroSection({ impostazioni }: HeroSectionProps) {
                 {impostazioni.hero_titolo_home}
               </h1>
               <p className="mt-2 text-sm leading-relaxed text-slate-100 sm:mt-3 sm:text-base">
-                {impostazioni.testo_hero_home}
+                {heroBody}
               </p>
+              {showFleetIdentity ? (
+                <p className="mt-2 text-sm font-medium leading-relaxed text-amber-100/95 sm:text-base">
+                  {FLEET_IDENTITY_SENTENCE}
+                </p>
+              ) : null}
 
               <p className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs text-slate-100 sm:mt-4 sm:text-sm">
                 <span className="tracking-wide text-amber-300" aria-hidden="true">

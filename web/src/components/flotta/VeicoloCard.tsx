@@ -35,7 +35,9 @@ export function VeicoloCard({ veicolo }: VeicoloCardProps) {
     <Link
       href={href}
       className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:border-brand-200 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
-      aria-label={`${name} — visualizza dettagli`}
+      aria-label={
+        unitaLabel ? `${name} — ${unitaLabel}` : `${name} — visualizza dettagli`
+      }
     >
       <article className="flex h-full flex-col">
         <div className="relative">

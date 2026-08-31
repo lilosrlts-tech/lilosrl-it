@@ -3,6 +3,7 @@ import {
   FleetPreviewGrid,
   type FleetPreviewCardData,
 } from "@/components/home/FleetPreviewGrid";
+import { FLEET_IDENTITY_SENTENCE } from "@/lib/fleet-identity";
 import {
   FLOTTA_CATEGORIA_IMAGES,
   FLOTTA_CATEGORIA_SLUGS,
@@ -78,7 +79,7 @@ export async function FleetPreviewSection() {
         <div>
           <h2 className="text-2xl font-bold text-slate-900">La nostra flotta</h2>
           <p className="mt-1 text-slate-600">
-            Auto e furgoni a Trieste —{" "}
+            {FLEET_IDENTITY_SENTENCE}{" "}
             <Link href="/noleggio-furgoni-trieste" className="font-medium text-brand-700 hover:underline">
               guida noleggio furgoni
             </Link>

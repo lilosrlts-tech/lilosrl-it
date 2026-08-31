@@ -154,11 +154,11 @@ export function getVeicoloCoverAlt(veicolo: VeicoloPubblico): string {
   return getVeicoloImageAlt(veicolo);
 }
 
-/** Badge unità flotta (solo se > 1). */
+/** Badge unità fisiche in flotta (solo se > 1). Non implica booking live. */
 export function getUnitaDisponibiliLabel(veicolo: VeicoloPubblico): string | null {
   const n = veicolo.unita_disponibili ?? 1;
   if (n <= 1) return null;
-  return `${n} unità disponibili`;
+  return `${n} unità in flotta`;
 }
 
 /** Badge sintetici in stile siti noleggio: carburante, cambio, patente se presente. */

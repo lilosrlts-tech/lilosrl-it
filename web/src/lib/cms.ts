@@ -1,3 +1,5 @@
+import { FLEET_IDENTITY_SENTENCE, FLEET_SIZE_CLAIM_SHORT } from "@/lib/fleet-identity";
+
 export interface PuntoForza {
   title: string;
   description: string;
@@ -5,7 +7,10 @@ export interface PuntoForza {
 
 const DEFAULT_PUNTI_FORZA: PuntoForza[] = [
   { title: "20+ Anni di Esperienza", description: "Dal 2003 leader nei trasporti e servizi a Trieste" },
-  { title: "Noleggio Flessibile", description: "Oltre 50 mezzi; cauzione in contanti per uso in città" },
+  {
+    title: "Noleggio Flessibile",
+    description: `${FLEET_SIZE_CLAIM_SHORT} in flotta reale; cauzione in contanti per uso in città`,
+  },
   { title: "Igienizzazione Certificata", description: "Ogni mezzo è sanificato a vapore prima della consegna" },
   { title: "Trasparenza Totale", description: "Tariffe competitive, chiare e senza costi nascosti" },
 ];
