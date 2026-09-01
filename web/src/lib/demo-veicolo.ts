@@ -644,12 +644,20 @@ export const DEMO_VEICOLI: VeicoloPubblico[] = [
     posti: 2,
     porte: 4,
     titolo_pubblico: "Fiat Doblò Cargo — Furgone piccolo Trieste",
-    sottotitolo: "Compatto per consegne urbane",
-    descrizione_breve: "Furgone piccolo diesel, 3,4 m³ di volume utile.",
-    descrizione_completa: null,
+    sottotitolo: "Furgone piccolo con portapacchi integrato, ideale consegne e materiali lunghi",
+    descrizione_breve:
+      "Noleggio Fiat Doblò Cargo a Trieste: furgone piccolo diesel con portapacchi integrato (barre portatutto) sul tetto. Compatto in città, adatto anche a tubi, profili e carichi lunghi o ingombranti.",
+    descrizione_completa:
+      "Il Fiat Doblò Cargo è un furgone piccolo diesel della flotta LILO S.r.l. a Trieste: compatto e maneggevole per consegne urbane, piccoli traslochi e lavoro artigianale. Equipaggiato con portapacchi integrati sul tetto, utili per trasportare scale, tubi, profili, pannelli e altri materiali lunghi o ingombranti che non rientrano nel vano di carico. Ritiro e riconsegna presso la sede di Viale Campi Elisi 38/B a Trieste.",
     seo_title: null,
-    seo_description: null,
-    seo_keywords: [],
+    seo_description:
+      "Noleggia il Fiat Doblò Cargo a Trieste con LILO S.r.l. Furgone piccolo diesel con portapacchi integrato, ideale per materiali lunghi e ingombranti. Ritiro in sede.",
+    seo_keywords: [
+      "noleggio fiat doblo trieste",
+      "furgone piccolo portapacchi",
+      "barre portatutto noleggio trieste",
+      "trasporto materiali lunghi trieste",
+    ],
     meta_robots: null,
     canonical_url: null,
     og_title: null,
@@ -658,9 +666,24 @@ export const DEMO_VEICOLI: VeicoloPubblico[] = [
     twitter_title: null,
     twitter_description: null,
     json_ld: null,
-    ai_summary: "Fiat Doblò Cargo diesel, furgone piccolo a noleggio a Trieste.",
-    ai_highlights: ["3,4 m³", "Diesel", "Compatto"],
-    ai_faq: [],
+    ai_summary:
+      "Fiat Doblò Cargo diesel con portapacchi integrato — furgone piccolo a noleggio a Trieste presso LILO S.r.l. Ideale per consegne urbane e trasporto di materiali lunghi o ingombranti.",
+    ai_highlights: [
+      "🪜 Portapacchi integrato: barre sul tetto per scale, tubi, profili e materiali lunghi o ingombranti.",
+      "Compatto in città: ideale per consegne urbane, piccoli traslochi e lavoro artigianale.",
+      "3,4 m³ di volume utile",
+      "Diesel",
+    ],
+    ai_faq: [
+      {
+        q: "Il Fiat Doblò ha le barre sul tetto?",
+        a: "Sì: portapacchi integrati (barre portatutto) per scale, tubi, profili e carichi lunghi o ingombranti.",
+      },
+      {
+        q: "Per cosa serve il portapacchi sul Doblò?",
+        a: "Per trasportare materiali che superano la lunghezza del vano di carico, come tubi, profili, scale e pannelli, in sicurezza sul tetto.",
+      },
+    ],
     ai_context: null,
     categoria: cat("furgoni-piccoli"),
     specifiche_tecniche: specs({
@@ -874,19 +897,20 @@ export const DEMO_VEICOLI: VeicoloPubblico[] = [
     posti: 3,
     porte: 4,
     titolo_pubblico: "Opel Vivaro Van — Furgone medio Trieste",
-    sottotitolo: "Furgone medio con barre portatutto, ideale città e piccoli traslochi",
+    sottotitolo: "Furgone medio con portapacchi integrato, ideale città e materiali lunghi",
     descrizione_breve:
-      "Noleggio Opel Vivaro Van a Trieste: furgone medio con barre sul tetto, vano capiente e guida agevole. Ritiro in Viale Campi Elisi 38/b.",
+      "Noleggio Opel Vivaro Van a Trieste: furgone medio con portapacchi integrato (barre portatutto) sul tetto, vano capiente e guida agevole. Ideale anche per tubi, profili e carichi lunghi o ingombranti. Ritiro in Viale Campi Elisi 38/b.",
     descrizione_completa:
-      "L'Opel Vivaro Van è il furgone medio di LILO S.r.l.: bilanciamento ideale tra vano di carico e manovrabilità nel traffico di Trieste. Equipaggiato con barre portatutto per scale, tubi e carichi lunghi. Adatto a professionisti e privati per piccoli traslochi o lavoro quotidiano. Ritiro e riconsegna presso la sede di Viale Campi Elisi 38/b a Trieste.",
+      "L'Opel Vivaro Van è il furgone medio di LILO S.r.l.: bilanciamento ideale tra vano di carico e manovrabilità nel traffico di Trieste. Equipaggiato con portapacchi integrati (barre portatutto) sul tetto per scale, tubi, profili e altri materiali lunghi o ingombranti che non entrano comodamente nel vano. Adatto a professionisti e privati per piccoli traslochi o lavoro quotidiano. Ritiro e riconsegna presso la sede di Viale Campi Elisi 38/b a Trieste.",
     seo_title: "Noleggio Opel Vivaro Trieste | Furgoni Medi | LILO Autonoleggio",
     seo_description:
-      "Noleggia l'Opel Vivaro Van a Trieste (Viale Campi Elisi 38/b). Furgone medio con barre portatutto, ideale trasporti e piccoli traslochi. LILO.",
+      "Noleggia l'Opel Vivaro Van a Trieste (Viale Campi Elisi 38/b). Furgone medio con portapacchi integrato, ideale per materiali lunghi, ingombranti e piccoli traslochi. LILO.",
     seo_keywords: [
       "noleggio opel vivaro trieste",
       "furgone medio trieste",
+      "portapacchi integrato noleggio",
       "barre portatutto noleggio",
-      "viale campi elisi noleggio",
+      "trasporto materiali lunghi trieste",
     ],
     meta_robots: "index, follow",
     canonical_url: null,
@@ -897,12 +921,12 @@ export const DEMO_VEICOLI: VeicoloPubblico[] = [
     twitter_description: null,
     json_ld: null,
     ai_summary:
-      "Opel Vivaro Van — furgone medio con barre portatutto a noleggio a Trieste presso LILO S.r.l., Viale Campi Elisi 38/b.",
+      "Opel Vivaro Van — furgone medio con portapacchi integrato (barre portatutto) a noleggio a Trieste presso LILO S.r.l., Viale Campi Elisi 38/b. Ideale per materiali lunghi e ingombranti.",
     ai_highlights: [
-      "📦 Dimensioni Intermedie Ideali: Bilanciamento perfetto tra vano di carico capiente e facilità di guida nel traffico cittadino.",
-      "🪜 Barre Portatutto Integrate: Equipaggiato con barre sul tetto per il trasporto pratico di scale, tubi o carichi lunghi.",
-      "💼 Eccellente per Professionisti e Privati: Ottimo sia per piccoli traslochi fai-da-te che per esigenze lavorative giornaliere.",
-      "📍 Ritiro e Consegna in Sede: Presso la sede LILO S.r.l. di Viale Campi Elisi 38/b a Trieste.",
+      "📦 Dimensioni intermedie ideali: bilanciamento perfetto tra vano di carico capiente e facilità di guida nel traffico cittadino.",
+      "🪜 Portapacchi integrato: barre sul tetto per scale, tubi, profili e materiali lunghi o ingombranti.",
+      "💼 Per professionisti e privati: ottimo per piccoli traslochi fai-da-te e lavoro quotidiano.",
+      "📍 Ritiro e consegna in sede: Viale Campi Elisi 38/b, Trieste.",
     ],
     ai_faq: [
       {
@@ -911,7 +935,11 @@ export const DEMO_VEICOLI: VeicoloPubblico[] = [
       },
       {
         q: "Ha le barre sul tetto?",
-        a: "Sì: barre portatutto integrate, utili per scale, tubi e carichi lunghi.",
+        a: "Sì: portapacchi integrati (barre portatutto), utili per scale, tubi, profili e carichi lunghi o ingombranti.",
+      },
+      {
+        q: "Posso trasportare materiali lunghi con l'Opel Vivaro?",
+        a: "Sì: i portapacchi sul tetto permettono di fissare tubi, profili, scale e altri carichi ingombranti che non rientrano nel vano di carico.",
       },
     ],
     ai_context: "Servizio di noleggio a Trieste e provincia. Ritiro in sede Viale Campi Elisi 38/b.",
