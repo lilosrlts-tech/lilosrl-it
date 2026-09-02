@@ -39,6 +39,7 @@ export const LOCAL_FLEET_IMAGE_BY_SLUG: Record<string, string> = {
   "volvo-s40": "/images/veicoli/volvo-s40-noleggio-trieste.webp",
   "citroen-c3": "/images/veicoli/citroen-c3-grigia-trieste.webp",
   "volkswagen-polo": "/images/veicoli/volkswagen-polo-noleggio-auto-trieste.webp",
+  "opel-karl": "/images/veicoli/opel-karl-noleggio-auto-trieste.webp",
   "peugeot-boxer-l3h3": "/images/veicoli/furgone-peugeot-boxer-l3h3-trieste.webp",
   "iveco-daily-35-12": "/images/flotta/furgone-grande-iveco-daily-l2h2-trieste-front.webp",
   "iveco-daily-70-17": "/images/flotta/iveco-daily-noleggio-furgoni-xl-trieste.webp",
