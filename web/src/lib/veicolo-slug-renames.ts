@@ -17,7 +17,9 @@ export const VEICOLO_SLUG_RENAMES: ReadonlyArray<{ from: string; to: string }> =
   { from: "citroen-jumper-es772tn", to: "citroen-jumper-l1h1" },
   { from: "peugeot-boxer-l2h2-ew858wc", to: "peugeot-boxer-l2h2" },
   { from: "renault-master-l2h2-gf883sb", to: "renault-master-l2h2" },
-  { from: "renault-master-gg290xm", to: "renault-master-l2h3" },
+  // Ex L2H3 errato (GG290XM): il mezzo è L2H2 → scheda canonica
+  { from: "renault-master-gg290xm", to: "renault-master-l2h2" },
+  { from: "renault-master-l2h3", to: "renault-master-l2h2" },
   { from: "nissan-interstar-l3h2-gt436zp", to: "nissan-interstar-l3h2" },
   { from: "opel-movano-gc328pk", to: "opel-movano-l2h2" },
   // Legacy demo / alias

@@ -32,7 +32,6 @@ export const LOCAL_FLEET_IMAGE_BY_SLUG: Record<string, string> = {
   "peugeot-boxer-l2h2":
     "/images/veicoli/peugeot-boxer-l2h2-noleggio-furgoni-grandi-citta-trieste.webp",
   "renault-master-l2h2": "/images/veicoli/renault-master-noleggio-furgoni-grandi-trieste.webp",
-  "renault-master-l2h3": "/images/veicoli/renault-master-passo-medio-noleggio-lilo.webp",
   "opel-movano-l2h2": "/images/veicoli/opel-movano-noleggio-furgoni-grandi-trieste.webp",
   "renault-trafic-9-posti": "/images/veicoli/renault-trafic-9-posti-noleggio-trieste.webp",
   "nissan-primastar-9-posti": "/images/veicoli/nissan-primastar-9-posti-frontale.webp",

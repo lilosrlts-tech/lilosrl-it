@@ -16,7 +16,6 @@ export const UNITA_DISPONIBILI_BY_SLUG: Record<string, number> = {
   // Grandi
   "ford-transit-l2h2": 3,
   "renault-master-l2h2": 4,
-  "renault-master-l2h3": 4,
   "opel-movano-l2h2": 4,
   // Medi
   "ford-transit-custom-l1h1-ibrido": 4,

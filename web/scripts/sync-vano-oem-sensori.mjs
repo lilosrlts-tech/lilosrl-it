@@ -98,11 +98,6 @@ const BY_SLUG = {
     ...vano(3083, 1765, 1894, 1380, 10.8),
     sensori_parcheggio: true,
   },
-  // Volume dichiarato ~12 → L2H3 OEM 12,3 m³
-  "renault-master-l2h3": {
-    ...vano(3083, 1765, 2144, 1380, 12.3),
-    sensori_parcheggio: true,
-  },
   "opel-movano-l2h2": {
     ...vano(3083, 1765, 1894, 1380, 10.8),
     sensori_parcheggio: true,
