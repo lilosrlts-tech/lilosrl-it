@@ -190,7 +190,7 @@ export function CookieBanner() {
                   <span>
                     <span className="font-semibold text-slate-900">Analitica</span>
                     <span className="mt-0.5 block text-xs text-slate-500">
-                      Misura visite e uso delle pagine (es. Google Analytics).
+                      Misura visite e uso delle pagine (es. Google Analytics). Non include le metriche cookieless di hosting Vercel.
                     </span>
                   </span>
                   <input

@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import { GoogleTags } from "@/components/analytics/GoogleTags";
 import { GooglePhoneConversion } from "@/components/analytics/GooglePhoneConversion";
 import { GoogleContactTracking } from "@/components/analytics/GoogleContactTracking";
 import { GoogleAnalyticsRouteListener } from "@/components/analytics/GoogleAnalyticsRouteListener";
-import { ConsentAwareVercelMetrics } from "@/components/analytics/ConsentAwareVercelMetrics";
 import { CookieConsent } from "@/components/layout/CookieConsent";
 import { GOOGLE_SITE_VERIFICATION } from "@/lib/google-config";
 import { SITE_URL, COMPANY } from "@/lib/constants";
@@ -54,7 +55,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </Suspense>
         {children}
         <CookieConsent />
-        <ConsentAwareVercelMetrics />
+        {/* Vercel Web Analytics + Speed Insights: cookieless / GDPR, no prior consent required */}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

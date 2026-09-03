@@ -2,9 +2,12 @@ import Script from "next/script";
 import { CookieBanner } from "@/components/layout/CookieBanner";
 
 /**
- * GDPR / cookie consent.
+ * GDPR / cookie consent (Google Analytics / marketing).
  *
- * Priorità:
+ * Vercel Web Analytics e Speed Insights sono cookieless: montati sempre in
+ * app/layout.tsx e NON devono essere bloccati dal CMP come marketing/terze parti.
+ *
+ * Priorità CMP:
  * 1. Cookiebot — se NEXT_PUBLIC_COOKIEBOT_ID
  * 2. Iubenda — se NEXT_PUBLIC_IUBENDA_SITE_ID (+ cookie policy id)
  * 3. Banner first-party LILO (Privato / Equilibrato / Personalizzato) + Consent Mode v2
