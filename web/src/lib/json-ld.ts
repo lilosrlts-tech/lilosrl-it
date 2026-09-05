@@ -1089,9 +1089,9 @@ export function buildTariffeJsonLd(
         "@type": "WebPage",
         "@id": `${url}#webpage`,
         url,
-        name: "Prezzi e Tariffe noleggio | LILO Trieste",
+        name: "Prezzi noleggio auto, furgoni e pulmini a Trieste | LILO",
         description:
-          "Listino tariffe giornaliere noleggio auto e furgoni a Trieste. Prezzi IVA inclusa, aggiornati dalla flotta.",
+          "Listino tariffe giornaliere noleggio auto, furgoni e pulmini a Trieste. Prezzi IVA inclusa, aggiornati dalla flotta.",
         isPartOf: { "@id": `${SITE_URL}/#website` },
         breadcrumb: {
           "@type": "BreadcrumbList",

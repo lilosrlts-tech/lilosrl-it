@@ -45,7 +45,9 @@ export default async function TariffePage() {
       <SitePageWrapper impostazioni={impostazioni}>
         <main className="mx-auto max-w-4xl px-4 py-12">
           <header className="max-w-3xl">
-            <h1 className="text-3xl font-bold text-slate-900">Prezzi e Tariffe</h1>
+            <h1 className="text-3xl font-bold text-slate-900">
+              Prezzi noleggio auto, furgoni e pulmini a Trieste
+            </h1>
             <p className="mt-4 leading-relaxed text-slate-600">
               Listino generato automaticamente dalle tariffe giornaliere dei veicoli presenti in
               flotta. Tutti i prezzi sono IVA inclusa. Quando aggiorni un prezzo in gestione, questa
