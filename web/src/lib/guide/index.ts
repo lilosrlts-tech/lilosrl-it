@@ -128,7 +128,7 @@ export const GUIDE_ARTICLES: GuideArticle[] = [
     title: "Che patente serve per guidare un furgone a noleggio?",
     metaTitle: "Patente per furgone a noleggio | LILO Trieste",
     metaDescription:
-      "Per i furgoni e i pulmini 9 posti della flotta LILO a Trieste di norma basta la patente B, salvo indicazioni diverse di legge o di contratto. Verifica sempre in sede.",
+      "Patente per furgone a Trieste: per i mezzi LILO di norma basta la patente B (anche pulmini 9 posti), salvo indicazioni di legge o contratto.",
     inBreve:
       "Per i furgoni della flotta LILO a Trieste, nella pratica commerciale ordinaria è sufficiente la patente B, come per i pulmini 9 posti pubblicati. Restano ferme le norme del Codice della strada e le condizioni del contratto di noleggio: in caso di dubbi (massa, patente speciale, neopatentati) chiedi conferma in sede prima della prenotazione.",
     publishedAt: "2026-08-31",

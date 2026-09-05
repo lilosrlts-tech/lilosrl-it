@@ -5,6 +5,7 @@ import { SitePageWrapper, loadImpostazioni } from "@/lib/site-page";
 import { getGuideBySlug, getGuideSlugs } from "@/lib/guide";
 import { resolveMetadataTitle } from "@/lib/metadata-title";
 import { canonicalUrl } from "@/lib/seo";
+import { fitSeoDescription, fitSeoTitle } from "@/lib/seo-limits";
 import { SITE_URL } from "@/lib/constants";
 import { pruneJsonLd } from "@/lib/json-ld";
 
@@ -24,13 +25,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!article) return { title: "Guida non trovata" };
 
   const canonical = canonicalUrl(`/guide/${article.slug}`);
+  const title = fitSeoTitle(article.metaTitle, article.metaTitle);
+  const description = fitSeoDescription(
+    article.metaDescription,
+    article.metaDescription,
+  );
   return {
-    title: resolveMetadataTitle(article.metaTitle),
-    description: article.metaDescription,
+    title: resolveMetadataTitle(title),
+    description,
     alternates: { canonical },
     openGraph: {
-      title: article.metaTitle,
-      description: article.metaDescription,
+      title,
+      description,
       url: canonical,
       type: "article",
       locale: "it_IT",
@@ -39,8 +45,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     },
     twitter: {
       card: "summary_large_image",
-      title: article.metaTitle,
-      description: article.metaDescription,
+      title,
+      description,
     },
   };
 }

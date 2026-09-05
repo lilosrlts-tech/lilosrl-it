@@ -10,6 +10,7 @@ import {
   NAP_NOLEGGIO_POSTAL,
   NAP_NOLEGGIO_REGION,
   NAP_ORARI_AUTOLAVAGGIO,
+  NAP_ORARI_NOLEGGIO,
   NAP_PHONE_E164,
 } from "@/lib/nap";
 import { orariToOpeningHoursSpecification } from "@/lib/opening-hours-schema";
@@ -84,6 +85,9 @@ function autoRentalRef() {
  * priceRange usa "$$" (ASCII): i simboli €€ finivano corrotti in "??" in produzione.
  */
 function autoRentalProvider() {
+  const openingHoursSpecification =
+    orariToOpeningHoursSpecification(NAP_ORARI_NOLEGGIO);
+
   return {
     "@type": "AutoRental" as const,
     "@id": AUTO_RENTAL_ID,
@@ -121,6 +125,9 @@ function autoRentalProvider() {
       { "@type": "City" as const, name: "Trieste" },
       { "@type": "AdministrativeArea" as const, name: "Provincia di Trieste" },
     ],
+    ...(openingHoursSpecification.length > 0
+      ? { openingHoursSpecification }
+      : {}),
   };
 }
 
@@ -630,6 +637,9 @@ export function buildHomeJsonLd(): Record<string, unknown> {
           addressRegion: NAP_NOLEGGIO_REGION,
           addressCountry: NAP_NOLEGGIO_COUNTRY,
         },
+        openingHoursSpecification: orariToOpeningHoursSpecification(
+          NAP_ORARI_AUTOLAVAGGIO,
+        ),
         parentOrganization: { "@id": `${SITE_URL}/#organization` },
       },
       {
@@ -904,7 +914,7 @@ export function buildContattiJsonLd(impostazioni: ImpostazioniSito): Record<stri
 
   const sedeNoleggio: Record<string, unknown> = {
     ...autoRentalProvider(),
-    "@id": `${canonical}#sede-noleggio`,
+    // Stesso @id di AutoRental (home/schede) per Knowledge Graph coerente.
     name: COMPANY.name,
     alternateName: COMPANY.marketingName,
     description:
@@ -919,6 +929,7 @@ export function buildContattiJsonLd(impostazioni: ImpostazioniSito): Record<stri
     parentOrganization: { "@id": `${SITE_URL}/#organization` },
   };
 
+  // Preferisci orari CMS se parsabili; altrimenti restano quelli NAP da autoRentalProvider.
   if (openingHoursSpecification.length > 0) {
     sedeNoleggio.openingHoursSpecification = openingHoursSpecification;
   }

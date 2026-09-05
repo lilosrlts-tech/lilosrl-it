@@ -651,7 +651,7 @@ export const DEMO_VEICOLI: VeicoloPubblico[] = [
       "Il Fiat Doblò Cargo è un furgone piccolo diesel della flotta LILO S.r.l. a Trieste: compatto e maneggevole per consegne urbane, piccoli traslochi e lavoro artigianale. Equipaggiato con portapacchi integrati sul tetto, utili per trasportare scale, tubi, profili, pannelli e altri materiali lunghi o ingombranti che non rientrano nel vano di carico. Ritiro e riconsegna presso la sede di Viale Campi Elisi 38/B a Trieste.",
     seo_title: null,
     seo_description:
-      "Noleggia il Fiat Doblò Cargo a Trieste con LILO S.r.l. Furgone piccolo diesel con portapacchi integrato, ideale per materiali lunghi e ingombranti. Ritiro in sede.",
+      "Noleggia il Fiat Doblò Cargo a Trieste con LILO: furgone piccolo diesel con portapacchi, ideale per materiali lunghi. Ritiro in sede.",
     seo_keywords: [
       "noleggio fiat doblo trieste",
       "furgone piccolo portapacchi",
@@ -904,7 +904,7 @@ export const DEMO_VEICOLI: VeicoloPubblico[] = [
       "L'Opel Vivaro Van è il furgone medio di LILO S.r.l.: bilanciamento ideale tra vano di carico e manovrabilità nel traffico di Trieste. Equipaggiato con portapacchi integrati (barre portatutto) sul tetto per scale, tubi, profili e altri materiali lunghi o ingombranti che non entrano comodamente nel vano. Adatto a professionisti e privati per piccoli traslochi o lavoro quotidiano. Ritiro e riconsegna presso la sede di Viale Campi Elisi 38/b a Trieste.",
     seo_title: "Noleggio Opel Vivaro Trieste | Furgoni Medi | LILO Autonoleggio",
     seo_description:
-      "Noleggia l'Opel Vivaro Van a Trieste (Viale Campi Elisi 38/b). Furgone medio con portapacchi integrato, ideale per materiali lunghi, ingombranti e piccoli traslochi. LILO.",
+      "Noleggia l'Opel Vivaro Van a Trieste con LILO: furgone medio con portapacchi, ideale per materiali lunghi e piccoli traslochi. Ritiro in sede.",
     seo_keywords: [
       "noleggio opel vivaro trieste",
       "furgone medio trieste",
