@@ -14,21 +14,27 @@ export default function manifest(): MetadataRoute.Manifest {
     lang: "it-IT",
     icons: [
       {
-        src: "/icon",
+        src: "/favicon.ico",
+        sizes: "32x32",
+        type: "image/x-icon",
+        purpose: "any",
+      },
+      {
+        src: "/favicon-32.png",
         sizes: "32x32",
         type: "image/png",
         purpose: "any",
       },
       {
-        src: "/apple-icon",
+        src: "/apple-touch-icon.png",
         sizes: "180x180",
         type: "image/png",
         purpose: "any",
       },
       {
-        src: "/logo-lilo.webp",
+        src: "/icon-lilo.webp",
         type: "image/webp",
-        sizes: "any",
+        sizes: "180x180",
         purpose: "any",
       },
     ],

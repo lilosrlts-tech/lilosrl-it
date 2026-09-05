@@ -26,6 +26,10 @@ export const metadata: Metadata = {
   },
   description:
     "Noleggio auto e furgoni a Trieste. Flotta moderna, tariffe trasparenti, ritiro in sede in Viale Campi Elisi.",
+  icons: {
+    icon: [{ url: "/favicon.ico", sizes: "any" }, { url: "/favicon-32.png", type: "image/png", sizes: "32x32" }],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
   openGraph: {
     type: "website",
     locale: "it_IT",

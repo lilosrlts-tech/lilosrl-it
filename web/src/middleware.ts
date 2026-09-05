@@ -49,11 +49,8 @@ const ALLOWED_TOP_LEVEL = new Set([
   "8f3c2a91d64e4b0f9c1a7e5d2b8f0c3a.txt",
   "manifest.webmanifest",
   "manifest.json",
-  "icon",
-  "apple-icon",
-  "opengraph-image",
-  "twitter-image",
   "favicon.ico",
+  "apple-touch-icon.png",
 ]);
 
 /**

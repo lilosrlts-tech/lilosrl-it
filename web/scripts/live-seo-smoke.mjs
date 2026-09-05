@@ -20,7 +20,8 @@ const pages = [
   "/robots.txt",
   "/sitemap.xml",
   "/manifest.webmanifest",
-  "/icon",
+  "/favicon.ico",
+  "/apple-touch-icon.png",
 ];
 
 function count(html, re) {
@@ -30,7 +31,7 @@ function count(html, re) {
 async function headOrGet(path) {
   const url = `${BASE}${path}`;
   const res = await fetch(url, { redirect: "manual" });
-  const text = res.status < 400 && !path.match(/\.(xml|txt|webmanifest)$/) && path !== "/icon"
+  const text = res.status < 400 && !path.match(/\.(xml|txt|webmanifest|ico|png)$/)
     ? await res.text()
     : path.match(/\.(xml|txt|webmanifest)$/)
       ? await res.text()
