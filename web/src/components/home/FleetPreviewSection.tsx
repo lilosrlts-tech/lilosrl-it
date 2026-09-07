@@ -93,7 +93,7 @@ export async function FleetPreviewSection() {
           href="/flotta"
           className="hidden text-sm font-semibold text-brand-600 hover:underline md:inline"
         >
-          Vedi tutti →
+          Vedi tutta la flotta a Trieste →
         </Link>
       </div>
 

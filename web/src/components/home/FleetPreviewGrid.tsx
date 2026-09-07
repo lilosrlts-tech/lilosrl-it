@@ -58,6 +58,7 @@ export function FleetPreviewGrid({
             <Link
               href={card.href}
               className="group block h-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-md"
+              aria-label={`Noleggio ${card.title} a Trieste`}
             >
               <div className="relative">
                 <VeicoloCoverImage
@@ -124,7 +125,7 @@ export function FleetPreviewGrid({
             href="/flotta"
             className="text-center text-sm font-semibold text-brand-600 hover:underline"
           >
-            Vedi tutta la flotta →
+            Vedi tutta la flotta a Trieste →
           </Link>
         </div>
       ) : null}

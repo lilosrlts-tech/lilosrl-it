@@ -30,14 +30,15 @@ export function VeicoloCard({ veicolo }: VeicoloCardProps) {
   const coverAlt = getVeicoloCoverAlt(veicolo);
   const imageVariant = getVeicoloImageVariant(veicolo);
   const href = `/flotta/${resolvePublicVeicoloSlug(veicolo.slug)}`;
+  const vehicleShort = [veicolo.marca, veicolo.modello].filter(Boolean).join(" ");
+  const ctaLabel = `Noleggio ${vehicleShort} a Trieste`;
+  const ariaLabel = unitaLabel ? `${ctaLabel} — ${unitaLabel}` : ctaLabel;
 
   return (
     <Link
       href={href}
       className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:border-brand-200 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
-      aria-label={
-        unitaLabel ? `${name} — ${unitaLabel}` : `${name} — visualizza dettagli`
-      }
+      aria-label={ariaLabel}
     >
       <article className="flex h-full flex-col">
         <div className="relative">
@@ -94,8 +95,8 @@ export function VeicoloCard({ veicolo }: VeicoloCardProps) {
             <div className="flex flex-col gap-3">
               <VeicoloPrezzoBlock veicolo={veicolo} />
 
-              <span className="w-full rounded-xl bg-brand-600 px-5 py-2.5 text-center text-sm font-semibold text-white transition group-hover:bg-brand-700">
-                Visualizza Dettagli
+              <span className="w-full rounded-xl bg-brand-600 px-5 py-2.5 text-center text-sm font-semibold leading-snug text-white transition group-hover:bg-brand-700">
+                {ctaLabel}
               </span>
             </div>
           </div>

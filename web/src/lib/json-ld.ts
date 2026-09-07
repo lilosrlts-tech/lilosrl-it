@@ -171,6 +171,9 @@ function buildDailyRentalOffer(params: {
     price,
     priceCurrency,
     availability: "https://schema.org/InStock",
+    itemCondition: "https://schema.org/UsedCondition",
+    // Semrush/Offer: data di validità listino (rinnovata annualmente).
+    priceValidUntil: `${new Date().getFullYear() + 1}-12-31`,
     url: canonical,
     businessFunction: "https://schema.org/LeaseOut",
     priceSpecification: {
@@ -1068,6 +1071,8 @@ export function buildTariffeJsonLd(
           price: String(voce.importo),
           priceCurrency: voce.valuta || "EUR",
           availability: "https://schema.org/InStock",
+          itemCondition: "https://schema.org/UsedCondition",
+          priceValidUntil: `${new Date().getFullYear() + 1}-12-31`,
           url: `${SITE_URL}/flotta/${voce.slug}`,
           businessFunction: "https://schema.org/LeaseOut",
           category: sezione.categoria.nome,
