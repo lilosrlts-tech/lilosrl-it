@@ -15,6 +15,9 @@
  * Decisioni SEO (2026-08-29):
  *   - /slide-page/contatti → /contatti (non fallback /flotta)
  *   - /flotta/fiat-doblo → /flotta/fiat-doblo-cargo (scheda canonica)
+ * Decisioni SEO (2026-09-07 / GSC 404):
+ *   - /portfolio-items/autolavaggio → /autolavaggio (301)
+ *   - /author/*, /upload/* e placeholder WP → 410 Gone (middleware)
  *
  * Status HTTP: sempre statusCode 301 (non permanent:true → 308) per tool SEO.
  * Domini secondari / apex: middleware + REDIRECT_TO_CANONICAL_HOSTS in constants.
@@ -111,6 +114,13 @@ export const LEGACY_REDIRECTS: LegacyRedirect[] = [
     "/flotta-noleggio-2",
     "/flotta",
     "Duplicato hub flotta WP → /flotta",
+  ),
+
+  // ── Portfolio WP / GSC 404 → pagine Next ─────────────────────────────────
+  ...withTrailingVariants(
+    "/portfolio-items/autolavaggio",
+    "/autolavaggio",
+    "WP portfolio-items autolavaggio → pagina autolavaggio",
   ),
 
   // ── Prezzi / tariffe (URL keyword) ───────────────────────────────────────

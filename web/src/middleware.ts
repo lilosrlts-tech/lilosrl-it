@@ -101,6 +101,59 @@ function stripTrailingSlash(pathname: string): string {
 }
 
 /**
+ * Prefissi WordPress dismessi: 410 Gone (segnale più chiaro del 404 per Googlebot).
+ * I path con redirect esplicito (es. /portfolio-items/autolavaggio) vengono
+ * gestiti prima da maybeRedirectUnknownPath / next.config.
+ */
+const WP_GONE_TOP_LEVEL = new Set([
+  "author",
+  "upload",
+  "uploads",
+  "wp-content",
+  "wp-includes",
+  "wp-admin",
+  "wp-json",
+  "xmlrpc.php",
+  "feed",
+  "comments",
+  "category",
+  "tag",
+  "portfolio-items",
+  "portfolio",
+]);
+
+function gone410(): NextResponse {
+  return new NextResponse("Gone", {
+    status: 410,
+    headers: {
+      "Content-Type": "text/plain; charset=utf-8",
+      "Cache-Control": "public, max-age=86400",
+      "X-Robots-Tag": "noindex",
+    },
+  });
+}
+
+/** True per URL WP morte o placeholder di template (GSC 404 junk). */
+function isWordPressGonePath(pathname: string): boolean {
+  const normalized = stripTrailingSlash(pathname);
+  const segments = normalized.split("/").filter(Boolean);
+  const first = segments[0]?.toLowerCase();
+  if (!first) return false;
+
+  if (WP_GONE_TOP_LEVEL.has(first)) return true;
+
+  // Placeholder WP tipo /flotta/{search_term_string}
+  if (segments.some((s) => s.includes("{") || s.includes("%7B") || s.includes("%7b"))) {
+    return true;
+  }
+  if (first === "flotta" && segments[1]?.toLowerCase() === "{search_term_string}") {
+    return true;
+  }
+
+  return false;
+}
+
+/**
  * Path legacy noti / trailing slash → 301 (one-hop dove possibile).
  * URL sconosciute non vengono soft-redirectate a /flotta: restano 404.
  */
@@ -115,6 +168,11 @@ function maybeRedirectUnknownPath(request: NextRequest): NextResponse | null {
   const exactDest = getExactPathRedirectMap().get(normalized);
   if (exactDest && exactDest !== normalized) {
     return redirect301(request, exactDest);
+  }
+
+  // WP dismesso / placeholder (prima di trailing-slash su path “validi” tipo /flotta/…)
+  if (isWordPressGonePath(pathname) || isWordPressGonePath(normalized)) {
+    return gone410();
   }
 
   const segments = normalized.split("/").filter(Boolean);
@@ -163,6 +221,7 @@ export function middleware(request: NextRequest) {
   }
 
   // Path legacy (categorie root) + trailing slash + catch-all → destinazione finale
+  // (include anche 410 Gone per /author/*, /upload/*, portfolio WP residui, placeholder)
   const pathRedirect = maybeRedirectUnknownPath(request);
   if (pathRedirect) return pathRedirect;
 
