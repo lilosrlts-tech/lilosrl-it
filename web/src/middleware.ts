@@ -265,6 +265,6 @@ export const config = {
      * Esclude asset statici. /.gestionale è gestito da vercel.json → 301 HTTPS gestionale
      * (niente rewrite verso Aruba che risponde 403 ai crawler).
      */
-    "/((?!_next/static|_next/image|favicon.ico|\\.gestionale(?:/.*)?$|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|txt)$).*)",
+    "/((?!_next/static|_next/image|favicon.ico|\\.gestionale(?:/.*)?$|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|txt|md)$).*)",
   ],
 };
