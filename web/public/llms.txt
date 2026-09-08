@@ -1,7 +1,8 @@
 # LILO S.r.l. — llms.txt
 # Sintesi per LLM / AI crawler. Fonte operativa: https://www.lilosrl.it
 # Aggiornato: 2026-09-08
-# Dettaglio architettura: https://www.lilosrl.it/site-structure-for-ai.md
+# Dettaglio architettura: https://www.lilosrl.it/site-structure-for-ai.txt
+# (duplicato Markdown: https://www.lilosrl.it/site-structure-for-ai.md)
 
 > LILO S.r.l. (LILO Autonoleggio e Furgoni Trieste): noleggio auto, furgoni e pulmini 9 posti a Trieste, più autolavaggio in sede dedicata. Flotta reale di oltre 50 mezzi. Tariffe giornaliere IVA inclusa. Ritiro e riconsegna in sede.
 
@@ -144,6 +145,7 @@ Elenco non esaustivo delle schede pubblicate. Volume (m³) e portata (kg) indica
 
 ## File correlati
 
-- Architettura sito per AI: https://www.lilosrl.it/site-structure-for-ai.md
+- Architettura sito per AI (testo plain, consigliato): https://www.lilosrl.it/site-structure-for-ai.txt
+- Architettura sito per AI (Markdown, stesso contenuto): https://www.lilosrl.it/site-structure-for-ai.md
 - Sitemap: https://www.lilosrl.it/sitemap.xml
 - Robots: https://www.lilosrl.it/robots.txt
