@@ -143,6 +143,15 @@ function formatSchemaPrice(importo: number): string {
   return (Math.round(importo * 100) / 100).toFixed(2);
 }
 
+/** Finestra validità listino Offer (GSC Merchant: validFrom + priceValidUntil). */
+function offerValidityDates() {
+  const year = new Date().getFullYear();
+  return {
+    validFrom: `${year}-01-01`,
+    priceValidUntil: `${year + 1}-12-31`,
+  };
+}
+
 type PrezzoSchema = { importo: number; valuta: string };
 
 function buildVeicoloDescription(veicolo: VeicoloPubblico): string {
@@ -163,6 +172,7 @@ function buildDailyRentalOffer(params: {
   const { name, canonical, prezzo } = params;
   const price = formatSchemaPrice(prezzo.importo);
   const priceCurrency = prezzo.valuta || "EUR";
+  const { validFrom, priceValidUntil } = offerValidityDates();
 
   return {
     "@type": "Offer",
@@ -172,8 +182,8 @@ function buildDailyRentalOffer(params: {
     priceCurrency,
     availability: "https://schema.org/InStock",
     itemCondition: "https://schema.org/UsedCondition",
-    // Semrush/Offer: data di validità listino (rinnovata annualmente).
-    priceValidUntil: `${new Date().getFullYear() + 1}-12-31`,
+    validFrom,
+    priceValidUntil,
     url: canonical,
     businessFunction: "https://schema.org/LeaseOut",
     priceSpecification: {
@@ -769,6 +779,7 @@ export function buildOfferteJsonLd(faqItems: AiFaqItem[]): Record<string, unknow
           price: "83.00",
           priceCurrency: "EUR",
           availability: "https://schema.org/InStock",
+          ...offerValidityDates(),
           url: canonical,
           businessFunction: "https://schema.org/LeaseOut",
           category: "Furgoni grandi (uso città)",
@@ -876,6 +887,7 @@ export function buildFlottaCategoriaJsonLd(
                 price: formatSchemaPrice(prezzo.importo),
                 priceCurrency: prezzo.valuta || "EUR",
                 availability: "https://schema.org/InStock",
+                ...offerValidityDates(),
                 url: itemUrl,
                 businessFunction: "https://schema.org/LeaseOut",
                 seller: autoRentalRef(),
@@ -1072,7 +1084,7 @@ export function buildTariffeJsonLd(
           priceCurrency: voce.valuta || "EUR",
           availability: "https://schema.org/InStock",
           itemCondition: "https://schema.org/UsedCondition",
-          priceValidUntil: `${new Date().getFullYear() + 1}-12-31`,
+          ...offerValidityDates(),
           url: `${SITE_URL}/flotta/${voce.slug}`,
           businessFunction: "https://schema.org/LeaseOut",
           category: sezione.categoria.nome,
