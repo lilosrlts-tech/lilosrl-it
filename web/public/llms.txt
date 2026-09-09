@@ -1,18 +1,15 @@
-# LILO S.r.l. — llms.txt
-# Sintesi per LLM / AI crawler. Fonte operativa: https://www.lilosrl.it
-# Aggiornato: 2026-09-08
-# Dettaglio architettura: https://www.lilosrl.it/site-structure-for-ai.txt
-# (duplicato Markdown: https://www.lilosrl.it/site-structure-for-ai.md)
+# LILO S.r.l.
 
-> LILO S.r.l. (LILO Autonoleggio e Furgoni Trieste): noleggio auto, furgoni e pulmini 9 posti a Trieste, più autolavaggio in sede dedicata. Flotta reale di oltre 50 mezzi. Tariffe giornaliere IVA inclusa. Ritiro e riconsegna in sede.
+> Noleggio auto, furgoni e pulmini 9 posti a Trieste, più autolavaggio. Flotta reale di oltre 50 mezzi. Tariffe giornaliere IVA inclusa. Ritiro in Viale Campi Elisi 38/b.
+
+Sito ufficiale: [https://www.lilosrl.it](https://www.lilosrl.it) · Aggiornato: 2026-09-09 · Dettaglio architettura: [site-structure-for-ai.txt](https://www.lilosrl.it/site-structure-for-ai.txt)
 
 ## Azienda
 
 - Ragione sociale: LILO S.r.l. (P. IVA 01249580323)
-- Marchio commerciale: LILO Autonoleggio e Furgoni Trieste
-- Sito: https://www.lilosrl.it
-- Email: info@lilosrl.it
-- Telefono / WhatsApp: +39 040 2471720 (display: 040 2471720)
+- Marchio: LILO Autonoleggio e Furgoni Trieste
+- Email: [info@lilosrl.it](mailto:info@lilosrl.it)
+- Telefono / WhatsApp: [+39 040 2471720](https://wa.me/390402471720) (display: 040 2471720)
 - Area servita: Trieste e provincia (Friuli-Venezia Giulia, Italia)
 - Dal: 2003
 
@@ -20,14 +17,15 @@
 
 - Indirizzo: Viale Campi Elisi 38/b, 34143 Trieste (TS)
 - Orari: Lun–Ven 08:30–12:30 / 15:00–17:30; Sab 08:30–12:30; Dom chiuso
+- Contatti: [Pagina contatti](https://www.lilosrl.it/contatti)
 
 ### Sede autolavaggio
 
 - Indirizzo: Via Giovanni Schiaparelli 21/a, 34143 Trieste (TS)
 - Nota: ingresso Via Schiaparelli 21/a — uscita Via G. De Coletti 7
 - Orari: Lun–Sab 09:00–13:00 / 14:00–18:30; Dom chiuso
-- Pagina: https://www.lilosrl.it/autolavaggio
-- Sito dedicato (esterno): https://www.autolavaggiolilo.it
+- Pagina: [Autolavaggio LILO](https://www.lilosrl.it/autolavaggio)
+- Sito dedicato: [autolavaggiolilo.it](https://www.autolavaggiolilo.it)
 
 ### Servizi
 
@@ -37,115 +35,101 @@
 - Autolavaggio (interno/esterno, sanificazione, tappezzeria)
 - Preventivo online da scheda veicolo (form + WhatsApp)
 
-## Mappa URL principali
+## Pagine principali
 
-- Home: https://www.lilosrl.it/
-- Noleggio furgoni (pilastro): https://www.lilosrl.it/noleggio-furgoni-trieste
-- Noleggio auto (pilastro): https://www.lilosrl.it/noleggio-auto-trieste
-- Noleggio pulmini 9 posti: https://www.lilosrl.it/noleggio-pulmini-9-posti-trieste
-- Flotta (hub): https://www.lilosrl.it/flotta
-- Tariffe: https://www.lilosrl.it/tariffe-noleggio-furgoni-trieste
-- Cosa trasporti (wizard): https://www.lilosrl.it/cosa-trasporti
-- Guide: https://www.lilosrl.it/guide
-- Offerte / Promo Weekend: https://www.lilosrl.it/offerte-noleggio-furgoni-trieste
-- Autolavaggio: https://www.lilosrl.it/autolavaggio
-- Chi siamo: https://www.lilosrl.it/chi-siamo
-- Contatti: https://www.lilosrl.it/contatti
+- [Home](https://www.lilosrl.it/): Panoramica noleggio e autolavaggio a Trieste
+- [Noleggio furgoni Trieste](https://www.lilosrl.it/noleggio-furgoni-trieste): Landing pilastro furgoni
+- [Noleggio auto Trieste](https://www.lilosrl.it/noleggio-auto-trieste): Landing pilastro auto
+- [Noleggio pulmini 9 posti Trieste](https://www.lilosrl.it/noleggio-pulmini-9-posti-trieste): Landing pilastro pulmini
+- [Flotta](https://www.lilosrl.it/flotta): Catalogo veicoli a noleggio
+- [Tariffe](https://www.lilosrl.it/tariffe-noleggio-furgoni-trieste): Prezzi giornalieri per categoria
+- [Cosa trasporti](https://www.lilosrl.it/cosa-trasporti): Wizard per scegliere il mezzo
+- [Guide](https://www.lilosrl.it/guide): Guide pratiche (trasloco, costi, patente, m³)
+- [Offerte](https://www.lilosrl.it/offerte-noleggio-furgoni-trieste): Promo Weekend e offerte
+- [Autolavaggio](https://www.lilosrl.it/autolavaggio): Lavaggio in sede Schiaparelli
+- [Chi siamo](https://www.lilosrl.it/chi-siamo): Storia e sedi LILO
+- [Contatti](https://www.lilosrl.it/contatti): Telefono, WhatsApp, mappa e orari
 
-### Categorie flotta
+## Categorie flotta
 
-- Auto: https://www.lilosrl.it/flotta/auto
-- Pulmini 9 posti: https://www.lilosrl.it/flotta/pulmini-9-posti
-- Furgoni piccoli: https://www.lilosrl.it/flotta/furgoni-piccoli
-- Furgoni medi: https://www.lilosrl.it/flotta/furgoni-medi
-- Furgoni grandi: https://www.lilosrl.it/flotta/furgoni-grandi
-- Furgoni grandi uso città: https://www.lilosrl.it/flotta/furgoni-grandi-citta
-- Furgoni XL: https://www.lilosrl.it/flotta/furgoni-xl
+- [Auto](https://www.lilosrl.it/flotta/auto): da €40/giorno, 100 km inclusi, cauzione €300
+- [Pulmini 9 posti](https://www.lilosrl.it/flotta/pulmini-9-posti): da €90/giorno, 150 km, cauzione €500 (solo carta)
+- [Furgoni piccoli](https://www.lilosrl.it/flotta/furgoni-piccoli): da €50/giorno, 100 km, cauzione €200
+- [Furgoni medi](https://www.lilosrl.it/flotta/furgoni-medi): da €55/giorno, 100 km, cauzione €200
+- [Furgoni grandi](https://www.lilosrl.it/flotta/furgoni-grandi): da €60/giorno, 100 km, cauzione €200
+- [Furgoni grandi uso città](https://www.lilosrl.it/flotta/furgoni-grandi-citta): da €55/giorno, 50 km (Trieste città), cauzione €200
+- [Furgoni XL](https://www.lilosrl.it/flotta/furgoni-xl): da €70/giorno, 100 km, cauzione €300
 
-## Tariffe di categoria (listino, IVA inclusa)
+Prezzi IVA inclusa, “a partire da”. Confermare in scheda o in sede.
 
-Prezzi “a partire da” per categoria. Il prezzo della singola scheda può variare (promo durata, listino mezzo). Confermare sempre in scheda o in sede.
-
-| Categoria | Prezzo base €/giorno | Km inclusi | Cauzione |
-|-----------|---------------------|------------|----------|
-| Auto | 40 | 100 | 300 € (città anche contanti; fuori città/estero carta) |
-| Pulmini 9 posti | 90 | 150 | 500 € (solo carta di credito) |
-| Furgoni piccoli | 50 | 100 | 200 € |
-| Furgoni medi | 55 | 100 | 200 € |
-| Furgoni grandi uso città | 55 | 50 (ottimizzato Trieste città) | 200 € |
-| Furgoni grandi | 60 | 100 | 200 € |
-| Furgoni XL | 70 | 100 | 300 € |
-
-Promo tipica: Promo Weekend su furgoni grandi uso città (sabato–lunedì / 48 ore a tariffa promo pubblicata in /offerte).
-
-## Veicoli principali (catalogo pubblico)
-
-Elenco non esaustivo delle schede pubblicate. Volume (m³) e portata (kg) indicativi da scheda/OEM/libretto; disponibilità giornaliera da confermare.
+## Veicoli principali
 
 ### Auto (da €40/giorno)
 
-- Volkswagen Polo — https://www.lilosrl.it/flotta/volkswagen-polo
-- Opel Karl — https://www.lilosrl.it/flotta/opel-karl
-- Citroën C3 — https://www.lilosrl.it/flotta/citroen-c3
-- Volvo S40 — https://www.lilosrl.it/flotta/volvo-s40
+- [Volkswagen Polo](https://www.lilosrl.it/flotta/volkswagen-polo)
+- [Opel Karl](https://www.lilosrl.it/flotta/opel-karl)
+- [Citroën C3](https://www.lilosrl.it/flotta/citroen-c3)
+- [Volvo S40](https://www.lilosrl.it/flotta/volvo-s40)
 
 ### Pulmini 9 posti (da €90/giorno)
 
-- Renault Trafic 9 posti — https://www.lilosrl.it/flotta/renault-trafic-9-posti
-- Nissan Primastar 9 posti — https://www.lilosrl.it/flotta/nissan-primastar-9-posti
+- [Renault Trafic 9 posti](https://www.lilosrl.it/flotta/renault-trafic-9-posti)
+- [Nissan Primastar 9 posti](https://www.lilosrl.it/flotta/nissan-primastar-9-posti)
 
 ### Furgoni piccoli (da €50/giorno)
 
-- Toyota Proace City — ~3,3 m³, portata ~583 kg — https://www.lilosrl.it/flotta/toyota-proace-city
-- Fiat Doblò Cargo — ~3,4 m³, portata ~586 kg, portapacchi — https://www.lilosrl.it/flotta/fiat-doblo-cargo
+- [Toyota Proace City](https://www.lilosrl.it/flotta/toyota-proace-city) — ~3,3 m³, portata ~583 kg
+- [Fiat Doblò Cargo](https://www.lilosrl.it/flotta/fiat-doblo-cargo) — ~3,4 m³, portata ~586 kg, portapacchi
 
 ### Furgoni medi (da €55/giorno)
 
-- Citroën Jumpy L1H1 — ~5,3 m³, portata ~1.000+ kg — https://www.lilosrl.it/flotta/citroen-jumpy-l1h1
-- Opel Vivaro — ~5,2 m³, portapacchi — https://www.lilosrl.it/flotta/opel-vivaro
-- Ford Transit Custom L1H1 — https://www.lilosrl.it/flotta/ford-transit-custom-l1h1
-- Ford Transit Custom L1H1 Ibrido — https://www.lilosrl.it/flotta/ford-transit-custom-l1h1-ibrido
+- [Citroën Jumpy L1H1](https://www.lilosrl.it/flotta/citroen-jumpy-l1h1) — ~5,3 m³
+- [Opel Vivaro](https://www.lilosrl.it/flotta/opel-vivaro) — ~5,2 m³, portapacchi
+- [Ford Transit Custom L1H1](https://www.lilosrl.it/flotta/ford-transit-custom-l1h1)
+- [Ford Transit Custom L1H1 Ibrido](https://www.lilosrl.it/flotta/ford-transit-custom-l1h1-ibrido)
 
 ### Furgoni grandi / uso città (da €55–60/giorno)
 
-- Ford Transit L2H2 — ~10 m³, portata ~1.166 kg — https://www.lilosrl.it/flotta/ford-transit-l2h2
-- Ford Transit L2H2 città — ~10 m³, 50 km inclusi — https://www.lilosrl.it/flotta/ford-transit-l2h2-citta
-- Citroën Jumper L2H2 — ~11,5 m³ — https://www.lilosrl.it/flotta/citroen-jumper-l2h2
-- Renault Master L2H2 — https://www.lilosrl.it/flotta/renault-master-l2h2
-- Opel Movano L2H2 — https://www.lilosrl.it/flotta/opel-movano-l2h2
-- Fiat Ducato L1H1 (rampa moto / HACCP) — ~8 m³ — https://www.lilosrl.it/flotta/fiat-ducato-l1h1
-- Iveco Daily 35-12 — ~10,8 m³ — https://www.lilosrl.it/flotta/iveco-daily-35-12
-- Peugeot Boxer L2H2 — https://www.lilosrl.it/flotta/peugeot-boxer-l2h2
-- Citroën Jumper L1H1 — https://www.lilosrl.it/flotta/citroen-jumper-l1h1
+- [Ford Transit L2H2](https://www.lilosrl.it/flotta/ford-transit-l2h2) — ~10 m³, portata ~1.166 kg
+- [Ford Transit L2H2 città](https://www.lilosrl.it/flotta/ford-transit-l2h2-citta) — ~10 m³, 50 km inclusi
+- [Citroën Jumper L2H2](https://www.lilosrl.it/flotta/citroen-jumper-l2h2) — ~11,5 m³
+- [Renault Master L2H2](https://www.lilosrl.it/flotta/renault-master-l2h2)
+- [Opel Movano L2H2](https://www.lilosrl.it/flotta/opel-movano-l2h2)
+- [Fiat Ducato L1H1](https://www.lilosrl.it/flotta/fiat-ducato-l1h1) — ~8 m³, rampa moto / HACCP
+- [Iveco Daily 35-12](https://www.lilosrl.it/flotta/iveco-daily-35-12) — ~10,8 m³
+- [Peugeot Boxer L2H2](https://www.lilosrl.it/flotta/peugeot-boxer-l2h2)
+- [Citroën Jumper L1H1](https://www.lilosrl.it/flotta/citroen-jumper-l1h1)
 
 ### Furgoni XL (da €70/giorno)
 
-- Peugeot Boxer L3H3 — ~15 m³, portata ~1.395 kg — https://www.lilosrl.it/flotta/peugeot-boxer-l3h3
-- Ford Transit L3H2 — https://www.lilosrl.it/flotta/ford-transit-l3h2
-- Nissan Interstar L3H2 — https://www.lilosrl.it/flotta/nissan-interstar-l3h2
+- [Peugeot Boxer L3H3](https://www.lilosrl.it/flotta/peugeot-boxer-l3h3) — ~15 m³, portata ~1.395 kg
+- [Ford Transit L3H2](https://www.lilosrl.it/flotta/ford-transit-l3h2)
+- [Nissan Interstar L3H2](https://www.lilosrl.it/flotta/nissan-interstar-l3h2)
 
-## Regole di noleggio (sintesi)
+## Regole di noleggio
 
-- Ritiro e riconsegna: sede Viale Campi Elisi 38/b, Trieste (non delivery di default sul sito).
-- Giornata tipo: riferimenti operativi 08:30 → 08:30 (dettaglio in scheda / contratto).
-- Chilometri: inclusa la quota di categoria (vedi tabella); eccedenze secondo contratto.
-- Cauzione: importo e modalità per categoria (pulmini: solo carta di credito).
-- Patente: per furgoni e pulmini 9 posti della flotta, in pratica commerciale ordinaria di norma patente B (verificare sempre in sede / contratto).
-- Prezzi in vetrina: IVA inclusa salvo diversa indicazione.
-- Preventivo: form in scheda veicolo, telefono o WhatsApp https://wa.me/390402471720
-- Disponibilità: il sito elenca modelli pubblicati; le unità fisiche e le date si confermano in sede.
+- Ritiro e riconsegna: [Viale Campi Elisi 38/b](https://www.lilosrl.it/contatti), Trieste
+- Chilometri e cauzione: secondo [tariffe di categoria](https://www.lilosrl.it/tariffe-noleggio-furgoni-trieste)
+- Pulmini: cauzione solo con carta di credito
+- Patente: di norma B per furgoni e pulmini 9 posti (verificare in sede)
+- Prezzi in vetrina: IVA inclusa
+- Preventivo: [WhatsApp](https://wa.me/390402471720) o form in scheda veicolo
+- Disponibilità: confermare date in sede (il catalogo elenca modelli pubblicati)
 
-## Guide utili
+## Guide
 
-- https://www.lilosrl.it/guide/quale-furgone-scegliere-per-trasloco
-- https://www.lilosrl.it/guide/quanto-costa-noleggiare-furgone-trieste
-- https://www.lilosrl.it/guide/che-patente-serve-per-furgone
-- https://www.lilosrl.it/guide/quanti-metri-cubi-servono-per-trasloco
-- https://www.lilosrl.it/guide/furgone-per-frigorifero
+- [Quale furgone per un trasloco](https://www.lilosrl.it/guide/quale-furgone-scegliere-per-trasloco)
+- [Quanto costa noleggiare un furgone](https://www.lilosrl.it/guide/quanto-costa-noleggiare-furgone-trieste)
+- [Che patente serve](https://www.lilosrl.it/guide/che-patente-serve-per-furgone)
+- [Metri cubi per trasloco](https://www.lilosrl.it/guide/quanti-metri-cubi-servono-per-trasloco)
+- [Furgone per frigorifero](https://www.lilosrl.it/guide/furgone-per-frigorifero)
 
-## File correlati
+## Optional
 
-- Architettura sito per AI (testo plain, consigliato): https://www.lilosrl.it/site-structure-for-ai.txt
-- Architettura sito per AI (Markdown, stesso contenuto): https://www.lilosrl.it/site-structure-for-ai.md
-- Sitemap: https://www.lilosrl.it/sitemap.xml
-- Robots: https://www.lilosrl.it/robots.txt
+- [Privacy](https://www.lilosrl.it/privacy)
+- [Cookie policy](https://www.lilosrl.it/cookie-policy)
+- [Termini e condizioni](https://www.lilosrl.it/termini-condizioni)
+- [Sitemap](https://www.lilosrl.it/sitemap.xml)
+- [Robots](https://www.lilosrl.it/robots.txt)
+- [Architettura per AI (txt)](https://www.lilosrl.it/site-structure-for-ai.txt)
+- [Architettura per AI (md)](https://www.lilosrl.it/site-structure-for-ai.md)
