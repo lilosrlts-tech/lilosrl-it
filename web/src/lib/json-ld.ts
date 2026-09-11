@@ -185,7 +185,7 @@ function buildDailyRentalOffer(params: {
     validFrom,
     priceValidUntil,
     url: canonical,
-    businessFunction: "https://schema.org/LeaseOut",
+    businessFunction: "http://purl.org/goodrelations/v1#LeaseOut",
     priceSpecification: {
       "@type": "UnitPriceSpecification",
       price,
@@ -224,54 +224,6 @@ function buildDailyRentalOffer(params: {
       },
     },
   };
-}
-
-/** Rimuove Product da JSON-LD custom (evita Schede commercianti / spedizioni-resi). */
-function sanitizeCustomJsonLd(
-  raw: Record<string, unknown>,
-  offer: Record<string, unknown> | null,
-  canonical: string,
-  images: string[],
-  description: string,
-  brandName: string,
-): Record<string, unknown> {
-  const custom: Record<string, unknown> = { ...raw, url: canonical };
-  const type = custom["@type"];
-  let types = Array.isArray(type) ? type.map(String) : type != null ? [String(type)] : [];
-
-  if (types.includes("Product")) {
-    types = types.filter((t) => t !== "Product");
-  }
-  // Un solo tipo concreto: evita warning Ahrefs su multi-type ridondanti.
-  if (types.includes("Car")) {
-    types = ["Car"];
-  } else if (types.includes("Vehicle")) {
-    types = ["Vehicle"];
-  } else if (types.length === 0) {
-    types = ["Vehicle"];
-  } else {
-    types = [types[0]];
-  }
-  custom["@type"] = types[0];
-
-  // Proprietà non valide su Vehicle/Car secondo schema.org
-  delete custom.provider;
-  delete custom.locationCreated;
-  delete custom.keywords;
-  if (custom.offers && typeof custom.offers === "object" && !Array.isArray(custom.offers)) {
-    const offers = { ...(custom.offers as Record<string, unknown>) };
-    delete offers.additionalProperty;
-    custom.offers = offers;
-  }
-
-  if (offer && custom.offers == null) custom.offers = offer;
-  if (!custom.image && images.length > 0) custom.image = images;
-  if (!custom.description) custom.description = description;
-  if (!custom.brand) {
-    custom.brand = { "@type": "Brand", name: brandName };
-  }
-
-  return custom;
 }
 
 function quantitativeMc(value: number) {
@@ -429,7 +381,8 @@ function buildVeicoloFaqPageJsonLd(
     "@id": `${canonical}#faq`,
     url: canonical,
     name: `Domande frequenti — ${getDisplayName(veicolo)}`,
-    isPartOf: { "@id": `${canonical}#veicolo` },
+    // Niente isPartOf → Vehicle/Car: Schema.org richiede CreativeWork (Ahrefs/validator).
+    // Il collegamento resta via subjectOf sul veicolo.
     mainEntity: faqItems.map((item) => ({
       "@type": "Question",
       name: item.q,
@@ -501,18 +454,8 @@ export function buildVeicoloJsonLd(veicolo: VeicoloPubblico): Record<string, unk
   ];
   if (faqPage) graph.push(faqPage);
 
-  if (veicolo.json_ld && Object.keys(veicolo.json_ld).length > 0) {
-    graph.push(
-      sanitizeCustomJsonLd(
-        veicolo.json_ld,
-        offers,
-        canonical,
-        images,
-        description,
-        veicolo.marca,
-      ),
-    );
-  }
+  // Non includiamo veicolo.json_ld custom (legacy CMS): spesso Offer senza price,
+  // address stringa e Car duplicato → errori Schema.org / Ahrefs. Lo schema sopra è completo.
 
   return pruneJsonLd({
     "@context": "https://schema.org",
@@ -595,11 +538,7 @@ export function buildOrganizationJsonLd(): Record<string, unknown> {
       addressRegion: COMPANY.region,
       addressCountry: "IT",
     },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: COMPANY.geo.latitude,
-      longitude: COMPANY.geo.longitude,
-    },
+    // geo non è una proprietà di Organization (Schema.org) → resta su AutoRental/Place.
     telephone: COMPANY.phoneE164,
     email: COMPANY.email,
     vatID: COMPANY.vatNumber,
@@ -781,7 +720,7 @@ export function buildOfferteJsonLd(faqItems: AiFaqItem[]): Record<string, unknow
           availability: "https://schema.org/InStock",
           ...offerValidityDates(),
           url: canonical,
-          businessFunction: "https://schema.org/LeaseOut",
+          businessFunction: "http://purl.org/goodrelations/v1#LeaseOut",
           category: "Furgoni grandi (uso città)",
           seller: { "@id": `${SITE_URL}/#organization` },
           itemOffered: {
@@ -889,7 +828,7 @@ export function buildFlottaCategoriaJsonLd(
                 availability: "https://schema.org/InStock",
                 ...offerValidityDates(),
                 url: itemUrl,
-                businessFunction: "https://schema.org/LeaseOut",
+                businessFunction: "http://purl.org/goodrelations/v1#LeaseOut",
                 seller: autoRentalRef(),
               };
             }
@@ -1086,7 +1025,7 @@ export function buildTariffeJsonLd(
           itemCondition: "https://schema.org/UsedCondition",
           ...offerValidityDates(),
           url: `${SITE_URL}/flotta/${voce.slug}`,
-          businessFunction: "https://schema.org/LeaseOut",
+          businessFunction: "http://purl.org/goodrelations/v1#LeaseOut",
           category: sezione.categoria.nome,
           priceSpecification: {
             "@type": "UnitPriceSpecification",
