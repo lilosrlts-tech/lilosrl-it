@@ -8,7 +8,7 @@ import { resolveMetadataTitle } from "@/lib/metadata-title";
 import { canonicalUrl } from "@/lib/seo";
 import { COMPANY, SITE_URL } from "@/lib/constants";
 import { NAP_NOLEGGIO_STREET } from "@/lib/nap";
-import { pruneJsonLd } from "@/lib/json-ld";
+import { buildNoleggioHubJsonLd } from "@/lib/json-ld";
 import {
   PREZZO_IVA_DICITURA,
   TARIFFE_CATEGORIA,
@@ -61,41 +61,14 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 function buildJsonLd() {
-  const url = canonicalUrl("/noleggio-auto-trieste");
-  return pruneJsonLd({
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "WebPage",
-        "@id": `${url}#webpage`,
-        name: META_TITLE,
-        description: META_DESCRIPTION,
-        url,
-        isPartOf: { "@type": "WebSite", url: SITE_URL, name: COMPANY.name },
-      },
-      {
-        "@type": "Service",
-        name: "Noleggio auto a Trieste",
-        provider: { "@type": "AutoRental", name: COMPANY.name, url: SITE_URL },
-        areaServed: { "@type": "City", name: "Trieste" },
-        url,
-      },
-      {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Inizio", item: SITE_URL },
-          { "@type": "ListItem", position: 2, name: "Noleggio auto Trieste", item: url },
-        ],
-      },
-      {
-        "@type": "FAQPage",
-        mainEntity: FAQ.map((item) => ({
-          "@type": "Question",
-          name: item.q,
-          acceptedAnswer: { "@type": "Answer", text: item.a },
-        })),
-      },
-    ],
+  return buildNoleggioHubJsonLd({
+    path: "/noleggio-auto-trieste",
+    pageName: META_TITLE,
+    pageDescription: META_DESCRIPTION,
+    serviceName: "Noleggio auto a Trieste",
+    serviceType: "Noleggio auto",
+    breadcrumbName: "Noleggio auto Trieste",
+    faqItems: FAQ,
   });
 }
 

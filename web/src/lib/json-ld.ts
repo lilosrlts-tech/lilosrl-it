@@ -695,6 +695,74 @@ export function buildFaqJsonLd(items: AiFaqItem[]): Record<string, unknown> {
   };
 }
 
+/**
+ * Hub pilastro /noleggio-*-trieste — allineato a Google Rich Results / Ahrefs:
+ * AutoRental completo nel @graph + Service.provider via @id (niente AutoRental “scheletrico”),
+ * FAQPage con @id/url/name come sulle schede veicolo.
+ */
+export function buildNoleggioHubJsonLd(params: {
+  path: string;
+  pageName: string;
+  pageDescription: string;
+  serviceName: string;
+  serviceType: string;
+  breadcrumbName: string;
+  faqItems: AiFaqItem[];
+}): Record<string, unknown> {
+  const url = `${SITE_URL}${params.path.startsWith("/") ? params.path : `/${params.path}`}`;
+  const faqId = `${url}#faq`;
+
+  return pruneJsonLd({
+    "@context": "https://schema.org",
+    "@graph": [
+      autoRentalProvider(),
+      {
+        "@type": "WebPage",
+        "@id": `${url}#webpage`,
+        name: params.pageName,
+        description: params.pageDescription,
+        url,
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        about: { "@id": `${url}#service` },
+        mainEntity: { "@id": faqId },
+      },
+      {
+        "@type": "Service",
+        "@id": `${url}#service`,
+        name: params.serviceName,
+        serviceType: params.serviceType,
+        description: params.pageDescription,
+        provider: autoRentalRef(),
+        areaServed: { "@type": "City", name: "Trieste" },
+        url,
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Inizio", item: SITE_URL },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: params.breadcrumbName,
+            item: url,
+          },
+        ],
+      },
+      {
+        "@type": "FAQPage",
+        "@id": faqId,
+        url,
+        name: `Domande frequenti — ${params.serviceName}`,
+        mainEntity: params.faqItems.map((item) => ({
+          "@type": "Question",
+          name: item.q,
+          acceptedAnswer: { "@type": "Answer", text: item.a },
+        })),
+      },
+    ],
+  });
+}
+
 /** FAQ + Offer per la pagina Offerta del Mese (Promo Weekend — solo furgoni-grandi-citta). */
 export function buildOfferteJsonLd(faqItems: AiFaqItem[]): Record<string, unknown> {
   const canonical = `${SITE_URL}/offerte-noleggio-furgoni-trieste`;
