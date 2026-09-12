@@ -1,11 +1,11 @@
 /**
- * Notifica IndexNow per guide, pilastri e hub commerciali.
+ * Notifica IndexNow: URL prioritari + (se disponibile) tutto il sitemap live.
  *
  * Uso:
  *   npm run indexnow
  *
- * Su Vercel production può essere invocato da postbuild se INDEXNOW_ON_BUILD=1.
- * Non gira su preview/dev a meno di FORCE_INDEXNOW=1.
+ * Su Vercel production gira da postbuild (sempre).
+ * Preview/dev: solo con FORCE_INDEXNOW=1 o `npm run indexnow`.
  */
 
 const SITE_URL = "https://www.lilosrl.it";
@@ -21,9 +21,20 @@ const GUIDE_SLUGS = [
   "furgone-per-frigorifero",
 ];
 
-const PATHS = [
+const FLOTTA_CATEGORIE = [
+  "auto",
+  "pulmini-9-posti",
+  "furgoni-piccoli",
+  "furgoni-medi",
+  "furgoni-grandi",
+  "furgoni-grandi-citta",
+  "furgoni-xl",
+];
+
+const FALLBACK_PATHS = [
   "/",
   "/flotta",
+  ...FLOTTA_CATEGORIE.map((slug) => `/flotta/${slug}`),
   "/noleggio-furgoni-trieste",
   "/noleggio-auto-trieste",
   "/noleggio-pulmini-9-posti-trieste",
@@ -32,16 +43,23 @@ const PATHS = [
   "/offerte-noleggio-furgoni-trieste",
   "/contatti",
   "/chi-siamo",
+  "/autolavaggio",
   "/guide",
   ...GUIDE_SLUGS.map((slug) => `/guide/${slug}`),
+  "/privacy",
+  "/cookie-policy",
+  "/termini-condizioni",
 ];
 
 function shouldRun() {
   if (process.env.FORCE_INDEXNOW === "1") return true;
+  // Produzione Vercel: sempre (postbuild). Opt-out: INDEXNOW_ON_BUILD=0
+  if (process.env.VERCEL_ENV === "production" && process.env.INDEXNOW_ON_BUILD !== "0") {
+    return true;
+  }
   if (process.env.INDEXNOW_ON_BUILD === "1" && process.env.VERCEL_ENV === "production") {
     return true;
   }
-  // CLI esplicito: npm run indexnow (senza VERCEL_ENV)
   if (!process.env.VERCEL_ENV && process.env.npm_lifecycle_event === "indexnow") {
     return true;
   }
@@ -51,15 +69,35 @@ function shouldRun() {
   return false;
 }
 
+function pathToUrl(p) {
+  return p === "/" ? `${SITE_URL}/` : `${SITE_URL}${p}`;
+}
+
+async function fetchSitemapUrls() {
+  try {
+    const res = await fetch(`${SITE_URL}/sitemap.xml`, {
+      headers: { Accept: "application/xml,text/xml,*/*" },
+    });
+    if (!res.ok) return [];
+    const xml = await res.text();
+    const urls = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1].trim());
+    return urls.filter((u) => u.startsWith(SITE_URL));
+  } catch {
+    return [];
+  }
+}
+
 async function main() {
   if (!shouldRun()) {
     console.log(
-      "[indexnow] skip (set FORCE_INDEXNOW=1 or INDEXNOW_ON_BUILD=1 on production, or run npm run indexnow)",
+      "[indexnow] skip (production auto; or FORCE_INDEXNOW=1 / npm run indexnow)",
     );
     return;
   }
 
-  const urlList = PATHS.map((p) => (p === "/" ? `${SITE_URL}/` : `${SITE_URL}${p}`));
+  const fromSitemap = await fetchSitemapUrls();
+  const fallback = FALLBACK_PATHS.map(pathToUrl);
+  const urlList = [...new Set(fromSitemap.length > 0 ? [...fromSitemap, ...fallback] : fallback)];
 
   const res = await fetch(INDEXNOW_ENDPOINT, {
     method: "POST",
@@ -73,7 +111,9 @@ async function main() {
   });
 
   const body = await res.text();
-  console.log(`[indexnow] status=${res.status} urls=${urlList.length}`);
+  console.log(
+    `[indexnow] status=${res.status} urls=${urlList.length} (sitemap=${fromSitemap.length})`,
+  );
   if (body) console.log(body);
   if (!res.ok) process.exitCode = 1;
 }

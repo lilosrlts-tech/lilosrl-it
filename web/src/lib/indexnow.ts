@@ -9,7 +9,7 @@ export const INDEXNOW_KEY_LOCATION = `${SITE_URL}/${INDEXNOW_KEY}.txt`;
 
 const INDEXNOW_ENDPOINT = "https://api.indexnow.org/indexnow";
 
-/** URL SEO prioritari da notificare (pilastri, guide, hub commerciali). */
+/** URL SEO prioritari da notificare (pilastri, guide, hub, legali). */
 export function getIndexNowPriorityUrls(): string[] {
   const paths = [
     "/",
@@ -22,8 +22,12 @@ export function getIndexNowPriorityUrls(): string[] {
     "/offerte-noleggio-furgoni-trieste",
     "/contatti",
     "/chi-siamo",
+    "/autolavaggio",
     "/guide",
     ...getGuideSlugs().map((slug) => `/guide/${slug}`),
+    "/privacy",
+    "/cookie-policy",
+    "/termini-condizioni",
   ];
   return paths.map((p) => canonicalUrl(p));
 }

@@ -23,14 +23,16 @@ const STATIC_PRIORITIES: Partial<Record<SeoPageKey, number>> = {
 };
 
 /**
- * Pagine legali: restano sul sito e possono essere indicizzate via meta,
- * ma non entrano in sitemap (poco valore di crawl vs pagine commerciali).
+ * Pagine legali: indexabili (trust) ma priorità bassa in sitemap.
+ * Incluse esplicitamente sotto (non via SEO_PAGE_PATHS default 0.6).
  */
-const SITEMAP_EXCLUDED_PATHS = new Set([
+const LEGAL_PATHS = [
   "/privacy",
   "/cookie-policy",
   "/termini-condizioni",
-]);
+] as const;
+
+const SITEMAP_EXCLUDED_FROM_STATIC = new Set<string>(LEGAL_PATHS);
 
 export const revalidate = 3600;
 
@@ -50,10 +52,6 @@ function sitemapEntry(
   }
 
   const pathname = new URL(url).pathname.replace(/\/+$/, "") || "/";
-
-  if (SITEMAP_EXCLUDED_PATHS.has(pathname)) {
-    return null;
-  }
 
   // Escludi path che esistono solo come sorgente di redirect legacy.
   if (pathname !== "/" && REDIRECT_PATHS.has(pathname)) {
@@ -98,7 +96,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const staticEntries = seoRows
     .filter(({ path, seo }) => {
-      if (SITEMAP_EXCLUDED_PATHS.has(path)) return false;
+      if (SITEMAP_EXCLUDED_FROM_STATIC.has(path)) return false;
       if (isSeoPageNoindex(seo)) return false;
       return true;
     })
@@ -170,5 +168,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ),
   ];
 
-  return uniqueEntries([...staticEntries, ...categoryEntries, ...vehicleEntries, ...guidaEntries]);
+  const legalEntries = LEGAL_PATHS.map((path) =>
+    sitemapEntry(path, {
+      lastModified: now,
+      changeFrequency: "yearly" as const,
+      priority: 0.2,
+    }),
+  );
+
+  return uniqueEntries([
+    ...staticEntries,
+    ...categoryEntries,
+    ...vehicleEntries,
+    ...guidaEntries,
+    ...legalEntries,
+  ]);
 }
