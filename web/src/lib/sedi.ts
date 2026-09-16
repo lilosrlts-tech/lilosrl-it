@@ -18,6 +18,7 @@ import {
   NAP_SERVIZI_NOLEGGIO,
   formatPhoneDisplay,
 } from "@/lib/nap";
+import { AUTOLAVAGGIO_URL } from "@/lib/nav-config";
 import type { ImpostazioniSito } from "@/types/impostazioni";
 
 function formatOrariLines(testo: string): string[] {
@@ -71,8 +72,8 @@ export const SEDE_AUTOLAVAGGIO: SedeOperativa = {
   servizi: NAP_SERVIZI_AUTOLAVAGGIO,
   orariRighe: NAP_ORARI_AUTOLAVAGGIO_RIGHE,
   orariTesto: NAP_ORARI_AUTOLAVAGGIO,
-  ctaHref: "/autolavaggio",
-  ctaLabel: "Scopri l'autolavaggio",
+  ctaHref: AUTOLAVAGGIO_URL,
+  ctaLabel: "Vai al sito Autolavaggio",
 };
 
 export const SEDI_OPERATIVE = [SEDE_NOLEGGIO, SEDE_AUTOLAVAGGIO] as const;

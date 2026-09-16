@@ -74,12 +74,23 @@ export function SedeCard({
               Apri in Google Maps
             </a>
             {showCta && sede.ctaHref && sede.ctaLabel ? (
-              <Link
-                href={sede.ctaHref}
-                className="inline-flex rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
-              >
-                {sede.ctaLabel} →
-              </Link>
+              sede.ctaHref.startsWith("http") ? (
+                <a
+                  href={sede.ctaHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+                >
+                  {sede.ctaLabel} →
+                </a>
+              ) : (
+                <Link
+                  href={sede.ctaHref}
+                  className="inline-flex rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+                >
+                  {sede.ctaLabel} →
+                </Link>
+              )
             ) : null}
           </div>
         </div>

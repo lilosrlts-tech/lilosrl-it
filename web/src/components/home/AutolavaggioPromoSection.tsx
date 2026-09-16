@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { GOLD_TEXT } from "@/lib/nav-config";
+import { AUTOLAVAGGIO_URL, GOLD_TEXT } from "@/lib/nav-config";
 
 const AUTOLAVAGGIO_IMAGE = "/images/staff-autolavaggio-lilo-trieste.webp";
 const AUTOLAVAGGIO_IMAGE_WIDTH = 1024;
@@ -33,9 +33,17 @@ export function AutolavaggioPromoSection() {
             Autolavaggio professionale a Trieste
           </h2>
           <p className="mt-4 text-base leading-relaxed text-slate-600 sm:text-lg">
-            Oltre al noleggio, LILO S.r.l. offre un autolavaggio completo con tecnologie
-            all&apos;avanguardia: cura del veicolo, igiene certificata e rispetto per
-            l&apos;ambiente.
+            Accanto al noleggio, LILO gestisce un autolavaggio a Trieste. Servizi e listino sono sul
+            sito dedicato{" "}
+            <a
+              href={AUTOLAVAGGIO_URL}
+              className="font-semibold text-brand-700 underline-offset-2 hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              autolavaggiolilo.it
+            </a>
+            .
           </p>
 
           <ul className="mt-6 space-y-3">
@@ -51,10 +59,12 @@ export function AutolavaggioPromoSection() {
           </ul>
 
           <Link
-            href="/autolavaggio"
+            href={AUTOLAVAGGIO_URL}
             className="mt-8 inline-flex items-center gap-2 rounded-full bg-brand-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-700"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            Scopri i Servizi di Lavaggio
+            Vai al sito Autolavaggio
             <span aria-hidden="true">→</span>
           </Link>
         </div>

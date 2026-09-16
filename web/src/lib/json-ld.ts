@@ -962,13 +962,13 @@ export function buildContattiJsonLd(impostazioni: ImpostazioniSito): Record<stri
   });
 }
 
+const AUTOLAVAGGIO_SITE_URL = "https://www.autolavaggiolilo.it";
 const AUTOLAVAGGIO_PAGE_URL = `${SITE_URL}/autolavaggio`;
 const AUTOLAVAGGIO_BUSINESS_ID = `${SITE_URL}/#autolavaggio`;
 
 /**
  * LocalBusiness dedicato all’autolavaggio (sede Schiaparelli).
- * Distinto da AutoRental noleggio — nessun tipo inventato non supportato da schema.org.
- * (Non esiste un tipo ufficiale «AutoWash»; usiamo LocalBusiness + nome/URL dedicati.)
+ * Distinto da AutoRental noleggio — URL canonico sul sito lavaggio (anti-cannibalismo).
  */
 function buildAutolavaggioLocalBusiness(
   impostazioni: ImpostazioniSito,
@@ -989,6 +989,7 @@ function buildAutolavaggioLocalBusiness(
       : COMPANY.phoneE164;
 
   const sameAs = [
+    AUTOLAVAGGIO_SITE_URL,
     impostazioni.social_facebook_autolavaggio,
     impostazioni.social_facebook,
   ].filter((url): url is string => Boolean(url && url.trim()));
@@ -999,8 +1000,8 @@ function buildAutolavaggioLocalBusiness(
     name: "LILO Autolavaggio Trieste",
     alternateName: "Lilo Autolavaggio",
     description:
-      "Autolavaggio a Trieste: lavaggio interno ed esterno, sanificazione e cura tappezzeria. Sede distinta dal noleggio veicoli.",
-    url: AUTOLAVAGGIO_PAGE_URL,
+      "Autolavaggio a Trieste: lavaggio interno ed esterno, sanificazione e cura tappezzeria. Sito dedicato autolavaggiolilo.it — sede distinta dal noleggio veicoli.",
+    url: AUTOLAVAGGIO_SITE_URL,
     image: SITE_LOGO_URL,
     telephone,
     email: impostazioni.email_contatto?.trim() || COMPANY.email,
@@ -1027,7 +1028,7 @@ function buildAutolavaggioLocalBusiness(
   return node;
 }
 
-/** JSON-LD pagina /autolavaggio — entity LocalBusiness distinta dal noleggio. */
+/** JSON-LD pagina ponte /autolavaggio → punta l’attività al sito dedicato. */
 export function buildAutolavaggioJsonLd(
   impostazioni: ImpostazioniSito,
 ): Record<string, unknown> {
@@ -1038,17 +1039,18 @@ export function buildAutolavaggioJsonLd(
       buildOrganizationJsonLd(),
       {
         ...wash,
-        mainEntityOfPage: AUTOLAVAGGIO_PAGE_URL,
+        mainEntityOfPage: AUTOLAVAGGIO_SITE_URL,
       },
       {
         "@type": "WebPage",
         "@id": `${AUTOLAVAGGIO_PAGE_URL}#webpage`,
         url: AUTOLAVAGGIO_PAGE_URL,
-        name: "Autolavaggio a Trieste | LILO",
+        name: "Autolavaggio a Trieste | LILO (ponte)",
         description:
-          "Autolavaggio LILO a Trieste in Via Giovanni Schiaparelli 21/a. Lavaggio completo, sanificazione e cura interni.",
+          "Punto informativo LILO sull’autolavaggio a Trieste. Servizi e listino sul sito dedicato autolavaggiolilo.it.",
         isPartOf: { "@id": `${SITE_URL}/#website` },
         about: { "@id": AUTOLAVAGGIO_BUSINESS_ID },
+        significantLink: AUTOLAVAGGIO_SITE_URL,
         breadcrumb: {
           "@type": "BreadcrumbList",
           itemListElement: [

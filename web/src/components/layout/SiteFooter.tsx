@@ -160,9 +160,6 @@ export function SiteFooter({ impostazioni }: SiteFooterProps) {
                   </li>
                 );
               })}
-              <li>
-                <FooterLink href="/autolavaggio">Autolavaggio LILO Trieste</FooterLink>
-              </li>
             </ul>
           </FooterColumn>
 

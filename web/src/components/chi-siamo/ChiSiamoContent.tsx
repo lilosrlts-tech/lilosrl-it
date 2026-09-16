@@ -25,6 +25,7 @@ import {
   WHY_CHOOSE,
 } from "@/lib/chi-siamo-data";
 import { FLEET_IDENTITY_SENTENCE_LEGAL } from "@/lib/fleet-identity";
+import { AUTOLAVAGGIO_URL } from "@/lib/nav-config";
 import { resolveSedeAutolavaggio, resolveSedeNoleggio } from "@/lib/sedi";
 import type { ImpostazioniSito } from "@/types/impostazioni";
 
@@ -163,11 +164,13 @@ export function ChiSiamoContent({ impostazioni }: ChiSiamoContentProps) {
             {AUTOLAVAGGIO_SPECIALITA}
           </p>
           <Link
-            href="/autolavaggio"
+            href={AUTOLAVAGGIO_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="mt-6 inline-block font-semibold hover:underline"
             style={{ color: GOLD_TEXT }}
           >
-            Vai all&apos;autolavaggio →
+            Vai al sito Autolavaggio →
           </Link>
         </article>
 

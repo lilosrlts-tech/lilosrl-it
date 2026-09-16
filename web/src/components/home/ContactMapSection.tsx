@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { PhoneLink } from "@/components/shared/PhoneLink";
 import { COMPANY } from "@/lib/constants";
+import { AUTOLAVAGGIO_URL } from "@/lib/nav-config";
 import { resolveSedeAutolavaggio, resolveSedeNoleggio } from "@/lib/sedi";
 import type { ImpostazioniSito } from "@/types/impostazioni";
 
@@ -136,10 +137,12 @@ export function ContactMapSection({ impostazioni }: ContactMapSectionProps) {
                 Chiama {autolavaggio.telefono}
               </PhoneLink>
               <Link
-                href="/autolavaggio"
+                href={AUTOLAVAGGIO_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 hover:bg-slate-50"
               >
-                Scopri i Servizi →
+                Sito Autolavaggio →
               </Link>
             </div>
           </article>

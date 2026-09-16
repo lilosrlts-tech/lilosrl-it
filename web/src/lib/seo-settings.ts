@@ -36,10 +36,10 @@ const DEMO_SEO: Record<SeoPageKey, SeoSettings> = {
   },
   autolavaggio: {
     page_key: "autolavaggio",
-    seo_title: "Autolavaggio Trieste | LILO S.r.l.",
+    seo_title: "Autolavaggio Trieste | LILO — sito dedicato",
     seo_description:
-      "Autolavaggio self-service e professionale a Trieste. Lavaggio interno ed esterno, ingresso Via Schiaparelli, uscita Via De Coletti.",
-    seo_keywords: ["autolavaggio trieste", "lavaggio auto trieste", "LILO autolavaggio"],
+      "Autolavaggio LILO a Trieste (Via Schiaparelli). Servizi e listino sul sito dedicato autolavaggiolilo.it. Qui: sede, orari e contatti.",
+    seo_keywords: ["autolavaggio trieste", "LILO autolavaggio", "autolavaggiolilo"],
     meta_robots: "index, follow",
     canonical_url: null,
     og_title: null,
