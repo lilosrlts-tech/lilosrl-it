@@ -570,13 +570,12 @@ export function buildHomeJsonLd(): Record<string, unknown> {
         ...autoRentalProvider(),
         parentOrganization: { "@id": `${SITE_URL}/#organization` },
       },
-      // Entity autolavaggio distinta (sede Schiaparelli) — Knowledge Graph duale.
-      // Campi Google LocalBusiness (anche facoltativi) da nap.ts, senza dipendere dal CMS.
+      // Entity autolavaggio distinta (sede Schiaparelli) — URL sul sito dedicato.
       {
         "@type": "LocalBusiness",
         "@id": `${SITE_URL}/#autolavaggio`,
         name: "LILO Autolavaggio Trieste",
-        url: `${SITE_URL}/autolavaggio`,
+        url: "https://www.autolavaggiolilo.it",
         telephone: NAP_PHONE_E164,
         image: SITE_LOGO_URL,
         // ASCII "$$": i simboli €€ risultavano corrotti ("??") in produzione.
@@ -592,6 +591,7 @@ export function buildHomeJsonLd(): Record<string, unknown> {
         openingHoursSpecification: orariToOpeningHoursSpecification(
           NAP_ORARI_AUTOLAVAGGIO,
         ),
+        sameAs: ["https://www.autolavaggiolilo.it"],
         parentOrganization: { "@id": `${SITE_URL}/#organization` },
       },
       {
