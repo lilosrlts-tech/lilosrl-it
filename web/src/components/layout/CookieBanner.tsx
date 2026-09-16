@@ -117,29 +117,27 @@ export function CookieBanner() {
 
       {visible ? (
         <div
-          className="fixed inset-x-0 bottom-0 z-[100] flex justify-center p-0 sm:inset-0 sm:items-center sm:bg-slate-950/55 sm:p-6"
+          className="fixed inset-x-0 bottom-0 z-[100] flex justify-center p-0 pointer-events-none sm:inset-0 sm:items-center sm:bg-slate-950/55 sm:p-6 sm:pointer-events-auto"
           role="dialog"
           aria-modal="true"
           aria-labelledby="cookie-consent-title"
         >
-          {/* Mobile: foglio basso senza oscurare tutta la pagina */}
-          <div className="max-h-[min(70vh,32rem)] w-full overflow-y-auto rounded-t-2xl border border-slate-200 bg-white p-4 shadow-[0_-8px_30px_rgba(15,23,42,0.15)] sm:max-h-[92vh] sm:max-w-2xl sm:rounded-2xl sm:p-8 sm:shadow-2xl">
-            <div className="mx-auto mb-3 h-1 w-10 rounded-full bg-slate-200 sm:hidden" aria-hidden="true" />
-            <p className="text-xs font-medium text-slate-400">{hostLabel()}</p>
+          {/* Mobile: barra bassa compatta — non copre l’hero / non oscura la pagina */}
+          <div className="pointer-events-auto max-h-[min(42vh,20rem)] w-full overflow-y-auto rounded-t-xl border border-slate-200 bg-white px-3 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-2 shadow-[0_-6px_24px_rgba(15,23,42,0.12)] sm:max-h-[92vh] sm:max-w-2xl sm:rounded-2xl sm:p-8 sm:shadow-2xl">
+            <div className="mx-auto mb-2 h-1 w-8 rounded-full bg-slate-200 sm:hidden" aria-hidden="true" />
+            <p className="hidden text-xs font-medium text-slate-400 sm:block">{hostLabel()}</p>
             <h2
               id="cookie-consent-title"
-              className="mt-1 text-base font-bold leading-snug text-slate-900 sm:mt-2 sm:text-center sm:text-xl"
+              className="text-sm font-bold leading-snug text-slate-900 sm:mt-2 sm:text-center sm:text-xl"
             >
-              <span className="sm:hidden">Privacy e cookie</span>
+              <span className="sm:hidden">Cookie</span>
               <span className="hidden sm:inline">
                 Consideriamo i tuoi dati una tua proprietà e sosteniamo il tuo diritto alla privacy
                 e alla trasparenza.
               </span>
             </h2>
-            <p className="mt-2 text-sm leading-relaxed text-slate-600 sm:text-center">
-              <span className="sm:hidden">
-                Scegli quanto possiamo usare i cookie. Puoi cambiare in qualsiasi momento.
-              </span>
+            <p className="mt-0.5 text-xs leading-snug text-slate-500 sm:mt-2 sm:text-center sm:text-sm sm:leading-relaxed sm:text-slate-600">
+              <span className="sm:hidden">Scegli il livello, poi salva. Modificabile dal footer.</span>
               <span className="hidden sm:inline">
                 Per offrirvi la migliore esperienza sul nostro sito web, utilizziamo cookie o
                 tecnologie simili. Selezionate un livello di accesso ai dati per decidere per quali
@@ -148,7 +146,7 @@ export function CookieBanner() {
             </p>
 
             <div
-              className="mt-4 flex flex-col gap-2 sm:mt-6 sm:flex-row sm:justify-center"
+              className="mt-2.5 flex flex-row gap-1.5 sm:mt-6 sm:justify-center sm:gap-2"
               role="radiogroup"
               aria-label="Livello di privacy"
             >
@@ -162,14 +160,14 @@ export function CookieBanner() {
                     role="radio"
                     aria-checked={selected}
                     onClick={() => selectLevel(key)}
-                    className={`flex flex-1 items-center justify-center gap-2 rounded-full border px-3 py-2.5 text-sm font-semibold transition ${
+                    className={`flex min-h-10 flex-1 items-center justify-center gap-1.5 rounded-full border px-1.5 py-1.5 text-[11px] font-semibold leading-tight transition sm:gap-2 sm:px-3 sm:py-2.5 sm:text-sm ${
                       selected
                         ? "border-slate-800 bg-slate-800 text-white shadow-sm"
                         : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"
                     }`}
                   >
                     <span
-                      className={`h-2.5 w-2.5 shrink-0 rounded-full ${item.swatch} ${
+                      className={`h-2 w-2 shrink-0 rounded-full sm:h-2.5 sm:w-2.5 ${item.swatch} ${
                         selected ? "ring-2 ring-white/40" : ""
                       }`}
                       aria-hidden="true"
@@ -180,12 +178,15 @@ export function CookieBanner() {
               })}
             </div>
 
-            <p className="mt-3 text-sm leading-relaxed text-slate-600 sm:mt-5 sm:text-center">
+            <p className="mt-2 hidden text-sm leading-relaxed text-slate-600 sm:mt-5 sm:block sm:text-center">
+              {copy.description}
+            </p>
+            <p className="mt-1.5 line-clamp-2 text-[11px] leading-snug text-slate-500 sm:hidden">
               {copy.description}
             </p>
 
             {(customizeOpen || level === "personalizzato") && (
-              <div className="mt-4 space-y-3 rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm">
+              <div className="mt-2 space-y-2 rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm sm:mt-4 sm:space-y-3 sm:rounded-xl sm:p-4">
                 <label className="flex items-start justify-between gap-3">
                   <span>
                     <span className="font-semibold text-slate-900">Analitica</span>
@@ -223,17 +224,40 @@ export function CookieBanner() {
               </div>
             )}
 
-            <div className="mt-4 flex justify-center pb-[max(0.25rem,env(safe-area-inset-bottom))] sm:mt-6 sm:pb-0">
+            <div className="mt-2.5 flex gap-2 sm:mt-6 sm:justify-center sm:pb-0">
+              <button
+                type="button"
+                onClick={() => {
+                  const prefs: CookiePreferences = {
+                    version: 1,
+                    level: "privato",
+                    analytics: false,
+                    marketing: false,
+                    updatedAt: new Date().toISOString(),
+                  };
+                  writeCookiePreferences(prefs);
+                  applyGoogleConsent(prefs);
+                  setLevel("privato");
+                  setAnalytics(false);
+                  setMarketing(false);
+                  setHasPrefs(true);
+                  setVisible(false);
+                }}
+                className="min-h-10 flex-1 rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-semibold text-slate-800 transition hover:bg-slate-50 sm:hidden"
+              >
+                Solo necessari
+              </button>
               <button
                 type="button"
                 onClick={save}
-                className="w-full max-w-sm rounded-xl bg-teal-500 px-6 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-teal-600 sm:w-auto sm:min-w-[240px]"
+                className="min-h-10 flex-[1.2] rounded-lg bg-teal-500 px-3 py-2 text-xs font-bold text-white shadow-sm transition hover:bg-teal-600 sm:w-auto sm:min-w-[240px] sm:flex-none sm:rounded-xl sm:px-6 sm:py-3 sm:text-sm"
               >
-                Salva le mie preferenze
+                <span className="sm:hidden">Salva</span>
+                <span className="hidden sm:inline">Salva le mie preferenze</span>
               </button>
             </div>
 
-            <div className="mt-3 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500 sm:mt-5">
+            <div className="mt-2 flex flex-wrap items-center justify-between gap-x-3 gap-y-1 text-[11px] text-slate-500 sm:mt-5 sm:text-xs">
               <button
                 type="button"
                 onClick={() => {
