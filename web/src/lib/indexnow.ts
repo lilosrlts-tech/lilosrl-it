@@ -22,7 +22,6 @@ export function getIndexNowPriorityUrls(): string[] {
     "/offerte-noleggio-furgoni-trieste",
     "/contatti",
     "/chi-siamo",
-    "/autolavaggio",
     "/guide",
     ...getGuideSlugs().map((slug) => `/guide/${slug}`),
     "/privacy",

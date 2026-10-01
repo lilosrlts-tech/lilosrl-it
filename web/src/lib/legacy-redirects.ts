@@ -6,7 +6,7 @@
  *   - /prezzi e /tariffe → /tariffe-noleggio-furgoni-trieste
  *   - /offerte e /offerta-del-mese → /offerte-noleggio-furgoni-trieste
  *   - /flotta-noleggio e /flotta-noleggio-2 → /flotta
- *   - /autolavaggio resta su lilosrl.it (nessun redirect fuori dominio)
+ *   - /autolavaggio → autolavaggiolilo.it (301, 2026-10-01: niente seconda URL indicizzabile)
  *   - schede /car/*: mappate 301 → /flotta/... + catch-all → /flotta
  *   - root categorie (/pulmini-9-posti, /furgoni-*, /auto) → /flotta/...
  *
@@ -16,7 +16,7 @@
  *   - /slide-page/contatti → /contatti (non fallback /flotta)
  *   - /flotta/fiat-doblo → /flotta/fiat-doblo-cargo (scheda canonica)
  * Decisioni SEO (2026-09-07 / GSC 404):
- *   - /portfolio-items/autolavaggio → /autolavaggio (301)
+ *   - /portfolio-items/autolavaggio → autolavaggiolilo.it (301, un solo hop)
  *   - /author/*, /upload/* e placeholder WP → 410 Gone (middleware)
  *
  * Status HTTP: sempre statusCode 301 (non permanent:true → 308) per tool SEO.
@@ -28,6 +28,13 @@
  */
 
 import { VEICOLO_SLUG_REDIRECTS_301 } from "./veicolo-slug-renames";
+
+/**
+ * Canonico del sito autolavaggio (apex, senza www).
+ * www.autolavaggiolilo.it risponde 301 verso questo URL: il 301 da lilosrl.it
+ * deve arrivarci in un solo hop.
+ */
+const AUTOLAVAGGIO_SITE_URL = "https://autolavaggiolilo.it/";
 
 export interface LegacyRedirect {
   /** Path sorgente (senza dominio), es. "/furgoni" */
@@ -119,8 +126,13 @@ export const LEGACY_REDIRECTS: LegacyRedirect[] = [
   // ── Portfolio WP / GSC 404 → pagine Next ─────────────────────────────────
   ...withTrailingVariants(
     "/portfolio-items/autolavaggio",
+    AUTOLAVAGGIO_SITE_URL,
+    "WP portfolio-items autolavaggio → sito dedicato",
+  ),
+  ...withTrailingVariants(
     "/autolavaggio",
-    "WP portfolio-items autolavaggio → pagina autolavaggio",
+    AUTOLAVAGGIO_SITE_URL,
+    "Pagina ponte → autolavaggiolilo.it (evita cannibalizzazione col sito dedicato)",
   ),
 
   // ── Prezzi / tariffe (URL keyword) ───────────────────────────────────────

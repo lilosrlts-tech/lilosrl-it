@@ -24,8 +24,7 @@ Sito ufficiale: [https://www.lilosrl.it](https://www.lilosrl.it) · Aggiornato: 
 - Indirizzo: Via Giovanni Schiaparelli 21/a, 34143 Trieste (TS)
 - Nota: ingresso Via Schiaparelli 21/a — uscita Via G. De Coletti 7
 - Orari: Lun–Sab 09:00–13:00 / 14:00–18:30; Dom chiuso
-- Pagina: [Autolavaggio LILO](https://www.lilosrl.it/autolavaggio)
-- Sito dedicato: [autolavaggiolilo.it](https://www.autolavaggiolilo.it)
+- Sito: [autolavaggiolilo.it](https://autolavaggiolilo.it/)
 
 ### Servizi
 
@@ -46,7 +45,7 @@ Sito ufficiale: [https://www.lilosrl.it](https://www.lilosrl.it) · Aggiornato: 
 - [Cosa trasporti](https://www.lilosrl.it/cosa-trasporti): Wizard per scegliere il mezzo
 - [Guide](https://www.lilosrl.it/guide): Guide pratiche (trasloco, costi, patente, m³)
 - [Offerte](https://www.lilosrl.it/offerte-noleggio-furgoni-trieste): Promo Weekend e offerte
-- [Autolavaggio](https://www.lilosrl.it/autolavaggio): Lavaggio in sede Schiaparelli
+- [Autolavaggio](https://autolavaggiolilo.it/): Lavaggio in sede Schiaparelli (sito dedicato; /autolavaggio su lilosrl.it fa 301)
 - [Chi siamo](https://www.lilosrl.it/chi-siamo): Storia e sedi LILO
 - [Contatti](https://www.lilosrl.it/contatti): Telefono, WhatsApp, mappa e orari
 

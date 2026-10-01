@@ -43,7 +43,6 @@ const FALLBACK_PATHS = [
   "/offerte-noleggio-furgoni-trieste",
   "/contatti",
   "/chi-siamo",
-  "/autolavaggio",
   "/guide",
   ...GUIDE_SLUGS.map((slug) => `/guide/${slug}`),
   "/privacy",

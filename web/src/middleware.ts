@@ -82,6 +82,10 @@ function getRequestHost(request: NextRequest): string {
  * In locale / preview Vercel resta sullo stesso host per testare le regole.
  */
 function redirect301(request: NextRequest, pathname: string): NextResponse {
+  if (/^https?:\/\//i.test(pathname)) {
+    return NextResponse.redirect(pathname, 301);
+  }
+
   const host = getRequestHost(request);
   const hostname = request.nextUrl.hostname;
 

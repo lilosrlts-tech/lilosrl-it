@@ -29,7 +29,7 @@ Veicoli `/car/*`: inventariati ma **esclusi** dalle decisioni redirect (fase 2).
 | `/news/` | `/offerte` | **301** | Blog quasi vuoto |
 | `/how-we-manage-large-construction-projects/` | `/` | **301** | Post template |
 
-**Autolavaggio:** pagina `/autolavaggio` mantenuta su `lilosrl.it` (nessun redirect fuori dominio).
+**Autolavaggio (2026-10-01):** `/autolavaggio` fa 301 verso `https://autolavaggiolilo.it/` (apex, un solo hop). Menu, footer e riquadro in homepage restano e linkano il sito dedicato.
 
 Regole salvate in `src/lib/legacy-redirects.ts` (caricate da `next.config.ts`).
 
@@ -38,7 +38,7 @@ Regole salvate in `src/lib/legacy-redirects.ts` (caricate da `next.config.ts`).
 | Path nuovo | Nota |
 |------------|------|
 | `/contatti` | Assente in sitemap pagine WP |
-| `/autolavaggio` | WP: promo in home; sito dedicato `autolavaggiolilo.it` |
+| `/autolavaggio` | 301 verso `https://autolavaggiolilo.it/` (dal 2026-10-01) |
 | `/privacy` | Nuova |
 | `/tariffe` | Listino strutturato |
 | `/flotta/auto` | Categoria nuova |
@@ -86,7 +86,7 @@ Pattern storico: `/car/{slug}/` → `/flotta/{slug}`.
 
 1. `/prezzi/` → `/tariffe` (pagina listino esistente)
 2. `/flotta-noleggio/` e `/flotta-noleggio-2/` → `/flotta`
-3. Autolavaggio: pagina `/autolavaggio` su `lilosrl.it` mantenuta
+3. Autolavaggio (aggiornato 2026-10-01): `/autolavaggio` → `https://autolavaggiolilo.it/` (301)
 
 Implementazione path: `src/lib/legacy-redirects.ts` → `next.config.ts` (`statusCode: 301`).
 

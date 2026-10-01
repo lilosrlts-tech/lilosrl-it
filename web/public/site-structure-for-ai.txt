@@ -36,7 +36,7 @@ Fonte codice NAP: `web/src/lib/nap.ts` · Company: `web/src/lib/constants.ts`.
 | `/cosa-trasporti` | Wizard + hub scenari carico |
 | `/guide`, `/guide/[slug]` | Hub e articoli guida |
 | `/offerte-noleggio-furgoni-trieste` | Promo (es. Promo Weekend) |
-| `/autolavaggio` | Pagina autolavaggio (sede Schiaparelli) |
+| `/autolavaggio` | 301 verso https://autolavaggiolilo.it/ |
 | `/chi-siamo`, `/contatti` | Trust / NAP / form contatti |
 | `/privacy`, `/cookie-policy`, `/termini-condizioni` | Legali (fuori sitemap) |
 
