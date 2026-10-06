@@ -3,6 +3,30 @@ import Link from "next/link";
 import type { ImpostazioniSito } from "@/types/impostazioni";
 import { SITE_URL } from "@/lib/constants";
 import { FLEET_IDENTITY_SENTENCE } from "@/lib/fleet-identity";
+import { flottaCategoriaHref } from "@/lib/nav-config";
+import {
+  PREZZO_IVA_DICITURA,
+  TARIFFE_CATEGORIA,
+  type TariffaCategoriaSlug,
+} from "@/lib/tariffe-categoria";
+
+/** La home è l’URL già in quarta su «noleggio furgoni Trieste»: i furgoni stanno nel titolo. */
+const HERO_TITOLO_FURGONI = "Noleggio furgoni a Trieste";
+const HERO_TITOLO_LEGACY = "noleggio auto e furgoni a trieste";
+
+const FURGONI_HOME: TariffaCategoriaSlug[] = [
+  "furgoni-piccoli",
+  "furgoni-medi",
+  "furgoni-grandi-citta",
+  "furgoni-grandi",
+  "furgoni-xl",
+];
+
+function heroTitolo(raw: string | null | undefined): string {
+  const titolo = raw?.trim() ?? "";
+  if (!titolo || titolo.toLowerCase() === HERO_TITOLO_LEGACY) return HERO_TITOLO_FURGONI;
+  return titolo;
+}
 
 /** Desktop / fallback (1600×560). */
 export const HERO_DESKTOP = "/images/hero-home.webp";
@@ -34,8 +58,8 @@ export function HeroSection({ impostazioni }: HeroSectionProps) {
       className="relative isolate w-full overflow-hidden bg-slate-800 text-white"
       aria-label="Presentazione LILO Autonoleggio Trieste"
     >
-      {/* Mobile: altezza da contenuto (no clip). Da sm: ratio panoramico. */}
-      <div className="relative min-h-[320px] w-full sm:aspect-[20/7] sm:min-h-0 sm:max-h-[440px]">
+      {/* Altezza dal contenuto: il riquadro furgoni non va tagliato. */}
+      <div className="relative min-h-[420px] w-full sm:min-h-[520px]">
         <picture>
           <source media="(min-width: 1024px)" srcSet={HERO_DESKTOP} type="image/webp" />
           <source media="(min-width: 641px)" srcSet={HERO_800} type="image/webp" />
@@ -70,8 +94,27 @@ export function HeroSection({ impostazioni }: HeroSectionProps) {
                   impostazioni.hero_badge_home?.trim() ? "mt-2" : ""
                 }`}
               >
-                {impostazioni.hero_titolo_home}
+                {heroTitolo(impostazioni.hero_titolo_home)}
               </h1>
+              <p className="mt-2 text-sm font-semibold text-[#D4AF37] sm:text-base">
+                Da €{TARIFFE_CATEGORIA["furgoni-piccoli"].prezzoGiornaliero}/giorno ·{" "}
+                {PREZZO_IVA_DICITURA}
+              </p>
+              <ul className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs text-white sm:text-sm">
+                {FURGONI_HOME.map((slug) => {
+                  const tariffa = TARIFFE_CATEGORIA[slug];
+                  return (
+                    <li key={slug}>
+                      <Link
+                        href={flottaCategoriaHref(slug)}
+                        className="underline-offset-2 hover:underline"
+                      >
+                        {tariffa.label} €{tariffa.prezzoGiornaliero}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
               <p className="mt-2 text-sm leading-relaxed text-slate-100 sm:mt-3 sm:text-base">
                 {heroBody}
               </p>

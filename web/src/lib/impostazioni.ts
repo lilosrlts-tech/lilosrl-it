@@ -33,7 +33,7 @@ export const DEMO_IMPOSTAZIONI: ImpostazioniSito = {
   indirizzo_autolavaggio: `${NAP_AUTOLAVAGGIO_ADDRESS_FULL}\n${NAP_AUTOLAVAGGIO_NOTE}`,
   testo_hero_home:
     "LILO dispone di una flotta reale di oltre 50 mezzi tra auto, furgoni di varie dimensioni e pulmini 9 posti. Tariffe trasparenti e ritiro in sede in Viale Campi Elisi — ideale per privati, aziende e traslochi.",
-  hero_titolo_home: "Noleggio auto e furgoni a Trieste",
+  hero_titolo_home: "Noleggio furgoni a Trieste",
   hero_badge_home: "",
   home_punti_forza_titolo: "I punti di forza che fanno la differenza",
   home_punti_forza_json: null,

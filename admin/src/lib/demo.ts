@@ -184,7 +184,7 @@ export const DEMO_IMPOSTAZIONI: ImpostazioniSito = {
     "Ingresso: Via Schiaparelli 21/A — Uscita: Via G. De Coletti 7, Trieste",
   testo_hero_home:
     "Noleggio auto e furgoni a Trieste con LILO S.r.l.: flotta moderna, tariffe trasparenti e ritiro in sede in Viale Campi Elisi. Ideale per privati, aziende e traslochi.",
-  hero_titolo_home: "Noleggio auto e furgoni a Trieste",
+  hero_titolo_home: "Noleggio furgoni a Trieste",
   hero_badge_home: "",
   home_punti_forza_titolo: "I punti di forza che fanno la differenza",
   home_punti_forza_json: null,
