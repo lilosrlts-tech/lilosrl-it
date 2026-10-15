@@ -77,7 +77,7 @@ export function TariffeList({ sezioni }: TariffeListProps) {
       ))}
 
       <p className="text-sm leading-relaxed text-slate-500">
-        Tutti i prezzi del listino sono {PREZZO_IVA_DICITURA}. I prezzi sono aggiornati
+        {PREZZO_IVA_DICITURA} I prezzi sono aggiornati
         automaticamente dalla flotta pubblicata. Weekend, settimane lunghe e periodi speciali
         possono avere tariffe diverse: contattaci per un preventivo preciso.
       </p>

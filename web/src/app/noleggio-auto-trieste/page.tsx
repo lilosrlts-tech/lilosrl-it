@@ -11,6 +11,7 @@ import { OG_AUTO } from "@/lib/og-image";
 import { NAP_NOLEGGIO_STREET } from "@/lib/nap";
 import { buildNoleggioHubJsonLd } from "@/lib/json-ld";
 import {
+  PREZZO_IVA_BREVE,
   PREZZO_IVA_DICITURA,
   TARIFFE_CATEGORIA,
 } from "@/lib/tariffe-categoria";
@@ -20,7 +21,7 @@ export const revalidate = 3600;
 
 const META_TITLE = "Noleggio Auto a Trieste | LILO S.r.l.";
 const prezzoDa = TARIFFE_CATEGORIA.auto.prezzoGiornaliero;
-const META_DESCRIPTION = `Noleggio auto a Trieste con LILO: utilitarie e modelli per città e trasferta. Tariffe da €${prezzoDa}/giorno ${PREZZO_IVA_DICITURA}. Ritiro in ${NAP_NOLEGGIO_STREET}.`;
+const META_DESCRIPTION = `Noleggio auto a Trieste con LILO: utilitarie e modelli per città e trasferta. Tariffe da €${prezzoDa}/giorno ${PREZZO_IVA_BREVE}. Ritiro in ${NAP_NOLEGGIO_STREET}.`;
 
 const FAQ: AiFaqItem[] = [
   {

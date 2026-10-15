@@ -10,6 +10,7 @@ import { COMPANY, SITE_URL } from "@/lib/constants";
 import { NAP_NOLEGGIO_STREET } from "@/lib/nap";
 import { buildNoleggioHubJsonLd } from "@/lib/json-ld";
 import {
+  PREZZO_IVA_BREVE,
   PREZZO_IVA_DICITURA,
   TARIFFE_CATEGORIA,
 } from "@/lib/tariffe-categoria";
@@ -19,7 +20,7 @@ export const revalidate = 3600;
 
 const META_TITLE = "Noleggio Pulmini 9 Posti a Trieste | LILO S.r.l.";
 const prezzoDa = TARIFFE_CATEGORIA["pulmini-9-posti"].prezzoGiornaliero;
-const META_DESCRIPTION = `Noleggio pulmini 9 posti a Trieste con LILO: gruppi, eventi e trasferimenti. Tariffe da €${prezzoDa}/giorno ${PREZZO_IVA_DICITURA}. Ritiro in ${NAP_NOLEGGIO_STREET}.`;
+const META_DESCRIPTION = `Noleggio pulmini 9 posti a Trieste con LILO: gruppi, eventi e trasferimenti. Tariffe da €${prezzoDa}/giorno ${PREZZO_IVA_BREVE}. Ritiro in ${NAP_NOLEGGIO_STREET}.`;
 
 const FAQ: AiFaqItem[] = [
   {

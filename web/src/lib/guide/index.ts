@@ -1,5 +1,6 @@
 import type { GuideArticle } from "@/lib/guide/types";
 import {
+  PREZZO_IVA_BREVE,
   PREZZO_IVA_DICITURA,
   TARIFFE_CATEGORIA,
 } from "@/lib/tariffe-categoria";
@@ -71,8 +72,8 @@ export const GUIDE_ARTICLES: GuideArticle[] = [
     slug: "quanto-costa-noleggiare-furgone-trieste",
     title: "Quanto costa noleggiare un furgone a Trieste?",
     metaTitle: "Costo noleggio furgone Trieste | Tariffe LILO",
-    metaDescription: `Tariffe giornaliere indicative LILO a Trieste (a partire da): piccoli €${pic}, medi €${med}, grandi €${gra}. ${PREZZO_IVA_DICITURA}.`,
-    inBreve: `Presso LILO S.r.l. a Trieste le tariffe giornaliere di listino per i furgoni partono da circa €${pic}/giorno per i piccoli, €${med} per i medi, €${graCitta} per i grandi uso città, €${gra} per i grandi e €${xl} per gli XL (${PREZZO_IVA_DICITURA}). Il prezzo finale dipende da durata, chilometri, categoria e disponibilità: per un preventivo preciso usa la scheda veicolo o contattaci.`,
+    metaDescription: `Tariffe giornaliere indicative LILO a Trieste (a partire da): piccoli €${pic}, medi €${med}, grandi €${gra}. ${PREZZO_IVA_BREVE}.`,
+    inBreve: `Presso LILO S.r.l. a Trieste le tariffe giornaliere di listino per i furgoni partono da circa €${pic}/giorno per i piccoli, €${med} per i medi, €${graCitta} per i grandi uso città, €${gra} per i grandi e €${xl} per gli XL. ${PREZZO_IVA_DICITURA} Il prezzo finale dipende da durata, chilometri, categoria e disponibilità: per un preventivo preciso usa la scheda veicolo o contattaci.`,
     publishedAt: "2026-08-31",
     updatedAt: "2026-08-31",
     sections: [
@@ -105,7 +106,7 @@ export const GUIDE_ARTICLES: GuideArticle[] = [
     faq: [
       {
         q: "I prezzi includono l’IVA?",
-        a: `Sì, le tariffe di listino sul sito sono comunicate ${PREZZO_IVA_DICITURA}.`,
+        a: `Sì. ${PREZZO_IVA_DICITURA}`,
       },
       {
         q: "Posso noleggiare solo per un giorno?",

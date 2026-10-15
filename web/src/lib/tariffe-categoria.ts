@@ -107,8 +107,11 @@ export function getNotaCauzione(tariffa: TariffaCategoria): string {
   return `Cauzione €${importo}: per uso in città anche in contanti; per fuori città ed estero carta di credito o debito.`;
 }
 
-/** Dicitura commerciale prezzi noleggio in vetrina (tariffe veicolo / categoria). */
-export const PREZZO_IVA_DICITURA = "IVA inclusa";
+/** Riga fissa sotto il prezzo in vetrina. */
+export const PREZZO_IVA_DICITURA = "IVA 22% già inclusa. È il prezzo che paghi.";
+
+/** Stessa precisazione, in una frase sola, per meta description e righe promo. */
+export const PREZZO_IVA_BREVE = "IVA 22% inclusa";
 
 /** Chiarimento operativo per contratto e pagine legali */
 export const CAUZIONE_USO_CITTA_NOTA =

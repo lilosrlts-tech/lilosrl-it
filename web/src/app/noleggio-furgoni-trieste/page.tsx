@@ -11,6 +11,7 @@ import { OG_FURGONE } from "@/lib/og-image";
 import { NAP_NOLEGGIO_STREET } from "@/lib/nap";
 import { buildNoleggioHubJsonLd } from "@/lib/json-ld";
 import {
+  PREZZO_IVA_BREVE,
   PREZZO_IVA_DICITURA,
   TARIFFE_CATEGORIA,
   type TariffaCategoriaSlug,
@@ -21,7 +22,7 @@ import type { AiFaqItem } from "@/types/veicolo";
 export const revalidate = 3600;
 
 const META_TITLE = "Noleggio Furgoni a Trieste | LILO S.r.l.";
-const META_DESCRIPTION = `Noleggio furgoni a Trieste con LILO: piccoli, medi, grandi, uso città e XL. Tariffe da €${TARIFFE_CATEGORIA["furgoni-piccoli"].prezzoGiornaliero}/giorno ${PREZZO_IVA_DICITURA}. Ritiro in ${NAP_NOLEGGIO_STREET}.`;
+const META_DESCRIPTION = `Noleggio furgoni a Trieste con LILO: piccoli, medi, grandi, uso città e XL. Tariffe da €${TARIFFE_CATEGORIA["furgoni-piccoli"].prezzoGiornaliero}/giorno ${PREZZO_IVA_BREVE}. Ritiro in ${NAP_NOLEGGIO_STREET}.`;
 
 const CATEGORIE_FURGONI: Array<{
   slug: TariffaCategoriaSlug;
@@ -41,7 +42,7 @@ const FAQ: AiFaqItem[] = [
   },
   {
     q: "I prezzi includono l’IVA?",
-    a: `Le tariffe di listino sul sito sono ${PREZZO_IVA_DICITURA}. Il totale dipende da durata, km e categoria.`,
+    a: `${PREZZO_IVA_DICITURA} Il totale dipende da durata, km e categoria.`,
   },
   {
     q: "Come scelgo la categoria giusta?",
