@@ -30,6 +30,7 @@ import {
   getVeicoloImageUrlsForSchema,
   stripTargaFromPublicCopy,
 } from "@/lib/veicolo-seo";
+import { OG_FURGONE } from "@/lib/og-image";
 import { veicoloCanonicalUrl } from "@/lib/seo";
 import {
   getNotaCauzione,
@@ -99,7 +100,7 @@ function autoRentalProvider() {
     // Claim flotta reale in description — NON usare numberOfItems=50 sul catalogo
     // (le ItemList elencano modelli/categorie pubblicate, non le unità fisiche).
     description: FLEET_IDENTITY_SENTENCE_LEGAL,
-    image: SITE_LOGO_URL,
+    image: OG_FURGONE.url,
     logo: {
       "@type": "ImageObject" as const,
       url: SITE_LOGO_URL,
@@ -831,6 +832,13 @@ export function buildFlottaJsonLd(veicoli: VeicoloPubblico[]): Record<string, un
         description:
           "Catalogo noleggio LILO S.r.l. a Trieste: auto, pulmini 9 posti e furgoni per ogni esigenza. LILO dispone di una flotta reale di oltre 50 mezzi; in questa pagina elenchiamo le categorie del catalogo pubblicato.",
         url: canonical,
+        image: OG_FURGONE.url,
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: OG_FURGONE.url,
+          width: OG_FURGONE.width,
+          height: OG_FURGONE.height,
+        },
         isPartOf: { "@id": `${SITE_URL}/#website` },
         provider: autoRentalRef(),
         mainEntity: {

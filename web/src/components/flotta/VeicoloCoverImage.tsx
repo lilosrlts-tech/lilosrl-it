@@ -53,7 +53,11 @@ export function VeicoloCoverImage({
   priority = false,
   sizes = "(max-width: 768px) 100vw, (max-width: 1280px) 60vw, 720px",
 }: VeicoloCoverImageProps) {
-  const [currentSrc, setCurrentSrc] = useState<string | null>(null);
+  const [currentSrc, setCurrentSrc] = useState<string | null>(() => {
+    const primary = isValidImageUrl(src) ? src.trim() : null;
+    const fallback = isValidImageUrl(fallbackSrc) ? fallbackSrc.trim() : null;
+    return primary ?? fallback;
+  });
 
   useEffect(() => {
     const primary = isValidImageUrl(src) ? src.trim() : null;

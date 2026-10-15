@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SITE_URL } from "@/lib/constants";
+import { OG_FURGONE } from "@/lib/og-image";
 import { resolveMetadataTitle } from "@/lib/metadata-title";
 import {
   resolveVeicoloSeoTitle,
@@ -84,10 +85,10 @@ export function buildFlottaMetadata(): Metadata {
       description,
       images: [
         {
-          url: `${SITE_URL}/logo-lilo.webp`,
-          width: 1200,
-          height: 630,
-          alt: "LILO S.r.l. — Autonoleggio Trieste",
+          url: OG_FURGONE.url,
+          width: OG_FURGONE.width,
+          height: OG_FURGONE.height,
+          alt: OG_FURGONE.alt,
         },
       ],
     },
@@ -95,7 +96,7 @@ export function buildFlottaMetadata(): Metadata {
       card: "summary_large_image",
       title,
       description,
-      images: [`${SITE_URL}/logo-lilo.webp`],
+      images: [OG_FURGONE.url],
     },
     other: {
       "geo.region": "IT-TS",

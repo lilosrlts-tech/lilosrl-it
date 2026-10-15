@@ -6,7 +6,8 @@ import { WhatsAppCtaLink } from "@/components/shared/WhatsAppCtaLink";
 import { VeicoloFaq } from "@/components/flotta/VeicoloFaq";
 import { resolveMetadataTitle } from "@/lib/metadata-title";
 import { canonicalUrl } from "@/lib/seo";
-import { COMPANY, SITE_URL } from "@/lib/constants";
+import { COMPANY } from "@/lib/constants";
+import { OG_FURGONE } from "@/lib/og-image";
 import { NAP_NOLEGGIO_STREET } from "@/lib/nap";
 import { buildNoleggioHubJsonLd } from "@/lib/json-ld";
 import {
@@ -67,12 +68,20 @@ export async function generateMetadata(): Promise<Metadata> {
       type: "website",
       locale: "it_IT",
       siteName: "LILO S.r.l. — Autonoleggio Trieste",
-      images: [{ url: `${SITE_URL}/logo-lilo.webp` }],
+      images: [
+        {
+          url: OG_FURGONE.url,
+          width: OG_FURGONE.width,
+          height: OG_FURGONE.height,
+          alt: OG_FURGONE.alt,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: META_TITLE,
       description: META_DESCRIPTION,
+      images: [OG_FURGONE.url],
     },
   };
 }

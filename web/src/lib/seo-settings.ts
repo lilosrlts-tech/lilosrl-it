@@ -6,6 +6,7 @@ import { resolvePageCanonical, parseRobots } from "@/lib/seo";
 import { resolveMetadataTitle } from "@/lib/metadata-title";
 import { fitSeoDescription, fitSeoTitle } from "@/lib/seo-limits";
 import { SITE_URL } from "@/lib/constants";
+import { OG_FURGONE } from "@/lib/og-image";
 import type { SeoPageKey, SeoSettings } from "@/types/seo";
 import { SEO_PAGE_PATHS } from "@/types/seo";
 
@@ -189,6 +190,13 @@ export function buildPageMetadata(seo: SeoSettings, pageKey?: SeoPageKey): Metad
   // Ahrefs: <title> e og:title devono coincidere esattamente.
   const ogTitle = title;
   const ogDescription = fitSeoDescription(seo.og_description ?? description, description);
+  const searchPhoto =
+    pageKey === "home" ||
+    pageKey === "flotta" ||
+    pageKey === "tariffe" ||
+    pageKey === "offerte"
+      ? OG_FURGONE
+      : null;
 
   return {
     title: resolveMetadataTitle(title),
@@ -204,13 +212,22 @@ export function buildPageMetadata(seo: SeoSettings, pageKey?: SeoPageKey): Metad
       siteName: "LILO S.r.l. — Autonoleggio Trieste",
       title: ogTitle,
       description: ogDescription,
-      images: [{ url: `${SITE_URL}/logo-lilo.webp`, alt: "LILO S.R.L." }],
+      images: searchPhoto
+        ? [
+            {
+              url: searchPhoto.url,
+              width: searchPhoto.width,
+              height: searchPhoto.height,
+              alt: searchPhoto.alt,
+            },
+          ]
+        : [{ url: `${SITE_URL}/logo-lilo.webp`, alt: "LILO S.R.L." }],
     },
     twitter: {
       card: "summary_large_image",
       title: ogTitle,
       description: ogDescription,
-      images: [`${SITE_URL}/logo-lilo.webp`],
+      images: [searchPhoto?.url ?? `${SITE_URL}/logo-lilo.webp`],
     },
     other: {
       "geo.region": "IT-TS",
