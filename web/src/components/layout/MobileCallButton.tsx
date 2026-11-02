@@ -29,7 +29,7 @@ function PhoneIcon() {
   );
 }
 
-/** Tasto chiama mobile: stessa misura del tondo che era in testata, fermo a metà schermo. */
+/** Tasto chiama mobile: stessa misura del tondo che era in testata, fermo a tre quarti dello schermo. */
 export function MobileCallButton({
   phone,
   phoneDisplay,
@@ -43,7 +43,7 @@ export function MobileCallButton({
   return (
     <PhoneLink
       phone={phone}
-      className="fixed right-3 top-1/2 z-40 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-[#16a34a] text-white shadow-sm hover:bg-[#15803d] lg:hidden"
+      className="fixed right-3 top-[75%] z-40 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-[#16a34a] text-white shadow-sm hover:bg-[#15803d] lg:hidden"
       aria-label={`Chiama ${phoneDisplay}`}
     >
       <PhoneIcon />
