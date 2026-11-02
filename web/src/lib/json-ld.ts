@@ -11,7 +11,6 @@ import {
   NAP_NOLEGGIO_REGION,
   NAP_ORARI_AUTOLAVAGGIO,
   NAP_ORARI_NOLEGGIO,
-  NAP_PHONE_E164,
 } from "@/lib/nap";
 import { orariToOpeningHoursSpecification } from "@/lib/opening-hours-schema";
 import {
@@ -569,30 +568,6 @@ export function buildHomeJsonLd(): Record<string, unknown> {
       buildWebSiteJsonLd(),
       {
         ...autoRentalProvider(),
-        parentOrganization: { "@id": `${SITE_URL}/#organization` },
-      },
-      // Entity autolavaggio distinta (sede Schiaparelli) — URL sul sito dedicato.
-      {
-        "@type": "LocalBusiness",
-        "@id": `${SITE_URL}/#autolavaggio`,
-        name: "LILO Autolavaggio Trieste",
-        url: "https://www.autolavaggiolilo.it",
-        telephone: NAP_PHONE_E164,
-        image: SITE_LOGO_URL,
-        // ASCII "$$": i simboli €€ risultavano corrotti ("??") in produzione.
-        priceRange: "$$",
-        address: {
-          "@type": "PostalAddress",
-          streetAddress: NAP_AUTOLAVAGGIO_STREET,
-          addressLocality: NAP_NOLEGGIO_CITY,
-          postalCode: NAP_NOLEGGIO_POSTAL,
-          addressRegion: NAP_NOLEGGIO_REGION,
-          addressCountry: NAP_NOLEGGIO_COUNTRY,
-        },
-        openingHoursSpecification: orariToOpeningHoursSpecification(
-          NAP_ORARI_AUTOLAVAGGIO,
-        ),
-        sameAs: ["https://www.autolavaggiolilo.it"],
         parentOrganization: { "@id": `${SITE_URL}/#organization` },
       },
       {

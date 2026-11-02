@@ -409,14 +409,6 @@ export function Navbar({ phone, phoneDisplay, offertaAttiva = true }: NavbarProp
       </nav>
 
       <div className="flex items-center gap-3 lg:hidden">
-        <PhoneLink
-          phone={phone}
-          className="inline-flex h-10 w-10 items-center justify-center rounded-full text-white shadow-sm lg:hidden"
-          style={{ backgroundColor: GOLD }}
-          aria-label={`Chiama ${phoneDisplay}`}
-        >
-          <PhoneIcon className="h-4 w-4" />
-        </PhoneLink>
         <button
           type="button"
           className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-slate-700"

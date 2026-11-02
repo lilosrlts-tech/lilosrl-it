@@ -119,7 +119,7 @@ export function ContactMapSection({ impostazioni }: ContactMapSectionProps) {
             </div>
             <p className="mt-3 text-slate-900">{autolavaggio.indirizzo}</p>
             <p className="mt-2 text-sm leading-relaxed text-slate-600">
-              {autolavaggio.orariRighe.join(" · ")}
+              Orari e listino sono sul sito dedicato.
             </p>
             <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-slate-500">
               Servizi

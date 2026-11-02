@@ -1,4 +1,3 @@
-import { AutolavaggioPromoSection } from "@/components/home/AutolavaggioPromoSection";
 import { ContactMapSection } from "@/components/home/ContactMapSection";
 import { InstitutionalPartnersSection } from "@/components/home/InstitutionalPartnersSection";
 import { ReviewsSection } from "@/components/home/ReviewsSection";
@@ -15,7 +14,6 @@ export function HomeBelowFoldSections({ impostazioni }: HomeBelowFoldSectionsPro
   return (
     <>
       <StaffAccoglienzaSection />
-      <AutolavaggioPromoSection />
       <InstitutionalPartnersSection />
       <StrengthsSection impostazioni={impostazioni} />
       <ReviewsSection />
