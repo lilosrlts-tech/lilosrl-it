@@ -1,8 +1,8 @@
 # LILO S.r.l.
 
-> Noleggio auto, furgoni e pulmini 9 posti a Trieste, più autolavaggio. Flotta reale di oltre 50 mezzi. Tariffe giornaliere IVA inclusa. Ritiro in Viale Campi Elisi 38/b.
+> Noleggio auto, furgoni e pulmini 9 posti a Trieste. Flotta reale di oltre 50 mezzi. Tariffe giornaliere IVA 22% inclusa. Ritiro in Viale Campi Elisi 38/b. L’autolavaggio è un’altra sede, con sito dedicato.
 
-Sito ufficiale: [https://www.lilosrl.it](https://www.lilosrl.it) · Aggiornato: 2026-09-09 · Dettaglio architettura: [site-structure-for-ai.txt](https://www.lilosrl.it/site-structure-for-ai.txt)
+Sito ufficiale: [https://www.lilosrl.it](https://www.lilosrl.it) · Aggiornato: 2026-11-11 · Dettaglio architettura: [site-structure-for-ai.txt](https://www.lilosrl.it/site-structure-for-ai.txt)
 
 ## Azienda
 
@@ -36,7 +36,7 @@ Sito ufficiale: [https://www.lilosrl.it](https://www.lilosrl.it) · Aggiornato: 
 
 ## Pagine principali
 
-- [Home](https://www.lilosrl.it/): Panoramica noleggio e autolavaggio a Trieste
+- [Home](https://www.lilosrl.it/): Panoramica noleggio a Trieste. Autolavaggio: sito dedicato.
 - [Noleggio furgoni Trieste](https://www.lilosrl.it/noleggio-furgoni-trieste): Landing pilastro furgoni
 - [Noleggio auto Trieste](https://www.lilosrl.it/noleggio-auto-trieste): Landing pilastro auto
 - [Noleggio pulmini 9 posti Trieste](https://www.lilosrl.it/noleggio-pulmini-9-posti-trieste): Landing pilastro pulmini
@@ -51,7 +51,7 @@ Sito ufficiale: [https://www.lilosrl.it](https://www.lilosrl.it) · Aggiornato: 
 
 ## Categorie flotta
 
-- [Auto](https://www.lilosrl.it/flotta/auto): da €40/giorno, 100 km inclusi, cauzione €300
+- [Auto](https://www.lilosrl.it/flotta/auto): da €40/giorno (Volkswagen Polo €45/giorno), 100 km inclusi, cauzione €300
 - [Pulmini 9 posti](https://www.lilosrl.it/flotta/pulmini-9-posti): da €90/giorno, 150 km, cauzione €500 (solo carta)
 - [Furgoni piccoli](https://www.lilosrl.it/flotta/furgoni-piccoli): da €50/giorno, 100 km, cauzione €200
 - [Furgoni medi](https://www.lilosrl.it/flotta/furgoni-medi): da €55/giorno, 100 km, cauzione €200
@@ -65,7 +65,7 @@ Prezzi IVA inclusa, “a partire da”. Confermare in scheda o in sede.
 
 ### Auto (da €40/giorno)
 
-- [Volkswagen Polo](https://www.lilosrl.it/flotta/volkswagen-polo)
+- [Volkswagen Polo](https://www.lilosrl.it/flotta/volkswagen-polo) — €45/giorno
 - [Opel Karl](https://www.lilosrl.it/flotta/opel-karl)
 - [Citroën C3](https://www.lilosrl.it/flotta/citroen-c3)
 - [Volvo S40](https://www.lilosrl.it/flotta/volvo-s40)

@@ -88,7 +88,9 @@ export default async function OffertePage() {
               LILO Autonoleggio Trieste
             </p>
             <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-              {impostazioni.offerta_titolo}
+              {impostazioni.offerta_attiva
+                ? "Promo weekend: 83 €, solo furgoni grandi uso città"
+                : impostazioni.offerta_titolo}
             </h1>
             {!impostazioni.offerta_attiva ? (
               <p className="mt-4 leading-relaxed text-slate-600">

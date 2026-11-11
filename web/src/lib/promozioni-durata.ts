@@ -84,31 +84,50 @@ export function hasPromoDurataSconto(
   return Boolean(prezzo.promoAttiva && prezzo.daGiorno < prezzo.giornaliero - 0.01);
 }
 
+/** Regola durata in parole, senza un secondo prezzo al giorno. */
+export function fraseRegolaDurata(regola: {
+  nome?: string | null;
+  descrizione_pubblica?: string | null;
+  giorni_minimo?: number | null;
+  tipo?: PromoDurataTipo | null;
+  giorni_a_pagamento?: number | null;
+  sconto_percentuale?: number | null;
+}): string | null {
+  const giorni = regola.giorni_minimo ?? 0;
+  if (regola.tipo === "paga_giorni" && regola.giorni_a_pagamento != null && giorni > 0) {
+    return `${giorni} giorni: ne paghi ${regola.giorni_a_pagamento}`;
+  }
+  if (regola.tipo === "percentuale" && regola.sconto_percentuale != null && giorni > 0) {
+    return `Da ${giorni} giorni, sconto ${Number(regola.sconto_percentuale)}% sul listino`;
+  }
+  const text = (regola.descrizione_pubblica || regola.nome || "").trim();
+  return text || null;
+}
+
 /**
- * Riga secondaria sotto il listino: sconto durata (es. mensile).
+ * Riga secondaria sotto il listino: sconto durata in parole.
  * Il prezzo principale resta sempre il giornaliero di listino.
  */
 export function labelPromoDurataSecondario(prezzo: {
   giornaliero: number;
   daGiorno: number;
   promoAttiva: boolean;
-  regolaMigliore?: {
-    nome?: string | null;
-    descrizione_pubblica?: string | null;
-    giorni_minimo?: number | null;
-  } | null;
+  regole?: Array<Parameters<typeof fraseRegolaDurata>[0] & { giorni_minimo?: number | null }>;
+  regolaMigliore?: Parameters<typeof fraseRegolaDurata>[0] | null;
 }): string | null {
   if (!hasPromoDurataSconto(prezzo)) return null;
 
-  const eq = prezzo.daGiorno.toFixed(2);
-  const r = prezzo.regolaMigliore;
-  const giorni = r?.giorni_minimo ?? 0;
-  const nome = `${r?.nome ?? ""} ${r?.descrizione_pubblica ?? ""}`.toLowerCase();
-  const isMese = giorni >= 28 || /mese|mensil/.test(nome);
-
-  if (isMese) return `Da €${eq}/giorno, IVA 22% inclusa, con noleggio mensile`;
-  if (giorni > 0) return `Da €${eq}/giorno, IVA 22% inclusa, da ${giorni} giorni`;
-  return `Da €${eq}/giorno, IVA 22% inclusa, con promo durata`;
+  const regole =
+    prezzo.regole && prezzo.regole.length > 0
+      ? [...prezzo.regole].sort((a, b) => (a.giorni_minimo ?? 0) - (b.giorni_minimo ?? 0))
+      : prezzo.regolaMigliore
+        ? [prezzo.regolaMigliore]
+        : [];
+  const parts = regole
+    .map((regola) => fraseRegolaDurata(regola))
+    .filter((part): part is string => Boolean(part));
+  if (parts.length === 0) return null;
+  return `${parts.join(". ")}.`;
 }
 
 let cachedRegole: PromoDurataRegola[] | null = null;

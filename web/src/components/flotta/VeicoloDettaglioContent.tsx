@@ -50,8 +50,12 @@ export async function VeicoloDettaglioContent({ veicolo }: VeicoloDettaglioConte
   const sottotitolo = veicolo.sottotitolo
     ? sanitizePublicBrandCopy(stripTargaFromPublicCopy(veicolo.sottotitolo))
     : null;
+  const alimentazione = veicolo.alimentazione?.trim() ?? "";
   const highlights = veicolo.ai_highlights
     .map((item) => cleanPublicHighlight(item))
+    .map((item) =>
+      /^diesel$/i.test(item.trim()) && /ibrid/i.test(alimentazione) ? alimentazione : item,
+    )
     .filter(isUsefulPublicHighlight);
   const unitaLabel = getUnitaDisponibiliLabel(veicolo);
 

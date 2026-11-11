@@ -30,7 +30,7 @@ const FAQ: AiFaqItem[] = [
   },
   {
     q: "Quanto costa noleggiare un’auto?",
-    a: `Il listino categoria auto parte da €${prezzoDa}/giorno (${PREZZO_IVA_DICITURA}). Il totale dipende da modello, durata e km: conferma in scheda o in sede.`,
+    a: `Il listino categoria auto parte da €${prezzoDa}/giorno (${PREZZO_IVA_DICITURA}). La Volkswagen Polo è a €45/giorno. Il totale dipende da modello, durata e km: conferma in scheda o in sede.`,
   },
   {
     q: "Posso usare l’auto fuori Trieste?",
@@ -130,8 +130,8 @@ export default async function NoleggioAutoTriestePage() {
             <p className="mt-2 text-base leading-relaxed text-slate-800">
               Noleggio auto a Trieste con LILO: scegli il modello nella categoria Auto della flotta,
               confronta tariffa e km inclusi in scheda, poi richiedi preventivo. Listino da €
-              {prezzoDa}/giorno ({PREZZO_IVA_DICITURA}); il prezzo definitivo dipende da durata e
-              disponibilità.
+              {prezzoDa}/giorno ({PREZZO_IVA_DICITURA}); la Volkswagen Polo è a €45/giorno. Il prezzo
+              definitivo dipende da durata e disponibilità.
             </p>
           </section>
 

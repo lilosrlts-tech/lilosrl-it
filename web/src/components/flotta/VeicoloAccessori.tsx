@@ -12,7 +12,7 @@ export function VeicoloAccessori({ accessori }: VeicoloAccessoriProps) {
     <section className="rounded-2xl border border-slate-200 bg-white p-6">
       <h2 className="text-lg font-semibold text-slate-900">Opzioni noleggio / Extra</h2>
       <p className="mt-1 text-sm text-slate-500">
-        Accessori disponibili su richiesta. Prezzi al giorno, IVA esclusa.
+        Accessori disponibili su richiesta. Prezzi al giorno, IVA 22% inclusa.
       </p>
       <div className="mt-4 overflow-x-auto">
         <table className="w-full min-w-[320px] text-left text-sm">
