@@ -37,6 +37,8 @@ export const LOCAL_FLEET_IMAGE_BY_SLUG: Record<string, string> = {
   "nissan-primastar-9-posti": "/images/veicoli/nissan-primastar-9-posti-frontale.webp",
   "volvo-s40": "/images/veicoli/volvo-s40-noleggio-trieste.webp",
   "citroen-c3": "/images/veicoli/citroen-c3-grigia-trieste.webp",
+  "citroen-c3-automatica":
+    "/images/veicoli/citroen-c3-automatica-noleggio-auto-trieste.webp",
   "volkswagen-polo": "/images/veicoli/volkswagen-polo-noleggio-auto-trieste.webp",
   "opel-karl": "/images/veicoli/opel-karl-noleggio-auto-trieste.webp",
   "peugeot-boxer-l3h3": "/images/veicoli/furgone-peugeot-boxer-l3h3-trieste.webp",

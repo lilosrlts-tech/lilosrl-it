@@ -28,6 +28,7 @@ export const UNITA_DISPONIBILI_BY_SLUG: Record<string, number> = {
   "toyota-proace-city": 2,
   // Auto
   "citroen-c3": 3,
+  "citroen-c3-automatica": 1,
   "opel-karl": 2,
   "volkswagen-polo": 1,
   // Pulmini
